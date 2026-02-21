@@ -17,6 +17,8 @@
         "ssi_transaction_terminate_mixin",
         "ssi_employee_document_mixin",
         "ssi_transaction_date_duration_mixin",
+        "ssi_m2o_configurator_mixin",
+        "ssi_res_partner_m2o_configurator_mixin",
     ],
     "data": [
         "security/ir_module_category/employee_external_assignment_module_category.xml",
@@ -29,6 +31,7 @@
         "sequence_template/employee_external_assignment.xml",
         "policy_template/employee_external_assignment.xml",
         "approval_template/employee_external_assignment.xml",
+        "menu.xml",
         "views/employee_external_assignment_type_views.xml",
         "views/employee_external_assignment_views.xml",
         "views/hr_employee.xml",
