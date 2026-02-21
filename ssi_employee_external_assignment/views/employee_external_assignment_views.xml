@@ -1,6 +1,6 @@
 <!-- Copyright 2025 OpenSynergy Indonesia
-     Copyright 2025 PT. Simetri Sinergi Indonesia
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+   Copyright 2025 PT. Simetri Sinergi Indonesia
+   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
   <data>
     <!-- E.9: Search view (inherits transaction mixin search) -->
@@ -14,6 +14,56 @@
       <field name="mode">primary</field>
       <field name="arch" type="xml">
         <data>
+          <xpath expr="//field[@name='user_id']" position="after">
+            <field name="employee_id" />
+            <field name="department_id" />
+            <field name="manager_id" />
+            <field name="job_id" />
+            <field name="type_id" />
+            <field name="partner_id" />
+            <field name="date" />
+            <field name="date_start" />
+            <field name="date_end" />
+          </xpath>
+          <xpath expr="//filter[@name='grp_state']" position="after">
+            <filter
+                            name="grp_employee"
+                            string="Employee"
+                            context="{'group_by':'employee_id'}"
+                        />
+            <filter
+                            name="grp_department"
+                            string="Department"
+                            context="{'group_by':'department_id'}"
+                        />
+            <filter
+                            name="grp_manager"
+                            string="Manager"
+                            context="{'group_by':'manager_id'}"
+                        />
+            <filter name="grp_job" string="Job" context="{'group_by':'job_id'}" />
+            <filter
+                            name="grp_type"
+                            string="Assignment Type"
+                            context="{'group_by':'type_id'}"
+                        />
+            <filter
+                            name="grp_partner"
+                            string="Partner"
+                            context="{'group_by':'partner_id'}"
+                        />
+            <filter name="grp_date" string="Date" context="{'group_by':'date'}" />
+            <filter
+                            name="grp_date_start"
+                            string="Start Date"
+                            context="{'group_by':'date_start'}"
+                        />
+            <filter
+                            name="grp_date_end"
+                            string="End Date"
+                            context="{'group_by':'date_end'}"
+                        />
+          </xpath>
         </data>
       </field>
     </record>
@@ -59,25 +109,32 @@
       <field name="mode">primary</field>
       <field name="arch" type="xml">
         <data>
-            <xpath expr="//field[@name='user_id']" position="after">
-                <field name="employee_id" widget="many2one_avatar_employee" />
-                <field name="department_id" readonly="1" force_save="1" />
-                <field
+          <xpath expr="//field[@name='user_id']" position="after">
+            <field name="allowed_employee_ids" widget="many2many_tags" invisible="1" />
+            <field name="type_id" />
+            <field
+                            name="employee_id"
+                            widget="many2one_avatar_employee"
+                            domain="[('id', 'in', allowed_employee_ids)]"
+                        />
+            <field name="department_id" readonly="1" force_save="1" />
+            <field
                             name="manager_id"
                             widget="many2one_avatar_employee"
                             readonly="1"
                             force_save="1"
                         />
-                <field name="job_id" readonly="1" force_save="1" />
-                <field name="type_id" />
-            </xpath>
-            <xpath expr="//group[@name='header_right']" position="inside">
-                <field name="date" />
-                <field name="date_start" />
-                <field name="date_end" />
-                <field name="partner_id" />
-                <field name="partner_location_id" />
-            </xpath>
+            <field name="job_id" readonly="1" force_save="1" />
+
+          </xpath>
+          <xpath expr="//group[@name='header_right']" position="inside">
+            <field name="date" />
+            <field name="date_start" />
+            <field name="date_end" />
+            <field name="allowed_partner_ids" widget="many2many_tags" invisible="1" />
+            <field name="partner_id" domain="[('id', 'in', allowed_partner_ids)]" />
+            <field name="partner_location_id" />
+          </xpath>
         </data>
       </field>
     </record>
@@ -93,9 +150,10 @@
     <!-- E.9: Menu (placeholder parent) -->
     <menuitem
             id="employee_external_assignment_menu"
-            name="Employee External Assignments"
+            name="Assignments"
             action="employee_external_assignment_action"
-            parent="ssi_hr.hr_career_management_menu"
+            parent="menu_external_assignment_root"
+            sequence="100"
         />
   </data>
 </odoo>

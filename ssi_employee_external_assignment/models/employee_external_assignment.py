@@ -20,6 +20,7 @@ class EmployeeExternalAssignment(models.Model):
         "mixin.transaction_terminate",
         "mixin.employee_document",
         "mixin.transaction_date_duration",
+        "mixin.many2one_configurator",
     ]
 
     # mixin.multiple_approval attributes
@@ -113,6 +114,20 @@ class EmployeeExternalAssignment(models.Model):
         states={"draft": [("readonly", False)]},
         default=lambda r: r._default_date(),
     )
+    allowed_employee_ids = fields.Many2many(
+        comodel_name="hr.employee",
+        string="Allowed Employees",
+        compute="_compute_allowed_employee_ids",
+        store=False,
+        compute_sudo=True,
+    )
+    allowed_partner_ids = fields.Many2many(
+        comodel_name="res.partner",
+        string="Allowed Partners",
+        compute="_compute_allowed_partner_ids",
+        store=False,
+        compute_sudo=True,
+    )
     partner_id = fields.Many2one(
         comodel_name="res.partner",
         string="Partner",
@@ -123,11 +138,51 @@ class EmployeeExternalAssignment(models.Model):
     partner_location_id = fields.Many2one(
         comodel_name="res.partner",
         string="Partner Location",
-        domain="[('parent_id', '=', partner_id)]",
-        required=True,
+        domain="[('parent_id', '=', partner_id),('type','!=','contact')]",
+        required=False,
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
 
     def _default_date(self):
         return date.today()
+
+    @api.onchange("partner_id")
+    def onchange_partner_location_id(self):
+        self.partner_location_id = False
+
+    @api.onchange("type_id")
+    def onchange_partner_id(self):
+        self.partner_id = False
+
+    @api.onchange("type_id")
+    def onchange_employee_id(self):
+        self.employee_id = False
+
+    @api.depends("type_id")
+    def _compute_allowed_partner_ids(self):
+        for record in self:
+            result = False
+            if record.type_id:
+                result = record._m2o_configurator_get_filter(
+                    object_name="res.partner",
+                    method_selection=record.type_id.partner_selection_method,
+                    manual_recordset=record.type_id.partner_ids,
+                    domain=record.type_id.partner_domain,
+                    python_code=record.type_id.partner_python_code,
+                )
+            record.allowed_partner_ids = result
+
+    @api.depends("type_id")
+    def _compute_allowed_employee_ids(self):
+        for record in self:
+            result = False
+            if record.type_id:
+                result = record._m2o_configurator_get_filter(
+                    object_name="hr.employee",
+                    method_selection=record.type_id.employee_selection_method,
+                    manual_recordset=record.type_id.employee_ids,
+                    domain=record.type_id.employee_domain,
+                    python_code=record.type_id.employee_python_code,
+                )
+            record.allowed_employee_ids = result

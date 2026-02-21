@@ -29,6 +29,7 @@
         "sequence_template/employee_external_assignment.xml",
         "policy_template/employee_external_assignment.xml",
         "approval_template/employee_external_assignment.xml",
+        "menu.xml",
         "views/employee_external_assignment_type_views.xml",
         "views/employee_external_assignment_views.xml",
         "views/hr_employee.xml",

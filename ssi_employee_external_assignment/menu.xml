@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 OpenSynergy Indonesia
+     Copyright 2023 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3.0) -->
+<odoo>
+<data>
+
+<menuitem
+            id="menu_external_assignment_root"
+            name="External Assignment"
+            parent="ssi_hr.hr_career_management_menu"
+            sequence="20"
+        />
+
+<menuitem
+            id="menu_external_assignment_config"
+            name="External Assignment"
+            parent="ssi_hr.menu_career_configuration"
+            sequence="20"
+        />
+
+</data>
+</odoo>

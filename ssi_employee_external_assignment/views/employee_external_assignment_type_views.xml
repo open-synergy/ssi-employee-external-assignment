@@ -48,6 +48,32 @@
         <data>
           <xpath expr="//field[@name='active']" position="after">
           </xpath>
+          <xpath expr="//page[1]" position="before">
+            <page name="partner" string="Partner" />
+            <page name="employee" string="Employee">
+              <group name="employee_1" col="2" colspan="4" string="Employee">
+                  <field name="employee_selection_method" string="Selecton Method" />
+                  <field
+                                    name="employee_ids"
+                                    attrs="{'invisible':[('employee_selection_method','!=','manual')]}"
+                                    string="Employees"
+                                />
+                  <field
+                                    name="employee_domain"
+                                    widget="domain"
+                                    options="{'model': 'hr.employee', 'in_dialog': True}"
+                                    attrs="{'invisible':[('employee_selection_method','!=','domain')]}"
+                                    string="Domain"
+                                />
+                  <field
+                                    name="employee_python_code"
+                                    widget="ace"
+                                    attrs="{'invisible':[('employee_selection_method','!=','code')]}"
+                                    string="Python Code"
+                                />
+              </group>
+            </page>
+          </xpath>
         </data>
       </field>
     </record>
