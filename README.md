@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[ssi_employee_external_assignment](ssi_employee_external_assignment/) | 14.0.1.0.0 |  | Employee External Assignment
+[ssi_employee_external_assignment](ssi_employee_external_assignment/) | 14.0.1.1.0 |  | Employee External Assignment
 
 [//]: # (end addons)
 
