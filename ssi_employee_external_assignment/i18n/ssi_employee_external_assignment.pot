@@ -74,6 +74,16 @@ msgid "All"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__allowed_employee_ids
+msgid "Allowed Employees"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__allowed_partner_ids
+msgid "Allowed Partners"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__allowed_policy_template_ids
 msgid "Allowed Policy Templates"
 msgstr ""
@@ -104,6 +114,16 @@ msgstr ""
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__approved
 msgid "Approved"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
+msgid "Assignment Type"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.ui.menu,name:ssi_employee_external_assignment.employee_external_assignment_menu
+msgid "Assignments"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -244,6 +264,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__date
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
 msgid "Date"
 msgstr ""
 
@@ -259,6 +280,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__department_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
 msgid "Department"
 msgstr ""
 
@@ -267,6 +289,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_base__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields.selection,name:ssi_employee_external_assignment.selection__employee_external_assignment_type__employee_selection_method__domain
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_type_view_form
+msgid "Domain"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -279,7 +307,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__employee_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_type_view_form
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
 msgid "Employee"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__employee_domain
+msgid "Employee Domain"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -302,13 +337,33 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment
 #: model:ir.actions.act_window,name:ssi_employee_external_assignment.employee_external_assignment_action
-#: model:ir.ui.menu,name:ssi_employee_external_assignment.employee_external_assignment_menu
 msgid "Employee External Assignments"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__employee_partner_id
 msgid "Employee Partner"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__employee_python_code
+msgid "Employee Python Code"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__employee_selection_method
+msgid "Employee Selection Method"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__employee_ids
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_type_view_form
+msgid "Employees"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
+msgid "End Date"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -319,6 +374,8 @@ msgid ""
 msgstr ""
 
 #. module: ssi_employee_external_assignment
+#: model:ir.ui.menu,name:ssi_employee_external_assignment.menu_external_assignment_config
+#: model:ir.ui.menu,name:ssi_employee_external_assignment.menu_external_assignment_root
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.hr_employee_view_form
 msgid "External Assignment"
 msgstr ""
@@ -394,6 +451,11 @@ msgid "Is Follower"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
+msgid "Job"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__job_id
 msgid "Job Position"
 msgstr ""
@@ -425,7 +487,13 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__manager_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
 msgid "Manager"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields.selection,name:ssi_employee_external_assignment.selection__employee_external_assignment_type__employee_selection_method__manual
+msgid "Manual"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -547,7 +615,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__partner_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_type_view_form
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
 msgid "Partner"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__partner_domain
+msgid "Partner Domain"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -556,8 +631,29 @@ msgid "Partner Location"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__partner_python_code
+msgid "Partner Python Code"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__partner_selection_method
+msgid "Partner Selection Method"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__partner_ids
+msgid "Partners"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__policy_template_id
 msgid "Policy Template"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields.selection,name:ssi_employee_external_assignment.selection__employee_external_assignment_type__employee_selection_method__code
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_type_view_form
+msgid "Python Code"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -603,6 +699,16 @@ msgstr ""
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__reviewer_id
 msgid "Reviewer"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_type_view_form
+msgid "Selecton Method"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
+msgid "Start Date"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
