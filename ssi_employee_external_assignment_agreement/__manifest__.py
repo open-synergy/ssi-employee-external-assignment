@@ -16,6 +16,7 @@
         "ssi_transaction_cancel_mixin",
         "ssi_transaction_terminate_mixin",
         "ssi_transaction_partner_mixin",
+        "ssi_product_line_account_mixin",
         "ssi_hr_payroll",
         "ssi_employee_external_assignment",
         "ssi_transaction_pricelist_mixin",
