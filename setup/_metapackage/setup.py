@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-ssi_employee_external_assignment',
+        'odoo14-addon-ssi_employee_external_assignment_agreement',
     ],
     classifiers=[
         'Programming Language :: Python',
