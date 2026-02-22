@@ -1,0 +1,23 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="0">
+    <data>
+        <record
+            id="employee_external_assignment_agreement_workflow"
+            model="ir.module.category"
+        >
+            <field name="name">Employee External Assignment Agreement</field>
+            <field name="description">Employee External Assignment Agreement</field>
+            <field name="parent_id" ref="ssi_hr.human_resource_data_module_category" />
+        </record>
+        <record
+            id="employee_external_assignment_agreement_data_ownership"
+            model="ir.module.category"
+        >
+            <field name="name">Employee External Assignment Agreement</field>
+            <field name="description">Employee External Assignment Agreement</field>
+            <field name="parent_id" ref="ssi_hr.human_resource_data_module_category" />
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+<record id="create_employee_external_agreement_term_view_form" model="ir.ui.view">
+    <field name="name">create_employee_external_agreement_term - form</field>
+    <field name="model">create_employee_external_agreement_term</field>
+    <field name="arch" type="xml">
+        <form>
+            <group name="group_1" colspan="4" col="2">
+                <field name="agreement_id" invisible="0" />
+                <field name="duration_id" />
+                <field name="num_of_term" />
+            </group>
+            <footer>
+                <button
+                        string="Confirm"
+                        name="action_confirm"
+                        type="object"
+                        class="oe_highlight"
+                        confirm="Are you sure?"
+                    />
+                or
+                <button string="Cancel" class="oe_link" special="cancel" />
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record
+        id="create_employee_external_agreement_term_action"
+        model="ir.actions.act_window"
+    >
+    <field name="name">Create Employee External Agreement Term</field>
+    <field name="res_model">create_employee_external_agreement_term</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="create_employee_external_agreement_term_view_form" />
+    <field name="target">new</field>
+</record>
+
+</odoo>

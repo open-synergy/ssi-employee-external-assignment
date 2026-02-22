@@ -1,0 +1,369 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+    Copyright 2025 PT. Simetri Sinergi Indonesia
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="0">
+    <data>
+        <record
+            id="employee_external_assignment_agreement_view_search"
+            model="ir.ui.view"
+        >
+            <field name="name">employee_external_assignment_agreement - search</field>
+            <field name="model">employee_external_assignment_agreement</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_search"
+            />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <data>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_view_tree"
+            model="ir.ui.view"
+        >
+            <field name="name">employee_external_assignment_agreement - tree</field>
+            <field name="model">employee_external_assignment_agreement</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_tree"
+            />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="partner_id" widget="many2one_avatar" />
+                        <field
+                            name="contact_partner_id"
+                            widget="many2one_avatar"
+                            optional="hide"
+                        />
+                        <field name="partner_location_id" />
+                        <field name="type_id" />
+                        <field name="currency_id" />
+                        <field name="pricelist_id" />
+                        <field name="date" />
+                        <field name="date_start" />
+                        <field name="date_end" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_view_form"
+            model="ir.ui.view"
+        >
+            <field name="name">employee_external_assignment_agreement - form</field>
+            <field name="model">employee_external_assignment_agreement</field>
+            <field name="mode">primary</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_form"
+            />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="type_id" />
+                        <field
+                            name="allowed_partner_ids"
+                            widget="many2many_tags"
+                            invisible="1"
+                        />
+                        <field
+                            name="allowed_job_ids"
+                            widget="many2many_tags"
+                            invisible="1"
+                        />
+                        <field
+                            name="allowed_salary_rule_ids"
+                            widget="many2many_tags"
+                            invisible="1"
+                        />
+                        <field
+                            name="allowed_other_fee_category_ids"
+                            widget="many2many_tags"
+                            invisible="1"
+                        />
+                        <field
+                            name="allowed_other_fee_ids"
+                            widget="many2many_tags"
+                            invisible="1"
+                        />
+                        <field
+                            name="partner_id"
+                            widget="many2one_avatar"
+                            domain="[('id','in',allowed_partner_ids)]"
+                        />
+                        <field
+                            name="allowed_contact_ids"
+                            widget="many2many_tags"
+                            invisible="1"
+                        />
+                        <field
+                            name="contact_partner_id"
+                            widget="many2one_avatar"
+                            domain="[('id','in',allowed_contact_ids)]"
+                        />
+                        <field
+                            name="partner_location_id"
+                            domain="['|',('id','=',partner_id),'&amp;',('parent_id','=',partner_id),('type','in',['other','private','branch'])]"
+                        />
+                    </xpath>
+                    <xpath expr="//group[@name='header_right']" position="inside">
+                        <field name="date" />
+                        <field name="date_start" />
+                        <field name="date_end" />
+                        <field name="currency_id" />
+                        <field
+                            name="pricelist_id"
+                            domain="[('currency_id', '=', currency_id)]"
+                        />
+                    </xpath>
+                    <xpath expr="//group[@name='header_center']" position="inside">
+                        <field name="title" />
+                    </xpath>
+                    <xpath expr="//page[1]" position="before">
+                        <page name="detail" string="Details">
+                            <field name="detail_ids">
+                                <tree>
+                                    <field name="job_id" />
+                                    <field
+                                        name="all_salary_rule_ids"
+                                        widget="many2many_tags"
+                                    />
+                                    <field name="quantity" />
+                                    <field name="quantity_available" />
+                                    <field name="quantity_diff" />
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group name="detail_1" colspan="4" col="2">
+                                            <field
+                                                name="job_id"
+                                                domain="[('id','in',parent.allowed_job_ids)]"
+                                            />
+                                            <field name="quantity" />
+                                            <field
+                                                name="allowed_salary_rule_ids"
+                                                widget="many2many_tags"
+                                                invisible="1"
+                                            />
+                                        </group>
+                                        <notebook>
+                                            <page
+                                                name="compensation_term"
+                                                string="Compensation Term"
+                                            >
+                                                <field name="compensation_term_ids">
+                                                    <tree>
+                                                        <field name="rule_id" />
+                                                        <field
+                                                            name="currency_id"
+                                                            invisible="1"
+                                                        />
+                                                        <field name="fixed_amount" />
+                                                        <field name="minimum_amount" />
+                                                        <field name="maximum_amount" />
+                                                    </tree>
+                                                    <form>
+                                                        <sheet>
+                                                            <group
+                                                                name="compensation_term_1"
+                                                                colspan="4"
+                                                                col="2"
+                                                            >
+                                                                <field
+                                                                    name="rule_id"
+                                                                    domain="[('id','in',parent.allowed_salary_rule_ids)]"
+                                                                />
+                                                                <field
+                                                                    name="currency_id"
+                                                                    invisible="1"
+                                                                />
+                                                                <field
+                                                                    name="fixed_amount"
+                                                                />
+                                                                <field
+                                                                    name="minimum_amount"
+                                                                />
+                                                                <field
+                                                                    name="maximum_amount"
+                                                                />
+                                                            </group>
+                                                        </sheet>
+                                                    </form>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                            </field>
+                            <group name="detail_1" colspan="4" col="2">
+                                <field
+                                    name="all_salary_rule_ids"
+                                    widget="many2many_tags"
+                                    invisible="1"
+                                />
+                                <field
+                                    name="all_job_position_ids"
+                                    widget="many2many_tags"
+                                    invisible="1"
+                                />
+                            </group>
+                        </page>
+                        <page name="other_fee" string="Other Fee">
+                            <field name="other_fee_ids">
+                                <tree>
+                                    <field name="currency_id" invisible="1" />
+                                    <field name="product_id" />
+                                    <field name="usage_id" optional="hide" />
+                                    <field name="account_id" optional="hide" />
+                                    <field name="name" />
+                                    <field name="analytic_account_id" optional="show" />
+                                    <field name="price_unit" />
+                                    <field name="uom_quantity" />
+                                    <field name="uom_id" />
+                                    <field name="price_subtotal" />
+                                </tree>
+                                <form>
+                                    <field name="currency_id" invisible="1" />
+                                    <field
+                                        name="allowed_uom_ids"
+                                        widget="many2many_tags"
+                                        invisible="1"
+                                    />
+                                    <group name="detail_1" colspan="4" col="2">
+                                        <group name="detail_1_1" colspan="1" col="2">
+                                            <field
+                                                name="product_id"
+                                                domain="['|',('categ_id','in',parent.allowed_other_fee_category_ids),('id','in',parent.allowed_other_fee_ids)]"
+                                            />
+                                            <field name="name" />
+                                            <field name="usage_id" />
+                                            <field name="account_id" />
+                                            <field name="analytic_account_id" />
+                                        </group>
+                                        <group name="detail_1_1" colspan="1" col="2">
+                                            <field name="pricelist_id" />
+                                            <label for="uom_quantity" />
+                                            <div>
+                                                <field name="uom_quantity" />
+                                                <field
+                                                    name="uom_id"
+                                                    domain="[('id','in',allowed_uom_ids)]"
+                                                    attrs="{'required':[('product_id','!=',False)]}"
+                                                    class="oe_inline"
+                                                />
+                                            </div>
+                                            <field name="quantity" invisible="1" />
+                                            <field name="price_unit" />
+                                            <field name="price_subtotal" />
+                                        </group>
+                                    </group>
+                                    <notebook>
+                                        <page
+                                            name="standard_price"
+                                            string="Standard Price"
+                                            attrs="{'invisible':[('pricelist_id','=',False)]}"
+                                        >
+                                            <group
+                                                name="standard_price"
+                                                colspan="4"
+                                                col="2"
+                                            >
+                                                <group
+                                                    name="standard_price_1"
+                                                    string="Price Unit"
+                                                    colspan="1"
+                                                    col="2"
+                                                >
+                                                    <field
+                                                        name="standard_price_unit"
+                                                        string="Sarndard"
+                                                    />
+                                                    <field
+                                                        name="standard_price_unit_diff"
+                                                        string="Diff."
+                                                    />
+                                                </group>
+                                                <group
+                                                    name="standard_price_2"
+                                                    string="Price Subtotal"
+                                                    colspan="1"
+                                                    col="2"
+                                                >
+                                                    <field
+                                                        name="standard_price_subtotal"
+                                                        string="Standard"
+                                                    />
+                                                    <field
+                                                        name="standard_price_subtotal_diff"
+                                                        string="Diff."
+                                                    />
+                                                </group>
+                                            </group>
+                                        </page>
+                                        <page name="note" string="Notes">
+                                            <field name="note" />
+                                        </page>
+                                    </notebook>
+                                </form>
+                            </field>
+                        </page>
+                        <page name="payment_term" string="Payment Term">
+                            <button
+                                name="%(create_employee_external_agreement_term_action)d"
+                                type="action"
+                                string="Add Payment Term"
+                                class="oe_highlight"
+                                icon="fa-plus"
+                                style="margin-right:4px"
+                                attrs="{'invisible':[('state','!=','draft')]}"
+                            />
+                            <button
+                                name="action_open_payment_terms"
+                                type="object"
+                                string="Payment Terms"
+                                class="oe_highlight"
+                                icon="fa-list"
+                            />
+                            <field name="payment_term_ids" />
+                        </page>
+                        <page name="accounting" string="Accounting Configuration">
+                            <group name="accounting_1" colspan="4" col="2">
+                                <field name="receivable_account_id" />
+                                <field name="journal_id" />
+                            </group>
+                            <group name="accounting_2" colspan="4" col="2">
+                                <field name="analytic_account_id" />
+                                <field name="analytic_group_id" />
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_action"
+            model="ir.actions.act_window"
+        >
+            <field name="name">Employee External Assignment Agreements</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee_external_assignment_agreement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="employee_external_assignment_agreement_menu"
+            name="Agreements"
+            action="employee_external_assignment_agreement_action"
+            groups="ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_viewer_group"
+            parent="ssi_employee_external_assignment.menu_external_assignment_root"
+            sequence="210"
+        />
+    </data>
+</odoo>

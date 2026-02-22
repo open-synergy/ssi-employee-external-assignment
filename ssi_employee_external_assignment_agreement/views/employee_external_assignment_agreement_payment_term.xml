@@ -1,0 +1,220 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+    Copyright 2025 PT. Simetri Sinergi Indonesia
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="0">
+    <data>
+        <record
+            id="employee_external_assignment_agreement_payment_term_view_search"
+            model="ir.ui.view"
+        >
+            <field
+                name="name"
+            >employee_external_assignment_agreement.payment_term - search</field>
+            <field
+                name="model"
+            >employee_external_assignment_agreement.payment_term</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_search"
+            />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <data>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_payment_term_view_tree"
+            model="ir.ui.view"
+        >
+            <field
+                name="name"
+            >employee_external_assignment_agreement.payment_term - tree</field>
+            <field
+                name="model"
+            >employee_external_assignment_agreement.payment_term</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_tree"
+            />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="agreement_id" />
+                        <field name="currency_id" invisible="1" />
+                        <field name="date_start" />
+                        <field name="date_end" />
+                        <field name="partner_id" widget="many2one_avatar" />
+                        <field
+                            name="contact_partner_id"
+                            widget="many2one_avatar"
+                            optional="hide"
+                        />
+                        <field name="pricelist_id" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_payment_term_view_form"
+            model="ir.ui.view"
+        >
+            <field
+                name="name"
+            >employee_external_assignment_agreement.payment_term - form</field>
+            <field
+                name="model"
+            >employee_external_assignment_agreement.payment_term</field>
+            <field name="mode">primary</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_form"
+            />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="agreement_id" />
+                        <field name="currency_id" invisible="0" />
+                    </xpath>
+                    <xpath expr="//group[@name='header_right']" position="inside">
+                        <field name="date_start" />
+                        <field name="date_end" />
+                    </xpath>
+                    <xpath expr="//page[1]" position="before">
+                        <page name="assignment" string="Included Assignments">
+                            <button
+                                name="action_load_external_assignment"
+                                type="object"
+                                string="External Assignments"
+                                class="oe_highlight"
+                                icon="fa-refresh"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                                style="margin-right:4px"
+                            />
+                            <button
+                                name="action_open_external_assignments"
+                                type="object"
+                                string="External Assignments"
+                                class="oe_highlight"
+                                icon="fa-list"
+                                attrs="{'invisible': [('external_assignment_ids', '=', False)]}"
+                                groups="ssi_employee_external_assignment.employee_external_assignment_viewer_group"
+                            />
+                            <field name="external_assignment_ids" />
+                            <field
+                                name="employee_ids"
+                                widget="many2many_tags"
+                                invisible="0"
+                            />
+                        </page>
+                        <page name="payslip" string="Payslips">
+                            <button
+                                name="action_reload_payslip"
+                                type="object"
+                                string="Payslips"
+                                class="oe_highlight"
+                                icon="fa-refresh"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            />
+                            <field name="payslip_ids" />
+                        </page>
+                        <page name="line" string="Payslip Lines">
+                            <button
+                                name="action_load_payslip_line"
+                                type="object"
+                                string="Payslip Lines"
+                                class="oe_highlight"
+                                icon="fa-refresh"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            />
+                            <field name="payslip_detail_ids" />
+                            <field name="rule_ids">
+                                <tree>
+                                    <field name="rule_id" />
+                                    <field name="currency_id" invisible="1" />
+                                    <field name="tax_ids" widget="many2many_tags" />
+                                    <field name="amount_subtotal" />
+                                    <field name="amount_tax" />
+                                    <field name="amount_total" />
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <field name="rule_id" />
+                                            <field name="product_id" />
+                                            <field
+                                                name="tax_ids"
+                                                widget="many2many_tags"
+                                            />
+                                            <field name="amount_subtotal" />
+                                            <field name="amount_tax" />
+                                            <field name="amount_total" />
+                                        </group>
+                                        <notebook>
+                                            <page string="Payslip Lines">
+                                                <field name="payslip_line_ids" />
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                        <page name="invoice" string="Invoice">
+                            <button
+                                name="action_create_invoice"
+                                type="object"
+                                string="Create Invoice"
+                                class="oe_highlight"
+                                icon="fa-plus"
+                                style="margin-right:4px"
+                                attrs="{'invisible': [('invoice_id', '!=', False)]}"
+                            />
+                            <button
+                                name="action_delete_invoice"
+                                type="object"
+                                string="Delete Invoice"
+                                class="oe_highlight"
+                                icon="fa-trash"
+                                attrs="{'invisible': [('invoice_id', '=', False)]}"
+                            />
+                            <group name="invoice_1" colspan="4" col="2">
+                                <field name="invoice_id" />
+                            </group>
+                        </page>
+                    </xpath>
+                    <xpath expr="//group[@name='footer_left']" position="inside">
+                        <field name="amount_untaxed_rule" string="Untaxed from Rules" />
+                        <field name="amount_tax" string="Tax" />
+                        <field name="amount_total" string="Total" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_payment_term_action"
+            model="ir.actions.act_window"
+        >
+            <field
+                name="name"
+            >Employee External Assignment Agreement Payment Terms</field>
+            <field name="type">ir.actions.act_window</field>
+            <field
+                name="res_model"
+            >employee_external_assignment_agreement.payment_term</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="employee_external_assignment_agreement_payment_term_menu"
+            name="Payment Terms"
+            action="employee_external_assignment_agreement_payment_term_action"
+            groups="ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_viewer_group"
+            parent="ssi_employee_external_assignment.menu_external_assignment_root"
+            sequence="220"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,111 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+     Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<record id="employee_external_assignment_type_view_form" model="ir.ui.view">
+  <field name="name">employee_external_assignment_type - form</field>
+  <field name="model">employee_external_assignment_type</field>
+  <field
+            name="inherit_id"
+            ref="ssi_employee_external_assignment.employee_external_assignment_type_view_form"
+        />
+  <field name="mode">extension</field>
+  <field name="arch" type="xml">
+    <data>
+      <xpath expr="//group[@name='employee_1']" position="after">
+        <group name="employee_2" col="2" colspan="4" string="Job Position">
+            <field name="job_selection_method" string="Selecton Method" />
+            <field
+                            name="job_ids"
+                            attrs="{'invisible':[('job_selection_method','!=','manual')]}"
+                            string="Jobs"
+                        />
+            <field
+                            name="job_domain"
+                            widget="domain"
+                            options="{'model': 'hr.job', 'in_dialog': True}"
+                            attrs="{'invisible':[('job_selection_method','!=','domain')]}"
+                            string="Domain"
+                        />
+            <field
+                            name="job_python_code"
+                            widget="ace"
+                            attrs="{'invisible':[('job_selection_method','!=','code')]}"
+                            string="Python Code"
+                        />
+        </group>
+        <group name="employee_3" col="2" colspan="4" string="Salary Rules">
+            <field name="salary_rule_selection_method" string="Selection Method" />
+            <field
+                            name="salary_rule_ids"
+                            attrs="{'invisible':[('salary_rule_selection_method','!=','manual')]}"
+                            string="Salary Rules"
+                        />
+            <field
+                            name="salary_rule_domain"
+                            widget="domain"
+                            options="{'model': 'salary_rule', 'in_dialog': True}"
+                            attrs="{'invisible':[('salary_rule_selection_method','!=','domain')]}"
+                            string="Domain"
+                        />
+            <field
+                            name="salary_rule_python_code"
+                            widget="ace"
+                            attrs="{'invisible':[('salary_rule_selection_method','!=','code')]}"
+                            string="Python Code"
+                        />
+        </group>
+      </xpath>
+      <xpath expr="//page[@name='employee']" position="after">
+        <page name="other_fee" string="Other Fee">
+            <group name="other_fee_category_group" col="2" colspan="4">
+                <field
+                                name="other_fee_category_selection_method"
+                                string="Selection Method"
+                            />
+                <field
+                                name="other_fee_category_ids"
+                                attrs="{'invisible':[('other_fee_category_selection_method','!=','manual')]}"
+                                string="Other Fee Categories"
+                            />
+                <field
+                                name="other_fee_category_domain"
+                                widget="domain"
+                                options="{'model': 'product.category', 'in_dialog': True}"
+                                attrs="{'invisible':[('other_fee_category_selection_method','!=','domain')]}"
+                                string="Domain"
+                            />
+                <field
+                                name="other_fee_category_python_code"
+                                widget="ace"
+                                attrs="{'invisible':[('other_fee_selection_method','!=','code')]}"
+                                string="Python Code"
+                            />
+            </group>
+            <group name="other_fee_group" col="2" colspan="4">
+                <field name="other_fee_selection_method" string="Selection Method" />
+                <field
+                                name="other_fee_ids"
+                                attrs="{'invisible':[('other_fee_selection_method','!=','manual')]}"
+                                string="Other Fee"
+                            />
+                <field
+                                name="other_fee_domain"
+                                widget="domain"
+                                options="{'model': 'product.product', 'in_dialog': True}"
+                                attrs="{'invisible':[('other_fee_selection_method','!=','domain')]}"
+                                string="Domain"
+                            />
+                <field
+                                name="other_fee_python_code"
+                                widget="ace"
+                                attrs="{'invisible':[('other_fee_selection_method','!=','code')]}"
+                                string="Python Code"
+                            />
+            </group>
+        </page>
+      </xpath>
+    </data>
+  </field>
+</record>
+</odoo>
