@@ -279,6 +279,11 @@ msgid "Date Start"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_employee_external_assignment__date
+msgid "Date of the employee external assignment."
+msgstr ""
+
+#. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__department_id
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
 msgid "Department"
@@ -362,6 +367,13 @@ msgid "Employees"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_employee_external_assignment__allowed_employee_ids
+msgid ""
+"Employees that are allowed to be selected based on the employee external "
+"assignment type configuration."
+msgstr ""
+
+#. module: ssi_employee_external_assignment
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment.employee_external_assignment_view_search
 msgid "End Date"
 msgstr ""
@@ -385,6 +397,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_base__external_assignment_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_public__external_assignment_ids
 msgid "External Assignments"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee__external_assignment_ids
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee_base__external_assignment_ids
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee_public__external_assignment_ids
+msgid "External assignments of the employee."
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -477,6 +496,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_employee_external_assignment__partner_location_id
+msgid "Location of the partner for the employee external assignment."
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -641,8 +665,22 @@ msgid "Partner Selection Method"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_employee_external_assignment__partner_id
+msgid ""
+"Partner of the employee external assignment. The available options are "
+"filtered based on the employee external assignment type configuration."
+msgstr ""
+
+#. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__partner_ids
 msgid "Partners"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_employee_external_assignment__allowed_partner_ids
+msgid ""
+"Partners that are allowed to be selected based on the employee external "
+"assignment type configuration."
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -770,6 +808,13 @@ msgstr ""
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__type_id
 msgid "Type"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_employee_external_assignment__type_id
+msgid ""
+"Type of the employee external assignment which will determine the allowed "
+"employees and partners."
 msgstr ""
 
 #. module: ssi_employee_external_assignment
