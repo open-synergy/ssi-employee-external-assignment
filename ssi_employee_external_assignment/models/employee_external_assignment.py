@@ -106,6 +106,8 @@ class EmployeeExternalAssignment(models.Model):
         required=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
+        help="Type of the employee external assignment which will "
+        "determine the allowed employees and partners.",
     )
     date = fields.Date(
         string="Date",
@@ -113,6 +115,7 @@ class EmployeeExternalAssignment(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
         default=lambda r: r._default_date(),
+        help="Date of the employee external assignment.",
     )
     allowed_employee_ids = fields.Many2many(
         comodel_name="hr.employee",
@@ -120,6 +123,8 @@ class EmployeeExternalAssignment(models.Model):
         compute="_compute_allowed_employee_ids",
         store=False,
         compute_sudo=True,
+        help="Employees that are allowed to be selected based on the "
+        "employee external assignment type configuration.",
     )
     allowed_partner_ids = fields.Many2many(
         comodel_name="res.partner",
@@ -127,6 +132,8 @@ class EmployeeExternalAssignment(models.Model):
         compute="_compute_allowed_partner_ids",
         store=False,
         compute_sudo=True,
+        help="Partners that are allowed to be selected based on the "
+        "employee external assignment type configuration.",
     )
     partner_id = fields.Many2one(
         comodel_name="res.partner",
@@ -134,6 +141,9 @@ class EmployeeExternalAssignment(models.Model):
         required=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
+        help="Partner of the employee external assignment. The available "
+        "options are filtered based on the employee external assignment "
+        "type configuration.",
     )
     partner_location_id = fields.Many2one(
         comodel_name="res.partner",
@@ -142,6 +152,7 @@ class EmployeeExternalAssignment(models.Model):
         required=False,
         readonly=True,
         states={"draft": [("readonly", False)]},
+        help="Location of the partner for the employee external assignment.",
     )
 
     def _default_date(self):

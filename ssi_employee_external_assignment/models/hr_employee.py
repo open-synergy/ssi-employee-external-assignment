@@ -13,6 +13,7 @@ class HrEmployeeBase(models.AbstractModel):
         string="External Assignments",
         comodel_name="employee_external_assignment",
         inverse_name="employee_id",
+        help="External assignments of the employee.",
     )
     external_assignment_id = fields.Many2one(
         string="Current External Assignment",
