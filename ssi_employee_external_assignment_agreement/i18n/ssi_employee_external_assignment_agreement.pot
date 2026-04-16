@@ -873,6 +873,16 @@ msgid "Main Attachment"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment__management_fee_percent
+msgid "Management Fee (%)"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment__management_fee_percent
+msgid "Management fee percentage for this external assignment."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields.selection,name:ssi_employee_external_assignment_agreement.selection__employee_external_assignment_type__job_selection_method__manual
 #: model:ir.model.fields.selection,name:ssi_employee_external_assignment_agreement.selection__employee_external_assignment_type__other_fee_category_selection_method__manual
 #: model:ir.model.fields.selection,name:ssi_employee_external_assignment_agreement.selection__employee_external_assignment_type__other_fee_selection_method__manual
