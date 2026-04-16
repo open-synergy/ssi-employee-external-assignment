@@ -20,3 +20,9 @@ class EmployeeExternalAssignment(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
+    management_fee_percent = fields.Float(
+        string="Management Fee (%)",
+        help="Management fee percentage for this external assignment.",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
