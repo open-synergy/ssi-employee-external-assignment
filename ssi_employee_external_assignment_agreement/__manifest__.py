@@ -4,7 +4,7 @@
 
 {
     "name": "Employee External Assignment Agreement",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "author": "OpenSynergy Indonesia, PT. Simetri Sinergi Indonesia",
     "website": "https://github.com/open-synergy/employee-external-assignment",
     "license": "AGPL-3",
