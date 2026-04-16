@@ -393,6 +393,20 @@ msgid "External Assignment"
 msgstr ""
 
 #. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee__external_assignment_location_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_base__external_assignment_location_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_public__external_assignment_location_id
+msgid "External Assignment Location"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee__external_assignment_partner_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_base__external_assignment_partner_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_public__external_assignment_partner_id
+msgid "External Assignment Partner"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee__external_assignment_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_base__external_assignment_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_hr_employee_public__external_assignment_ids
@@ -496,6 +510,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee__external_assignment_location_id
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee_base__external_assignment_location_id
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee_public__external_assignment_location_id
+msgid "Location of the current active external assignment."
 msgstr ""
 
 #. module: ssi_employee_external_assignment
@@ -662,6 +683,13 @@ msgstr ""
 #. module: ssi_employee_external_assignment
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment.field_employee_external_assignment_type__partner_selection_method
 msgid "Partner Selection Method"
+msgstr ""
+
+#. module: ssi_employee_external_assignment
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee__external_assignment_partner_id
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee_base__external_assignment_partner_id
+#: model:ir.model.fields,help:ssi_employee_external_assignment.field_hr_employee_public__external_assignment_partner_id
+msgid "Partner of the current active external assignment."
 msgstr ""
 
 #. module: ssi_employee_external_assignment
