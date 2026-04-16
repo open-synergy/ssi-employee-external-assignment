@@ -13,6 +13,8 @@
                     <page name="external_assignment" string="External Assignment">
                         <group name="external_assignment_group" colspan="4" col="2">
                             <field name="external_assignment_id" />
+                            <field name="external_assignment_partner_id" />
+                            <field name="external_assignment_location_id" />
                         </group>
                         <field
                             name="external_assignment_ids"

@@ -23,6 +23,20 @@ class HrEmployeeBase(models.AbstractModel):
         compute_sudo=True,
         help="The current active external assignment, if any.",
     )
+    external_assignment_partner_id = fields.Many2one(
+        string="External Assignment Partner",
+        comodel_name="res.partner",
+        related="external_assignment_id.partner_id",
+        store=True,
+        help="Partner of the current active external assignment.",
+    )
+    external_assignment_location_id = fields.Many2one(
+        string="External Assignment Location",
+        comodel_name="res.partner",
+        related="external_assignment_id.partner_location_id",
+        store=True,
+        help="Location of the current active external assignment.",
+    )
 
     @api.depends("external_assignment_ids.state", "external_assignment_ids")
     def _compute_external_assignment_id(self):
