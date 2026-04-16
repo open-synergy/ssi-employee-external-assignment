@@ -89,7 +89,7 @@
     <!-- D.1: Menu item (placeholder parent) -->
     <menuitem
             id="employee_external_assignment_type_menu"
-            name="Classes"
+            name="External Asssignment Types"
             action="employee_external_assignment_type_action"
             groups="employee_external_assignment_type_configurator"
             parent="ssi_hr.menu_career_configuration"
