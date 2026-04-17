@@ -8,6 +8,7 @@ from . import employee_external_assignment_agreement_payment_term
 from . import employee_external_assignment_agreement_payment_term_rule
 from . import employee_external_assignment_agreement_detail
 from . import employee_external_assignment_agreement_other_fee
+from . import employee_external_assignment_agreement_variable_fee
 from . import employee_external_assignment
 from . import hr_payslip
 from . import hr_payslip_line
