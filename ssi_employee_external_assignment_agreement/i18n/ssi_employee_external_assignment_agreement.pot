@@ -683,6 +683,11 @@ msgid "Finish Expired Agreemew"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__ref1
+msgid "First reference for the external assignment agreement."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__fixed_amount
 msgid "Fixed Amount"
 msgstr ""
@@ -1263,6 +1268,16 @@ msgid "Receivable Account"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__ref1
+msgid "Reference 1"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__ref2
+msgid "Reference 2"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__reject_ok
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__reject_ok
 msgid ""
@@ -1359,6 +1374,11 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_form
 msgid "Sarndard"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__ref2
+msgid "Second reference for the external assignment agreement."
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
