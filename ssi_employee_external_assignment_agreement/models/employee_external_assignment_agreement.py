@@ -112,6 +112,12 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
+    management_fee_percent = fields.Float(
+        string="Management Fee (%)",
+        help="Management fee percentage for this agreement.",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
     detail_ids = fields.One2many(
         comodel_name="employee_external_assignment_agreement.detail",
         inverse_name="agreement_id",
@@ -348,7 +354,7 @@ class EmployeeExternalAssignmentAgreement(models.Model):
 
     @api.onchange("type_id")
     def onchange_partner_id(self):
-        self.partner_id = False
+        self.partner_id = False  # pylint: disable=W0201
 
     @api.model
     def _default_date(self):
@@ -387,7 +393,7 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         if self.analytic_account_id:
             self._update_analytic_account()
         else:
-            AA = self.env["account.analytic.account"]
+            AA = self.env["account.analytic.account"]  # pylint: disable=C0103
             aa = AA.create(self._prepare_analytic_account())
             self.write(
                 {
@@ -405,7 +411,7 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         return {
             "name": self.title,
             "code": self.name,
-            "partner_id": self.partner_id.id,
+            "partner_id": self.partner_id.id,  # pylint: disable=E1101
             "group_id": group_id,
             "date_start": self.date_start,
             "date_end": self.date_end,
@@ -417,7 +423,7 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         return {
             "name": self.title,
             "code": self.name,
-            "partner_id": self.partner_id.id,
+            "partner_id": self.partner_id.id,  # pylint: disable=E1101
             "group_id": group_id,
             "date_start": self.date_start,
             "date_end": self.date_end,

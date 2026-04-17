@@ -6,7 +6,7 @@
 from odoo import fields, models
 
 
-class EmployeeExternalAssignment(models.Model):
+class EmployeeExternalAssignment(models.Model):  # pylint: disable=R0903
     _name = "employee_external_assignment"
     _inherit = [
         "employee_external_assignment",
@@ -17,12 +17,6 @@ class EmployeeExternalAssignment(models.Model):
         string="# Agreement",
         help="The agreement associated with this external assignment.",
         ondelete="set null",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
-    )
-    management_fee_percent = fields.Float(
-        string="Management Fee (%)",
-        help="Management fee percentage for this external assignment.",
         readonly=True,
         states={"draft": [("readonly", False)]},
     )

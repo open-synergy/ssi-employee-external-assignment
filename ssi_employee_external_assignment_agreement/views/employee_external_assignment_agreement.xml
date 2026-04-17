@@ -111,6 +111,7 @@
                             name="partner_location_id"
                             domain="['|',('id','=',partner_id),'&amp;',('parent_id','=',partner_id),('type','in',['other','private','branch'])]"
                         />
+                        <field name="management_fee_percent" />
                     </xpath>
                     <xpath expr="//group[@name='header_right']" position="inside">
                         <field name="date" />

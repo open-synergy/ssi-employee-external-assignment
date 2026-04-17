@@ -36,7 +36,6 @@
                         position="before"
                     >
                         <field name="agreement_id" />
-                        <field name="management_fee_percent" />
                     </xpath>
                 </data>
             </field>

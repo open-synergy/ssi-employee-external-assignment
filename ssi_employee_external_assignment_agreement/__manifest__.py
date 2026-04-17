@@ -6,7 +6,7 @@
     "name": "Employee External Assignment Agreement",
     "version": "14.0.1.2.0",
     "author": "OpenSynergy Indonesia, PT. Simetri Sinergi Indonesia",
-    "website": "https://github.com/open-synergy/employee-external-assignment",
+    "website": "https://simetri-sinergi.id",
     "license": "AGPL-3",
     "depends": [
         "ssi_transaction_mixin",
@@ -48,6 +48,7 @@
         "views/employee_external_assignment_agreement.xml",
         "views/employee_external_assignment_agreement_payment_term.xml",
         "views/employee_external_assignment.xml",
+        "views/hr_payslip.xml",
     ],
     "demo": [],
     "application": False,
