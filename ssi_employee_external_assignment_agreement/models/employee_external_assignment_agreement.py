@@ -95,6 +95,18 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
+    ref1 = fields.Char(
+        string="Reference 1",
+        help="First reference for the external assignment agreement.",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
+    ref2 = fields.Char(
+        string="Reference 2",
+        help="Second reference for the external assignment agreement.",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
     allowed_partner_ids = fields.Many2many(
         comodel_name="res.partner",
         string="Allowed Partners",
