@@ -194,6 +194,14 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
+    variable_fee_ids = fields.One2many(
+        comodel_name="employee_external_assignment_agreement.variable_fee",
+        inverse_name="agreement_id",
+        string="Variable Fees",
+        help="Variable fees associated with this agreement.",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
     assignment_ids = fields.One2many(
         comodel_name="employee_external_assignment",
         inverse_name="agreement_id",

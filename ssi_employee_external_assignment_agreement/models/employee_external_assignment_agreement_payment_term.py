@@ -266,6 +266,30 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
         )
         for rule in self.rule_ids:
             rule._create_invoice_line()
+        for fee in self.agreement_id.other_fee_ids:
+            self._create_fee_invoice_line(invoice, fee)
+        for fee in self.agreement_id.variable_fee_ids:
+            self._create_fee_invoice_line(invoice, fee)
+
+    def _create_fee_invoice_line(self, invoice, fee):
+        self.ensure_one()
+        data = {
+            "move_id": invoice.id,
+            "product_id": fee.product_id.id,
+            "quantity": getattr(fee, "uom_quantity", 1.0) or 1.0,
+            "account_id": fee.product_id.property_account_income_id.id,
+            "price_unit": fee.price_unit,
+            "tax_ids": [(6, 0, fee.tax_ids.ids)],
+            "name": fee.name or fee.product_id.name,
+        }
+        (
+            self.env["account.move.line"]
+            .with_context(check_move_validity=False)
+            .create(data)
+        )
+        invoice.with_context(
+            check_move_validity=False
+        )._move_autocomplete_invoice_lines_values()
 
     def _delete_invoice(self):
         self.ensure_one()
