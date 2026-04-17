@@ -20,8 +20,7 @@ disable=
     W0613,                 ; unused-argument (mis. supress_error)
     W8113,
     W0212,
-    W8138,
-    R0903                 ; too-few-public-methods (wajar untuk AbstractModel Odoo)
+    W8138
 [REPORTS]
 msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
 output-format=colorized
