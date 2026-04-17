@@ -12,6 +12,7 @@
     "depends": [
         "ssi_employee_external_assignment",
         "ssi_operating_unit_mixin",
+        "ssi_hr_employee_operating_unit",
     ],
     "data": [
         "security/res_group/res_group_data.xml",
