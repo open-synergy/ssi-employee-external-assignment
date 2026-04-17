@@ -6,7 +6,7 @@
     "name": "Employee External Assignment",
     "version": "14.0.1.3.0",
     "author": "OpenSynergy Indonesia, PT. Simetri Sinergi Indonesia",
-    "website": "https://github.com/open-synergy/employee-external-assignment",
+    "website": "https://simetri-sinergi.id",
     "license": "AGPL-3",
     "depends": [
         "ssi_master_data_mixin",
