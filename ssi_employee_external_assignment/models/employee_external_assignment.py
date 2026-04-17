@@ -122,7 +122,7 @@ class EmployeeExternalAssignment(models.Model):
         string="Allowed Employees",
         compute="_compute_allowed_employee_ids",
         store=False,
-        compute_sudo=True,
+        compute_sudo=False,
         help="Employees that are allowed to be selected based on the "
         "employee external assignment type configuration.",
     )
@@ -131,7 +131,7 @@ class EmployeeExternalAssignment(models.Model):
         string="Allowed Partners",
         compute="_compute_allowed_partner_ids",
         store=False,
-        compute_sudo=True,
+        compute_sudo=False,
         help="Partners that are allowed to be selected based on the "
         "employee external assignment type configuration.",
     )
@@ -168,7 +168,7 @@ class EmployeeExternalAssignment(models.Model):
 
     @api.onchange("type_id")
     def onchange_employee_id(self):
-        self.employee_id = False
+        self.employee_id = False  # pylint: disable=attribute-defined-outside-init
 
     @api.depends("type_id")
     def _compute_allowed_partner_ids(self):
