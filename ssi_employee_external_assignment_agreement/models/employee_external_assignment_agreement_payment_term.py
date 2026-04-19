@@ -217,7 +217,13 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "employee_external_assignment",
             "view_mode": "tree,form",
-            "domain": [("id", "in", self.external_assignment_ids.ids)],
+            "domain": [
+                (
+                    "id",
+                    "in",
+                    self.external_assignment_ids.ids,  # pylint: disable=no-member
+                )
+            ],
         }
 
     def action_create_invoice(self):
@@ -265,7 +271,7 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
             }
         )
         for rule in self.rule_ids:
-            rule._create_invoice_line()
+            rule._create_invoice_line()  # pylint: disable=no-member
         for fee in self.agreement_id.other_fee_ids:
             self._create_fee_invoice_line(invoice, fee)
         for fee in self.agreement_id.variable_fee_ids:
@@ -294,8 +300,8 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
     def _delete_invoice(self):
         self.ensure_one()
         invoice = self.invoice_id
-        # TODO: Hapus juga relasi di detail_ids jika ada
-        self.rule_ids.write({"invoice_line_id": False})
+        # TODO: Hapus juga relasi di detail_ids jika ada  # pylint: disable=fixme
+        self.rule_ids.write({"invoice_line_id": False})  # pylint: disable=no-member
         self.write(
             {
                 "invoice_id": False,
@@ -323,9 +329,9 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
             "currency_id": self.currency_id.id,
             "invoice_user_id": False,
             "invoice_date": date.today(),
-            "invoice_date_due": date.today(),  # TODO
+            "invoice_date_due": date.today(),  # TODO  # pylint: disable=fixme
             "invoice_origin": agreement.name,
-            "invoice_payment_term_id": False,  # TODO
+            "invoice_payment_term_id": False,  # TODO  # pylint: disable=fixme
             "payment_reference": agreement.title,
         }
 
@@ -336,7 +342,9 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
         # Cari semua external agreement yang:
         # 1. Date Start dan Date End berada di antara date_start dan date_end dari agreement
         # 2. Partner sama dengan partner dari agreement
-        ExternalAssignment = self.env["employee_external_assignment"]
+        ExternalAssignment = self.env[  # pylint: disable=invalid-name
+            "employee_external_assignment"
+        ]
         agreement = self.agreement_id
         external_assignment_domain = [
             ("date_start", ">=", agreement.date_start),
@@ -352,7 +360,7 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
         # Kosongkan dulu payslip_detail_ids
         self.payslip_detail_ids = [(5, 0, 0)]
         # Cari semua payslip line yang terkait dengan payslip yang ada di payslip_ids
-        PayslipLine = self.env["hr.payslip_line"]
+        PayslipLine = self.env["hr.payslip_line"]  # pylint: disable=invalid-name
         # Loop compensation term pada detail agreement
         for detail in agreement.detail_ids:
             for compensation in detail.compensation_term_ids:
@@ -374,6 +382,8 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
             rule_vals = {
                 "payment_term_id": self.id,
                 "rule_id": detail.id,
+                "product_id": detail.external_assignment_agreement_product_id.id,
+                "tax_ids": [(6, 0, detail.external_assignment_agreement_tax_ids.ids)],
             }
             self.env["employee_external_assignment_agreement.payment_term.rule"].create(
                 rule_vals
