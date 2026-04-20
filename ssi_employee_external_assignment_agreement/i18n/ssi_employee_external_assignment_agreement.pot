@@ -45,8 +45,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_needaction
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_needaction
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_needaction
 msgid "Action Needed"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__active
+msgid "Active"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -69,24 +75,28 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_ids
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_ids
 msgid "Activities"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_exception_decoration
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_exception_decoration
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_exception_decoration
 msgid "Activity Exception Decoration"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_state
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_state
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_state
 msgid "Activity State"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_type_icon
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_type_icon
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_type_icon
 msgid "Activity Type Icon"
 msgstr ""
@@ -100,6 +110,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__agreement_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_hr_payslip__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_hr_payslip_line__agreement_id
 msgid "Agreement"
@@ -113,6 +124,11 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__detail_id
 msgid "Agreement Detail"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.ui.menu,name:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_input_type_menu
+msgid "Agreement Input Types"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -215,6 +231,11 @@ msgid "Allowed Usages"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__amount
+msgid "Amount"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__analytic_account_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__analytic_account_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_variable_fee__analytic_account_id
@@ -266,6 +287,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_attachment_count
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_attachment_count
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
@@ -350,6 +372,11 @@ msgid ""
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__code
+msgid "Code"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__company_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__company_id
 #: model:res.groups,name:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_company_group
@@ -430,6 +457,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__create_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__create_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__create_uid
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__create_uid
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__create_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__create_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__create_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term_rule__create_uid
@@ -442,6 +471,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__create_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__create_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__create_date
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__create_date
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__create_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__create_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__create_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term_rule__create_date
@@ -520,6 +551,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__display_name
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__display_name
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term_rule__display_name
@@ -604,6 +637,16 @@ msgid "Employee External Assignment Agreement - Variable Fee"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model,name:ssi_employee_external_assignment_agreement.model_employee_external_assignment_agreement_input
+msgid "Employee External Assignment Agreement Input"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model,name:ssi_employee_external_assignment_agreement.model_employee_external_assignment_agreement_input_type
+msgid "Employee External Assignment Agreement Input Type"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_hr_payslip__agreement_payment_term_id
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_hr_payslip_line__agreement_payment_term_id
 msgid ""
@@ -646,6 +689,16 @@ msgstr ""
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__employee_ids
 msgid ""
 "Employees associated with the external assignments in this payment term."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:res.groups,name:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_input_type_configurator_group
+msgid "External Assignment Agreement Input Type"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.actions.act_window,name:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_input_type_action
+msgid "External Assignment Agreement Input Types"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -694,24 +747,28 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_follower_ids
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_follower_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_follower_ids
 msgid "Followers"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_channel_ids
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_channel_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_channel_ids
 msgid "Followers (Channels)"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_partner_ids
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_partner_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_type_icon
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_type_icon
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
@@ -722,6 +779,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term_rule__id
@@ -735,12 +794,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_exception_icon
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_exception_icon
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_exception_icon
 msgid "Icon"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_exception_icon
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_exception_icon
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_exception_icon
 msgid "Icon to indicate an exception activity."
 msgstr ""
@@ -748,6 +809,8 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_needaction
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_unread
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_needaction
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_unread
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_needaction
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_unread
 msgid "If checked, new messages require your attention."
@@ -755,6 +818,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_has_error
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_has_error
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
@@ -770,6 +834,26 @@ msgid "Indicates if the amount is fixed or based on a percentage."
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__input_type_id
+msgid "Input Type"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__input_line_ids
+msgid "Input Types"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__input_line_ids
+msgid "Input values associated with this agreement."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_form
+msgid "Inputs"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__invoice_id
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_payment_term_view_form
 msgid "Invoice"
@@ -782,6 +866,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_is_follower
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_is_follower
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_is_follower
 msgid "Is Follower"
 msgstr ""
@@ -841,6 +926,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term____last_update
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input____last_update
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term_rule____last_update
@@ -857,6 +944,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__write_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__write_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__write_uid
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__write_uid
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__write_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__write_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__write_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term_rule__write_uid
@@ -869,6 +958,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__write_date
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__write_date
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term_rule__write_date
@@ -893,6 +984,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_main_attachment_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_main_attachment_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_main_attachment_id
 msgid "Main Attachment"
 msgstr ""
@@ -925,6 +1017,28 @@ msgid ""
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__active
+msgid ""
+"Master data status\n"
+"\n"
+"* Inactive data can not be selected when creating new transaction\n"
+"* Transaction with inactive master data can still be viewed\n"
+"* Set master data as inactive if master data no longger needed,\n"
+"but master data already used on transaction"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__code
+msgid ""
+"Master data unique identifier.\n"
+"\n"
+"* Fill with '/' if You do not need unique identifier\n"
+"* Click 'Generate Code' button to automatically assign code.\n"
+"  Sequence template mush be set to perform this action\n"
+"  Only master data with '/' code will be assign automatic code"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__maximum_amount
 msgid "Maximum Amount"
 msgstr ""
@@ -936,12 +1050,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_has_error
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_has_error
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_has_error
 msgid "Message Delivery error"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_ids
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_ids
 msgid "Messages"
 msgstr ""
@@ -958,8 +1074,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__my_activity_date_deadline
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__my_activity_date_deadline
 msgid "My Activity Deadline"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__name
+msgid "Name"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -970,18 +1092,21 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_date_deadline
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_date_deadline
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_date_deadline
 msgid "Next Activity Deadline"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_summary
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_summary
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_summary
 msgid "Next Activity Summary"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_type_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_type_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_type_id
 msgid "Next Activity Type"
 msgstr ""
@@ -994,6 +1119,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__note
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__note
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__note
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__note
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_variable_fee__note
@@ -1007,6 +1133,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_needaction_counter
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_needaction_counter
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_needaction_counter
 msgid "Number of Actions"
 msgstr ""
@@ -1030,24 +1157,28 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_has_error_counter
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_has_error_counter
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_has_error_counter
 msgid "Number of errors"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_needaction_counter
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_needaction_counter
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_has_error_counter
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_has_error_counter
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_unread_counter
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_unread_counter
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_unread_counter
 msgid "Number of unread messages"
 msgstr ""
@@ -1300,6 +1431,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_user_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_user_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_user_id
 msgid "Responsible User"
 msgstr ""
@@ -1453,6 +1585,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_state
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_state
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_state
 msgid ""
 "Status based on activities\n"
@@ -1561,6 +1694,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__activity_exception_decoration
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__activity_exception_decoration
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr ""
@@ -1573,12 +1707,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_unread
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_unread
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_unread
 msgid "Unread Messages"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__message_unread_counter
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__message_unread_counter
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr ""
@@ -1672,12 +1808,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__website_message_ids
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__website_message_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__website_message_ids
 msgid "Website Messages"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__website_message_ids
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__website_message_ids
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__website_message_ids
 msgid "Website communication history"
 msgstr ""
