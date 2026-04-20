@@ -348,6 +348,9 @@
                                 </form>
                             </field>
                         </page>
+                        <page name="input" string="Inputs">
+                            <field name="input_line_ids" />
+                        </page>
                         <page name="payment_term" string="Payment Term">
                             <button
                                 name="%(create_employee_external_agreement_term_action)d"

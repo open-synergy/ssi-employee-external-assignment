@@ -1,0 +1,79 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+    Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record
+        id="employee_external_assignment_agreement_input_type_view_search"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        >employee_external_assignment_agreement_input_type - search</field>
+        <field name="model">employee_external_assignment_agreement_input_type</field>
+        <field
+            name="inherit_id"
+            ref="ssi_master_data_mixin.mixin_master_data_view_search"
+        />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data />
+        </field>
+    </record>
+
+    <record
+        id="employee_external_assignment_agreement_input_type_view_tree"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        >employee_external_assignment_agreement_input_type - tree</field>
+        <field name="model">employee_external_assignment_agreement_input_type</field>
+        <field
+            name="inherit_id"
+            ref="ssi_master_data_mixin.mixin_master_data_view_tree"
+        />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data />
+        </field>
+    </record>
+
+    <record
+        id="employee_external_assignment_agreement_input_type_view_form"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        >employee_external_assignment_agreement_input_type - form</field>
+        <field name="model">employee_external_assignment_agreement_input_type</field>
+        <field
+            name="inherit_id"
+            ref="ssi_master_data_mixin.mixin_master_data_view_form"
+        />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data />
+        </field>
+    </record>
+
+    <record
+        id="employee_external_assignment_agreement_input_type_action"
+        model="ir.actions.act_window"
+    >
+        <field name="name">External Assignment Agreement Input Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field
+            name="res_model"
+        >employee_external_assignment_agreement_input_type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="employee_external_assignment_agreement_input_type_menu"
+        name="Agreement Input Types"
+        parent="ssi_employee_external_assignment.menu_external_assignment_config"
+        groups="ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_input_type_configurator_group"
+        action="employee_external_assignment_agreement_input_type_action"
+        sequence="25"
+    />
+</odoo>
