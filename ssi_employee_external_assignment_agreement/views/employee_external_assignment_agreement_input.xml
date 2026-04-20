@@ -1,0 +1,18 @@
+<!-- Copyright 2025 OpenSynergy Indonesia
+    Copyright 2025 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record
+        id="employee_external_assignment_agreement_input_view_tree"
+        model="ir.ui.view"
+    >
+        <field name="name">employee.external.assignment.agreement.input.tree</field>
+        <field name="model">employee_external_assignment_agreement_input</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="input_type_id" />
+                <field name="amount" />
+            </tree>
+        </field>
+    </record>
+</odoo>

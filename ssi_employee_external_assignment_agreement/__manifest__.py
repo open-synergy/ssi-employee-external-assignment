@@ -46,6 +46,8 @@
         "wizards/create_employee_external_agreement_term.xml",
         "views/hr_salary_rule.xml",
         "views/employee_external_assignment_type.xml",
+        "views/employee_external_assignment_agreement_input_type.xml",
+        "views/employee_external_assignment_agreement_input.xml",
         "views/employee_external_assignment_agreement.xml",
         "views/employee_external_assignment_agreement_payment_term.xml",
         "views/employee_external_assignment.xml",

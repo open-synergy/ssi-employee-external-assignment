@@ -220,6 +220,14 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
+    input_line_ids = fields.One2many(
+        comodel_name="employee_external_assignment_agreement_input",
+        inverse_name="agreement_id",
+        string="Input Types",
+        help="Input values associated with this agreement.",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
     assignment_ids = fields.One2many(
         comodel_name="employee_external_assignment",
         inverse_name="agreement_id",
