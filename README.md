@@ -21,10 +21,10 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[ssi_employee_external_assignment](ssi_employee_external_assignment/) | 14.0.1.4.1 |  | Employee External Assignment
-[ssi_employee_external_assignment_agreement](ssi_employee_external_assignment_agreement/) | 14.0.2.1.0 |  | Employee External Assignment Agreement
-[ssi_employee_external_assignment_agreement_operating_unit](ssi_employee_external_assignment_agreement_operating_unit/) | 14.0.1.0.1 |  | Employee External Assignment Agreement + Operating Unit
-[ssi_employee_external_assignment_operating_unit](ssi_employee_external_assignment_operating_unit/) | 14.0.1.1.1 |  | Employee External Assignment + Operating Unit
+[ssi_employee_external_assignment](ssi_employee_external_assignment/) | 14.0.1.5.0 |  | Employee External Assignment
+[ssi_employee_external_assignment_agreement](ssi_employee_external_assignment_agreement/) | 14.0.2.2.0 |  | Employee External Assignment Agreement
+[ssi_employee_external_assignment_agreement_operating_unit](ssi_employee_external_assignment_agreement_operating_unit/) | 14.0.1.1.0 |  | Employee External Assignment Agreement + Operating Unit
+[ssi_employee_external_assignment_operating_unit](ssi_employee_external_assignment_operating_unit/) | 14.0.1.2.0 |  | Employee External Assignment + Operating Unit
 
 [//]: # (end addons)
 

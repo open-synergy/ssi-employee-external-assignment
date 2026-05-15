@@ -4,7 +4,7 @@
 
 {
     "name": "Employee External Assignment",
-    "version": "14.0.1.4.1",
+    "version": "14.0.1.5.0",
     "author": "OpenSynergy Indonesia, PT. Simetri Sinergi Indonesia",
     "website": "https://simetri-sinergi.id",
     "license": "AGPL-3",
