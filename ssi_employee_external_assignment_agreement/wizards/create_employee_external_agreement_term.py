@@ -42,10 +42,14 @@ class CreateEmployeeExternalAgreementTerm(models.TransientModel):
             # date_end = date_start + relativedelta(months=1, days=-1)
             # raise UserError("%s" % date_end)
             self.env["employee_external_assignment_agreement.payment_term"].create(
-                {
-                    "agreement_id": agreement.id,
-                    "date_start": date_start,
-                    "date_end": date_end,
-                }
+                self._prepare_payment_term_vals(date_start, date_end)
             )
             date_start = date_end + relativedelta(days=1)
+
+    def _prepare_payment_term_vals(self, date_start, date_end):
+        self.ensure_one()
+        return {
+            "agreement_id": self.agreement_id.id,
+            "date_start": date_start,
+            "date_end": date_end,
+        }
