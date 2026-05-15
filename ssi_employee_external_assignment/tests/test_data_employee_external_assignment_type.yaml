@@ -1,0 +1,71 @@
+scenarios:
+  - name: "Employee External Assignment Type - Create and update master data"
+    steps:
+      - step: "Create assignment type with domain method"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test Assignment Type EEA"
+          code: "TEAT001"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+
+      - step: "Assert type created"
+        action: "assert"
+        target: "assignment_type"
+        asserts:
+          id:
+            type: "value"
+            operator: "is_truthy"
+          name:
+            type: "value"
+            expected: "Test Assignment Type EEA"
+          employee_selection_method:
+            type: "value"
+            expected: "domain"
+
+      - step: "Update type name"
+        action: "write"
+        target: "assignment_type"
+        values:
+          name: "Updated Assignment Type EEA"
+
+      - step: "Assert updated name"
+        action: "assert"
+        target: "assignment_type"
+        asserts:
+          name:
+            type: "value"
+            expected: "Updated Assignment Type EEA"
+
+  - name: "Employee External Assignment Type - Manual employee selection"
+    steps:
+      - step: "Create employee"
+        action: "create"
+        model: "hr.employee"
+        save_as: "employee"
+        values:
+          name: "Test Employee For Type"
+
+      - step: "Create assignment type with manual method"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type_manual"
+        values:
+          name: "Test Manual Type EEA"
+          code: "TMAT001"
+          employee_selection_method: "manual"
+          employee_ids:
+            - "EVAL: registry['employee'].id"
+
+      - step: "Assert manual type created"
+        action: "assert"
+        target: "assignment_type_manual"
+        asserts:
+          id:
+            type: "value"
+            operator: "is_truthy"
+          employee_selection_method:
+            type: "value"
+            expected: "manual"

@@ -1,0 +1,120 @@
+scenarios:
+  - name: "Employee External Assignment with Operating Unit - Create and verify"
+    steps:
+      - step: "Search for existing operating unit"
+        action: "search"
+        model: "operating.unit"
+        domain: []
+        save_as: "operating_unit"
+        limit: 1
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEA OU Type"
+          code: "TEAT-OU"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+
+      - step: "Create employee with operating unit"
+        action: "create"
+        model: "hr.employee"
+        save_as: "employee"
+        values:
+          name: "Test EEA OU Employee"
+          operating_unit_id: "EVAL: registry['operating_unit'].id"
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test EEA OU Partner"
+
+      - step: "Create assignment with operating unit"
+        action: "create"
+        model: "employee_external_assignment"
+        save_as: "assignment"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          employee_id: "EVAL: registry['employee'].id"
+          partner_id: "EVAL: registry['partner'].id"
+          operating_unit_id: "EVAL: registry['operating_unit'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert assignment created with operating unit"
+        action: "assert"
+        target: "assignment"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+          operating_unit_id:
+            type: "value"
+            operator: "is_truthy"
+
+  - name: "Employee External Assignment OU - Allowed employees filtered by OU"
+    steps:
+      - step: "Search for existing operating unit"
+        action: "search"
+        model: "operating.unit"
+        domain: []
+        save_as: "operating_unit"
+        limit: 1
+
+      - step: "Create assignment type with manual employee selection"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEA OU Manual Type"
+          code: "TEAT-OM"
+          employee_selection_method: "manual"
+          employee_ids: []
+
+      - step: "Create employee with operating unit"
+        action: "create"
+        model: "hr.employee"
+        save_as: "employee"
+        values:
+          name: "Test EEA OU Filtered Employee"
+          operating_unit_id: "EVAL: registry['operating_unit'].id"
+
+      - step: "Add employee to type"
+        action: "write"
+        target: "assignment_type"
+        values:
+          employee_ids:
+            - "EVAL: registry['employee'].id"
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test EEA OU Filtered Partner"
+
+      - step: "Create assignment with operating unit - triggers compute"
+        action: "create"
+        model: "employee_external_assignment"
+        save_as: "assignment"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          employee_id: "EVAL: registry['employee'].id"
+          partner_id: "EVAL: registry['partner'].id"
+          operating_unit_id: "EVAL: registry['operating_unit'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert assignment created"
+        action: "assert"
+        target: "assignment"
+        asserts:
+          id:
+            type: "value"
+            operator: "is_truthy"

@@ -1,0 +1,197 @@
+scenarios:
+  - name: "Employee External Assignment - Full workflow: draft to done"
+    steps:
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEA Type Full"
+          code: "TEAT-FW"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+
+      - step: "Create employee"
+        action: "create"
+        model: "hr.employee"
+        save_as: "employee"
+        values:
+          name: "Test EEA Employee Full"
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test EEA Partner Full"
+
+      - step: "Create external assignment"
+        action: "create"
+        model: "employee_external_assignment"
+        save_as: "assignment"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          employee_id: "EVAL: registry['employee'].id"
+          partner_id: "EVAL: registry['partner'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert assignment created in draft"
+        action: "assert"
+        target: "assignment"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+      - step: "Confirm assignment"
+        action: "call"
+        target: "assignment"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Invalidate cache after confirm"
+        action: "call"
+        target: "assignment"
+        method: "invalidate_cache"
+
+      - step: "Approve assignment"
+        action: "call"
+        target: "assignment"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "open"
+
+      - step: "Invalidate cache after open"
+        action: "call"
+        target: "assignment"
+        method: "invalidate_cache"
+
+      - step: "Assert employee has current assignment"
+        action: "assert"
+        target: "employee"
+        asserts:
+          external_assignment_id:
+            type: "value"
+            operator: "is_truthy"
+
+      - step: "Mark assignment as done"
+        action: "call"
+        target: "assignment"
+        method: "action_done"
+        as_user: "base.user_admin"
+        context:
+          bypass_policy_check: true
+        asserts:
+          state:
+            type: "value"
+            expected: "done"
+
+  - name: "Employee External Assignment - Cancel workflow"
+    steps:
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEA Type Cancel"
+          code: "TEAT-CW"
+
+      - step: "Create employee"
+        action: "create"
+        model: "hr.employee"
+        save_as: "employee"
+        values:
+          name: "Test EEA Employee Cancel"
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test EEA Partner Cancel"
+
+      - step: "Create external assignment"
+        action: "create"
+        model: "employee_external_assignment"
+        save_as: "assignment"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          employee_id: "EVAL: registry['employee'].id"
+          partner_id: "EVAL: registry['partner'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Confirm assignment"
+        action: "call"
+        target: "assignment"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+
+      - step: "Restart assignment to draft"
+        action: "call"
+        target: "assignment"
+        method: "action_restart"
+        as_user: "base.user_admin"
+        context:
+          bypass_policy_check: true
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+  - name: "Employee External Assignment - Allowed employee and partner computed"
+    steps:
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test EEA Partner Computed"
+
+      - step: "Create employee"
+        action: "create"
+        model: "hr.employee"
+        save_as: "employee"
+        values:
+          name: "Test EEA Employee Computed"
+
+      - step: "Create assignment type with manual employee"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEA Type Computed"
+          code: "TEAT-CP"
+          employee_selection_method: "manual"
+          employee_ids:
+            - "EVAL: registry['employee'].id"
+
+      - step: "Create external assignment"
+        action: "create"
+        model: "employee_external_assignment"
+        save_as: "assignment"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          employee_id: "EVAL: registry['employee'].id"
+          partner_id: "EVAL: registry['partner'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert allowed_employee_ids is populated"
+        action: "assert"
+        target: "assignment"
+        asserts:
+          allowed_employee_ids:
+            type: "value"
+            operator: "is_truthy"
