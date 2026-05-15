@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=R0903
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class EmployeeExternalAssignmentAgreementInput(models.Model):
@@ -26,4 +26,13 @@ class EmployeeExternalAssignmentAgreementInput(models.Model):
         string="Amount",
         required=True,
         default=0.0,
+        help="Amount for this input. Auto-filled from input type's default amount.",
     )
+
+    @api.onchange(
+        "input_type_id",
+    )
+    def onchange_amount(self):
+        self.amount = 0.0
+        if self.input_type_id:
+            self.amount = self.input_type_id.default_amount
