@@ -34,7 +34,11 @@
         />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
-            <data />
+            <data>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="default_amount" />
+                </xpath>
+            </data>
         </field>
     </record>
 
@@ -52,7 +56,15 @@
         />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
-            <data />
+            <data>
+                <xpath expr="//notebook/page[@name='note']" position="before">
+                    <page name="default_amount" string="Default Amount">
+                        <group name="default_amount_group_1" string="Default Amount">
+                            <field name="default_amount" />
+                        </group>
+                    </page>
+                </xpath>
+            </data>
         </field>
     </record>
 
