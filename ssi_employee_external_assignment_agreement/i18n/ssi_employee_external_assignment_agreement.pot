@@ -520,6 +520,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__default_amount
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_input_type_view_form
 msgid "Default Amount"
 msgstr ""
 
