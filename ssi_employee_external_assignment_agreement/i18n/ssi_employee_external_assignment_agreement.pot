@@ -113,6 +113,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_hr_payslip__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_hr_payslip_line__agreement_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_payment_term_view_search
 msgid "Agreement"
 msgstr ""
 
@@ -288,6 +289,12 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_agreement_term_view_form
 msgid "Are you sure?"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_payment_term_view_search
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_search
+msgid "Assignment Type"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -497,6 +504,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__date
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_search
 msgid "Date"
 msgstr ""
 
@@ -705,6 +713,12 @@ msgstr ""
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__employee_ids
 msgid ""
 "Employees associated with the external assignments in this payment term."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_payment_term_view_search
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_search
+msgid "End Date"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -1269,6 +1283,8 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__partner_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__partner_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_payment_term_view_search
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_search
 msgid "Partner"
 msgstr ""
 
@@ -1583,6 +1599,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__standard_price_unit_diff
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_variable_fee__standard_price_unit_diff
 msgid "Standard Price Unit Diff."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_payment_term_view_search
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_search
+msgid "Start Date"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
