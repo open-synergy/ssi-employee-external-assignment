@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 OpenSynergy Indonesia
+     Copyright 2026 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+<record id="employee_external_assignment_type_view_form_rr" model="ir.ui.view">
+    <field name="name">
+        employee_external_assignment_type - form - revenue recognition
+    </field>
+    <field name="model">employee_external_assignment_type</field>
+    <field
+            name="inherit_id"
+            ref="ssi_employee_external_assignment_agreement.employee_external_assignment_type_view_form"
+        />
+    <field name="mode">extension</field>
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//page[@name='other_fee']" position="after">
+                <page name="revenue_recognition" string="Revenue Recognition">
+                    <group name="rr_1" colspan="4" col="2">
+                        <field name="pob_product_id" />
+                    </group>
+                </page>
+            </xpath>
+        </data>
+    </field>
+</record>
+
+</odoo>

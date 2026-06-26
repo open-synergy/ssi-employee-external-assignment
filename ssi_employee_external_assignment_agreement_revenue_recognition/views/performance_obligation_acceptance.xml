@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 OpenSynergy Indonesia
+     Copyright 2026 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+<record id="performance_obligation_acceptance_view_form_eea" model="ir.ui.view">
+    <field name="name">
+        performance_obligation_acceptance - form - employee external assignment
+    </field>
+    <field name="model">performance_obligation_acceptance</field>
+    <field
+            name="inherit_id"
+            ref="ssi_revenue_recognition.performance_obligation_acceptance_view_form"
+        />
+    <field name="mode">extension</field>
+    <field name="arch" type="xml">
+        <data>
+            <!-- Add qty_payslip_fulfillment to footer summary -->
+            <xpath
+                    expr="//group[@name='footer_left']/field[@name='qty_fulfilled']"
+                    position="before"
+                >
+                <field name="qty_payslip_fulfillment" />
+            </xpath>
+            <!-- Add payslip lines tab after the manual fulfillments tab -->
+            <xpath expr="//page[@name='manual']" position="after">
+                <page name="payslip_lines" string="Payslip Lines">
+                    <field name="payslip_line_ids">
+                        <tree>
+                            <field name="payslip_id" />
+                            <field name="rule_id" />
+                            <field name="amount" />
+                            <field name="quantity" />
+                            <field name="total" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </data>
+    </field>
+</record>
+
+</odoo>
