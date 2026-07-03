@@ -26,8 +26,8 @@ analisa desain). Setiap item backlog punya:
 
 1. **Satu baris di [BACKLOG.md](BACKLOG.md)** — register ringkas: ID, judul, status,
    prioritas, modul target, link ke dokumen detail.
-2. **Satu file detail di `backlog/B<NNN>-<slug>.md`** — rencana lengkap, analisa, langkah
-   implementasi, dan **Progress Log** item tersebut.
+2. **Satu file detail di `backlog/B<NNN>-<slug>.md`** — rencana lengkap, analisa,
+   langkah implementasi, dan **Progress Log** item tersebut.
 
 ### Cara menambah item backlog
 

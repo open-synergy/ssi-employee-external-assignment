@@ -1,13 +1,13 @@
 # B<NNN> — <Judul item backlog>
 
-| Field | Nilai |
-| --- | --- |
-| **ID** | B<NNN> |
-| **Status** | PLANNING |
-| **Prioritas** | 🟢 / 🟡 / 🔴 |
+| Field            | Nilai                            |
+| ---------------- | -------------------------------- |
+| **ID**           | B<NNN>                           |
+| **Status**       | PLANNING                         |
+| **Prioritas**    | 🟢 / 🟡 / 🔴                     |
 | **Modul target** | `<nama_modul>` (baru / existing) |
-| **Repo** | ssi-employee-external-assignment |
-| **Dibuat** | YYYY-MM-DD |
+| **Repo**         | ssi-employee-external-assignment |
+| **Dibuat**       | YYYY-MM-DD                       |
 
 > Ringkasan satu kalimat tentang apa & kenapa item ini ada.
 
