@@ -3,6 +3,34 @@
      Copyright 2025 PT. Simetri Sinergi Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
+<!-- Data Ownership: employee_external_assignment_agreement_batch -->
+<record id="employee_external_assignment_agreement_batch_ou_group" model="res.groups">
+    <field name="name">Operating Unit</field>
+    <field
+            name="category_id"
+            ref="ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_batch_data_ownership"
+        />
+</record>
+
+<record
+        id="ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_batch_company_group"
+        model="res.groups"
+    >
+    <field name="name">Company</field>
+    <field
+            name="category_id"
+            ref="ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_batch_data_ownership"
+        />
+    <field
+            name="implied_ids"
+            eval="[(4, ref('employee_external_assignment_agreement_batch_ou_group'))]"
+        />
+    <field
+            name="users"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
+</record>
+
 <!-- Data Ownership: employee_external_assignment_agreement -->
 <record id="employee_external_assignment_agreement_ou_group" model="res.groups">
     <field name="name">Operating Unit</field>
