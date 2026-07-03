@@ -150,6 +150,8 @@ scenarios:
         save_as: "payment_term"
         values:
           agreement_id: "EVAL: registry['agreement'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
 
       - step: "Create payment term rule"
         action: "create"
@@ -329,6 +331,8 @@ scenarios:
         save_as: "payment_term"
         values:
           agreement_id: "EVAL: registry['agreement'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
 
       - step: "Create payment term rule"
         action: "create"
