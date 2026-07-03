@@ -39,6 +39,11 @@ msgid "Account used for receivables in this agreement."
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_type_view_form
+msgid "Accounting"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_form
 msgid "Accounting Configuration"
 msgstr ""
@@ -535,6 +540,13 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input_type__default_amount
 msgid "Default amount to be set when this input type is selected."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_type__usage_id
+msgid ""
+"Default usage that determines which account is used when generating invoices"
+" for agreements of this type."
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -1780,9 +1792,19 @@ msgid "UoM Quantity"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__usage_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__usage_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_variable_fee__usage_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_type__usage_id
 msgid "Usage"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__usage_id
+msgid ""
+"Usage that determines which account is used when generating invoices from "
+"this agreement's payment terms. Defaulted from the assignment type, but can "
+"be overridden."
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
