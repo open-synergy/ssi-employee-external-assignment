@@ -409,6 +409,7 @@
                             <group name="accounting_1" colspan="4" col="2">
                                 <field name="receivable_account_id" />
                                 <field name="journal_id" />
+                                <field name="usage_id" />
                             </group>
                             <group name="accounting_2" colspan="4" col="2">
                                 <field name="analytic_account_id" />

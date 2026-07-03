@@ -82,3 +82,10 @@ class EmployeeExternalAssignmentType(models.Model):
     other_fee_python_code = fields.Text(
         default="result = []", string="Other Fee Python Code"
     )
+
+    usage_id = fields.Many2one(
+        comodel_name="product.usage_type",
+        string="Usage",
+        help="Default usage that determines which account is used when "
+        "generating invoices for agreements of this type.",
+    )

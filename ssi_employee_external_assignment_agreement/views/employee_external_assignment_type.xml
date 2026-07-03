@@ -55,6 +55,9 @@
                             string="Python Code"
                         />
         </group>
+        <group name="agreement_accounting" col="2" colspan="4" string="Accounting">
+            <field name="usage_id" />
+        </group>
       </xpath>
       <xpath expr="//page[@name='employee']" position="after">
         <page name="other_fee" string="Other Fee">
