@@ -21,6 +21,7 @@
         "ssi_employee_external_assignment",
         "ssi_transaction_pricelist_mixin",
         "ssi_cost_accounting",
+        "ssi_product_usage_account_type",
         "base_automation",
         "base_duration",
     ],

@@ -252,6 +252,15 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
+    usage_id = fields.Many2one(
+        comodel_name="product.usage_type",
+        string="Usage",
+        help="Usage that determines which account is used when generating "
+        "invoices from this agreement's payment terms. Defaulted from "
+        "the assignment type, but can be overridden.",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
     # Cost Accounting Configuration
     analytic_account_id = fields.Many2one(
         string="Analytic Account",
@@ -375,6 +384,10 @@ class EmployeeExternalAssignmentAgreement(models.Model):
     @api.onchange("type_id")
     def onchange_partner_id(self):
         self.partner_id = False  # pylint: disable=W0201
+
+    @api.onchange("type_id")
+    def onchange_usage_id(self):
+        self.usage_id = self.type_id.usage_id
 
     @api.model
     def _default_date(self):

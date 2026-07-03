@@ -3,3 +3,4 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from . import test_employee_external_assignment_agreement
+from . import test_employee_external_assignment_agreement_payment_term_rule

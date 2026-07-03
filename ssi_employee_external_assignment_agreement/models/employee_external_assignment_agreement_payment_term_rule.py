@@ -114,6 +114,18 @@ class EmployeeExternalAssignmentAgreementPaymentTermRule(models.Model):
             record.amount_tax = tax
             record.amount_total = total
 
+    def _get_invoice_line_account(self):
+        self.ensure_one()
+        account = False
+        agreement = self.payment_term_id.agreement_id
+        if agreement.usage_id and self.product_id:
+            account = self.product_id._get_product_account(
+                usage_code=agreement.usage_id.code
+            )
+        if not account:
+            account = self.product_id.property_account_income_id
+        return account
+
     def _create_invoice_line(self):
         self.ensure_one()
         invoice = self.payment_term_id.invoice_id
@@ -121,7 +133,7 @@ class EmployeeExternalAssignmentAgreementPaymentTermRule(models.Model):
             "move_id": invoice.id,
             "product_id": self.product_id.id,
             "quantity": 1.0,
-            "account_id": self.product_id.property_account_income_id.id,
+            "account_id": self._get_invoice_line_account().id,
             "price_unit": self.amount_total,
             "tax_ids": [(6, 0, self.tax_ids.ids)],
             "name": f"{self.rule_id.name} - {self.payment_term_id.name}",

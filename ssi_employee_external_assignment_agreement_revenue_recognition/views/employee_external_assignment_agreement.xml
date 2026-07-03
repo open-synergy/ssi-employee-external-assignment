@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 OpenSynergy Indonesia
+     Copyright 2026 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+<record id="employee_external_assignment_agreement_view_form_rr" model="ir.ui.view">
+    <field name="name">
+        employee_external_assignment_agreement - form - revenue recognition
+    </field>
+    <field name="model">employee_external_assignment_agreement</field>
+    <field
+            name="inherit_id"
+            ref="ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_form"
+        />
+    <field name="mode">extension</field>
+    <field name="arch" type="xml">
+        <data>
+            <!-- Add pob_id column + create button to detail tree -->
+            <xpath
+                    expr="//field[@name='detail_ids']/tree/field[@name='quantity_diff']"
+                    position="after"
+                >
+                <field name="pob_id" />
+                <button
+                        name="action_create_pob"
+                        type="object"
+                        icon="fa-gear"
+                        help="Create performance obligation"
+                    />
+            </xpath>
+            <!-- Add pob_id column + create button to other_fee tree -->
+            <xpath
+                    expr="//field[@name='other_fee_ids']/tree/field[@name='price_subtotal']"
+                    position="after"
+                >
+                <field name="pob_id" />
+                <button
+                        name="action_create_pob"
+                        type="object"
+                        icon="fa-gear"
+                        help="Create performance obligation"
+                    />
+            </xpath>
+            <!-- Add pob_id column + create button to variable_fee tree -->
+            <xpath
+                    expr="//field[@name='variable_fee_ids']/tree/field[@name='analytic_account_id']"
+                    position="after"
+                >
+                <field name="pob_id" />
+                <button
+                        name="action_create_pob"
+                        type="object"
+                        icon="fa-gear"
+                        help="Create performance obligation"
+                    />
+            </xpath>
+            <!-- Add Performance Obligations page before the accounting page -->
+            <xpath expr="//page[@name='accounting']" position="before">
+                <page name="performance_obligation" string="Performance Obligations">
+                    <group name="pob_1" colspan="4" col="2">
+                        <field name="amount_total_pob" string="Total PoB" />
+                    </group>
+                    <button
+                            name="action_open_pob"
+                            string="PoB(s)"
+                            type="object"
+                            icon="fa-bars"
+                            class="oe_highlight"
+                        />
+                    <field name="pob_ids" />
+                </page>
+            </xpath>
+        </data>
+    </field>
+</record>
+
+</odoo>
