@@ -1,0 +1,212 @@
+<!-- Copyright 2026 OpenSynergy Indonesia
+    Copyright 2026 PT. Simetri Sinergi Indonesia
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="0">
+    <data>
+        <record
+            id="employee_external_assignment_agreement_batch_view_search"
+            model="ir.ui.view"
+        >
+            <field
+                name="name"
+            >employee_external_assignment_agreement_batch - search</field>
+            <field name="model">employee_external_assignment_agreement_batch</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_search"
+            />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="partner_id" />
+                        <field name="type_id" />
+                        <field name="title" />
+                        <field name="date" />
+                        <field name="date_start" />
+                        <field name="date_end" />
+                    </xpath>
+                    <xpath expr="//filter[@name='grp_state']" position="after">
+                        <filter
+                            name="grp_partner"
+                            string="Partner"
+                            context="{'group_by': 'partner_id'}"
+                        />
+                        <filter
+                            name="grp_type"
+                            string="Assignment Type"
+                            context="{'group_by': 'type_id'}"
+                        />
+                        <filter
+                            name="grp_date"
+                            string="Date"
+                            context="{'group_by': 'date:month'}"
+                        />
+                        <filter
+                            name="grp_date_start"
+                            string="Start Date"
+                            context="{'group_by': 'date_start:month'}"
+                        />
+                        <filter
+                            name="grp_date_end"
+                            string="End Date"
+                            context="{'group_by': 'date_end:month'}"
+                        />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_batch_view_tree"
+            model="ir.ui.view"
+        >
+            <field
+                name="name"
+            >employee_external_assignment_agreement_batch - tree</field>
+            <field name="model">employee_external_assignment_agreement_batch</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_tree"
+            />
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="partner_id" widget="many2one_avatar" />
+                        <field
+                            name="contact_partner_id"
+                            widget="many2one_avatar"
+                            optional="hide"
+                        />
+                        <field name="partner_location_id" />
+                        <field name="type_id" />
+                        <field name="currency_id" />
+                        <field name="pricelist_id" />
+                        <field name="date" />
+                        <field name="date_start" />
+                        <field name="date_end" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_batch_view_form"
+            model="ir.ui.view"
+        >
+            <field
+                name="name"
+            >employee_external_assignment_agreement_batch - form</field>
+            <field name="model">employee_external_assignment_agreement_batch</field>
+            <field name="mode">primary</field>
+            <field
+                name="inherit_id"
+                ref="ssi_transaction_mixin.mixin_transaction_view_form"
+            />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="type_id" />
+                        <field
+                            name="allowed_partner_ids"
+                            widget="many2many_tags"
+                            invisible="1"
+                        />
+                        <field
+                            name="partner_id"
+                            widget="many2one_avatar"
+                            domain="[('id','in',allowed_partner_ids)]"
+                        />
+                        <field
+                            name="allowed_contact_ids"
+                            widget="many2many_tags"
+                            invisible="1"
+                        />
+                        <field
+                            name="contact_partner_id"
+                            widget="many2one_avatar"
+                            domain="[('id','in',allowed_contact_ids)]"
+                        />
+                        <field
+                            name="partner_location_id"
+                            domain="['|',('id','=',partner_id),'&amp;',('parent_id','=',partner_id),('type','in',['other','private','branch'])]"
+                        />
+                    </xpath>
+                    <xpath expr="//group[@name='header_right']" position="inside">
+                        <field name="date" />
+                        <field name="date_start" />
+                        <field name="date_end" />
+                        <field name="currency_id" />
+                        <field
+                            name="pricelist_id"
+                            domain="[('currency_id', '=', currency_id)]"
+                        />
+                    </xpath>
+                    <xpath expr="//group[@name='header_center']" position="inside">
+                        <field name="title" />
+                        <field name="ref1" />
+                        <field name="ref2" />
+                    </xpath>
+                    <xpath expr="//div[@name='button_box']" position="inside">
+                        <button
+                            name="action_open_agreements"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-file-text-o"
+                        >
+                            <field
+                                name="agreement_count"
+                                widget="statinfo"
+                                string="Agreements"
+                            />
+                        </button>
+                    </xpath>
+                    <xpath expr="//page[1]" position="before">
+                        <page name="agreement" string="Agreements">
+                            <div>
+                                <button
+                                    name="%(generate_agreement_from_batch_action)d"
+                                    type="action"
+                                    string="Generate Agreements"
+                                    class="oe_highlight"
+                                    icon="fa-plus"
+                                    attrs="{'invisible':[('state','in',['done','cancel','terminate'])]}"
+                                />
+                            </div>
+                            <field name="agreement_ids">
+                                <tree>
+                                    <field name="name" />
+                                    <field name="title" />
+                                    <field name="partner_id" widget="many2one_avatar" />
+                                    <field name="date_start" />
+                                    <field name="date_end" />
+                                    <field name="state" widget="badge" />
+                                </tree>
+                            </field>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record
+            id="employee_external_assignment_agreement_batch_action"
+            model="ir.actions.act_window"
+        >
+            <field name="name">Employee External Assignment Agreement Batches</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee_external_assignment_agreement_batch</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="employee_external_assignment_agreement_batch_menu"
+            name="Agreement Batches"
+            action="employee_external_assignment_agreement_batch_action"
+            groups="ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_batch_viewer_group"
+            parent="ssi_employee_external_assignment.menu_external_assignment_root"
+            sequence="205"
+        />
+    </data>
+</odoo>

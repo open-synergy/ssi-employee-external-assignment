@@ -1,0 +1,19 @@
+<!-- Copyright 2026 OpenSynergy Indonesia
+     Copyright 2026 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="0">
+    <data>
+        <record
+            id="sequence_employee_external_assignment_agreement_batch"
+            model="ir.sequence"
+        >
+            <field name="name">Employee External Assignment Agreement Batches</field>
+            <field name="code">employee_external_assignment_agreement_batch</field>
+            <field name="padding">6</field>
+            <field name="prefix">EEAB/%(range_year)s/</field>
+            <field eval="1" name="number_next" />
+            <field eval="1" name="number_increment" />
+            <field name="use_date_range" eval="1" />
+        </record>
+    </data>
+</odoo>

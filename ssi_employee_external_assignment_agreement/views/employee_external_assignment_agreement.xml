@@ -23,6 +23,7 @@
                         <field name="date" />
                         <field name="date_start" />
                         <field name="date_end" />
+                        <field name="batch_id" />
                     </xpath>
                     <xpath expr="//filter[@name='grp_state']" position="after">
                         <filter
@@ -34,6 +35,11 @@
                             name="grp_type"
                             string="Assignment Type"
                             context="{'group_by': 'type_id'}"
+                        />
+                        <filter
+                            name="grp_batch"
+                            string="Batch"
+                            context="{'group_by': 'batch_id'}"
                         />
                         <filter
                             name="grp_date"
@@ -82,6 +88,7 @@
                         <field name="date" />
                         <field name="date_start" />
                         <field name="date_end" />
+                        <field name="batch_id" optional="show" />
                     </xpath>
                 </data>
             </field>
@@ -101,7 +108,14 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//field[@name='user_id']" position="after">
-                        <field name="type_id" />
+                        <field
+                            name="batch_id"
+                            attrs="{'readonly': [('state','!=','draft')]}"
+                        />
+                        <field
+                            name="type_id"
+                            attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                        />
                         <field
                             name="allowed_partner_ids"
                             widget="many2many_tags"
@@ -131,6 +145,7 @@
                             name="partner_id"
                             widget="many2one_avatar"
                             domain="[('id','in',allowed_partner_ids)]"
+                            attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
                         />
                         <field
                             name="allowed_contact_ids"
@@ -149,9 +164,18 @@
                         <field name="management_fee_percent" />
                     </xpath>
                     <xpath expr="//group[@name='header_right']" position="inside">
-                        <field name="date" />
-                        <field name="date_start" />
-                        <field name="date_end" />
+                        <field
+                            name="date"
+                            attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                        />
+                        <field
+                            name="date_start"
+                            attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                        />
+                        <field
+                            name="date_end"
+                            attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                        />
                         <field name="currency_id" />
                         <field
                             name="pricelist_id"
