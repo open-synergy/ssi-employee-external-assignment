@@ -4,4 +4,5 @@
 
 from . import (
     create_employee_external_agreement_term,
+    generate_agreement_from_batch,
 )

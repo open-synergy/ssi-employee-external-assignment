@@ -6,6 +6,7 @@
 from . import (
     employee_external_assignment,
     employee_external_assignment_agreement,
+    employee_external_assignment_agreement_batch,
     employee_external_assignment_agreement_detail,
     employee_external_assignment_agreement_detail_compensation_term,
     employee_external_assignment_agreement_input,

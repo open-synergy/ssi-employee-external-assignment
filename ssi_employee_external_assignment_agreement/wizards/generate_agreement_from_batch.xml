@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 OpenSynergy Indonesia
+     Copyright 2026 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+<record id="generate_agreement_from_batch_view_form" model="ir.ui.view">
+    <field name="name">generate_agreement_from_batch - form</field>
+    <field name="model">generate_agreement_from_batch</field>
+    <field name="arch" type="xml">
+        <form>
+            <group name="group_1" colspan="4" col="2">
+                <field name="batch_id" invisible="0" />
+                <field name="agreement_count" />
+                <field name="receivable_account_id" />
+                <field name="journal_id" />
+            </group>
+            <field name="line_ids">
+                <tree editable="bottom">
+                    <field name="title" />
+                    <field name="partner_location_id" />
+                </tree>
+            </field>
+            <footer>
+                <button
+                        string="Generate"
+                        name="action_generate"
+                        type="object"
+                        class="oe_highlight"
+                        confirm="Are you sure?"
+                    />
+                or
+                <button string="Cancel" class="oe_link" special="cancel" />
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="generate_agreement_from_batch_action" model="ir.actions.act_window">
+    <field name="name">Generate Agreements</field>
+    <field name="res_model">generate_agreement_from_batch</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="generate_agreement_from_batch_view_form" />
+    <field name="target">new</field>
+</record>
+
+</odoo>

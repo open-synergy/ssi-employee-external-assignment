@@ -42,7 +42,8 @@
                 name="group_ids"
                 eval="[(6,0,[ref('employee_external_assignment_agreement_user_group')])]"
             />
-            <field name="restrict_additional" eval="0" />
+            <field name="restrict_additional" eval="1" />
+            <field name="additional_python_code">result = not document.batch_id</field>
         </record>
 
         <!-- approve -->
@@ -66,7 +67,7 @@
             <field name="restrict_user" eval="0" />
             <field name="restrict_additional" eval="1" />
             <field name="additional_python_code">result = False
-if env.user.id in document.active_approver_user_ids.ids:
+if env.user.id in document.active_approver_user_ids.ids and not document.batch_id:
     result = True</field>
         </record>
 
@@ -91,7 +92,7 @@ if env.user.id in document.active_approver_user_ids.ids:
             <field name="restrict_user" eval="0" />
             <field name="restrict_additional" eval="1" />
             <field name="additional_python_code">result = False
-if env.user.id in document.active_approver_user_ids.ids:
+if env.user.id in document.active_approver_user_ids.ids and not document.batch_id:
     result = True</field>
         </record>
 
@@ -121,7 +122,7 @@ if env.user.id in document.active_approver_user_ids.ids:
             />
             <field name="restrict_additional" eval="1" />
             <field name="additional_python_code">result = False
-if not document.approval_template_id:
+if not document.approval_template_id and not document.batch_id:
     result = True</field>
         </record>
 
@@ -149,7 +150,8 @@ if not document.approval_template_id:
                 name="group_ids"
                 eval="[(6,0,[ref('employee_external_assignment_agreement_user_group')])]"
             />
-            <field name="restrict_additional" eval="0" />
+            <field name="restrict_additional" eval="1" />
+            <field name="additional_python_code">result = not document.batch_id</field>
         </record>
 
         <!-- cancel -->
@@ -176,7 +178,8 @@ if not document.approval_template_id:
                 name="group_ids"
                 eval="[(6,0,[ref('employee_external_assignment_agreement_validator_group')])]"
             />
-            <field name="restrict_additional" eval="0" />
+            <field name="restrict_additional" eval="1" />
+            <field name="additional_python_code">result = not document.batch_id</field>
         </record>
 
         <!-- restart -->
@@ -203,7 +206,8 @@ if not document.approval_template_id:
                 name="group_ids"
                 eval="[(6,0,[ref('employee_external_assignment_agreement_validator_group')])]"
             />
-            <field name="restrict_additional" eval="0" />
+            <field name="restrict_additional" eval="1" />
+            <field name="additional_python_code">result = not document.batch_id</field>
         </record>
 
         <!-- manual number -->
@@ -230,7 +234,8 @@ if not document.approval_template_id:
                 name="group_ids"
                 eval="[(6,0,[ref('employee_external_assignment_agreement_validator_group')])]"
             />
-            <field name="restrict_additional" eval="0" />
+            <field name="restrict_additional" eval="1" />
+            <field name="additional_python_code">result = not document.batch_id</field>
         </record>
     </data>
 </odoo>

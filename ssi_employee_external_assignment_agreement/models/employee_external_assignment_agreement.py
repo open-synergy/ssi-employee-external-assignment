@@ -4,7 +4,8 @@
 
 from datetime import date
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError, ValidationError
 
 from odoo.addons.ssi_decorator import ssi_decorator
 
@@ -283,6 +284,16 @@ class EmployeeExternalAssignmentAgreement(models.Model):
             ],
         },
     )
+    batch_id = fields.Many2one(
+        comodel_name="employee_external_assignment_agreement_batch",
+        string="# Batch",
+        ondelete="restrict",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        help="Umbrella contract (batch) governing this agreement. When set, "
+        "the partner, type, and period are snapshotted from the batch and "
+        "the workflow is driven by the batch rather than run independently.",
+    )
 
     @api.depends(
         "detail_ids",
@@ -377,21 +388,152 @@ class EmployeeExternalAssignmentAgreement(models.Model):
                 )
             record.allowed_other_fee_ids = result
 
-    @api.onchange("partner_id")
+    @api.onchange("partner_id", "batch_id")
     def onchange_partner_location_id(self):
         self.partner_location_id = False
+        if self.batch_id:
+            self.partner_location_id = self.batch_id.partner_location_id
 
-    @api.onchange("type_id")
+    @api.onchange("type_id", "batch_id")
     def onchange_partner_id(self):
         self.partner_id = False  # pylint: disable=W0201
+        if self.batch_id:
+            self.partner_id = self.batch_id.partner_id  # pylint: disable=W0201
+
+    @api.onchange("partner_id", "batch_id")
+    def onchange_contact_partner_id(self):
+        self.contact_partner_id = False
+        if self.batch_id:
+            self.contact_partner_id = self.batch_id.contact_partner_id
+
+    @api.onchange("currency_id", "batch_id")
+    def onchange_pricelist_id(self):
+        self.pricelist_id = False
+        if self.batch_id:
+            self.pricelist_id = self.batch_id.pricelist_id
 
     @api.onchange("type_id")
     def onchange_usage_id(self):
         self.usage_id = self.type_id.usage_id
 
+    @api.onchange("batch_id")
+    def onchange_type_id(self):
+        if self.batch_id:
+            self.type_id = self.batch_id.type_id  # pylint: disable=W0201
+
+    @api.onchange("batch_id")
+    def onchange_date(self):
+        if self.batch_id:
+            self.date = self.batch_id.date  # pylint: disable=W0201
+
+    @api.onchange("batch_id")
+    def onchange_date_start(self):
+        if self.batch_id:
+            self.date_start = self.batch_id.date_start  # pylint: disable=W0201
+
+    @api.onchange("batch_id")
+    def onchange_date_end(self):
+        if self.batch_id:
+            self.date_end = self.batch_id.date_end  # pylint: disable=W0201
+
+    @api.onchange("batch_id")
+    def onchange_currency_id(self):
+        if self.batch_id:
+            self.currency_id = self.batch_id.currency_id  # pylint: disable=W0201
+
     @api.model
     def _default_date(self):
         return date.today()
+
+    @api.constrains("batch_id", "type_id", "partner_id", "date_start", "date_end")
+    def _check_batch_agreement_alignment(self):
+        for document in self.sudo():
+            if not document._check_batch_agreement_alignment_condition():
+                error_message = """
+Context: Link agreement to batch
+Database ID: %s
+Problem: Type, partner, or period does not match the linked batch %s
+Solution: Align the agreement's type, partner, and period with the batch, \
+or unlink the batch
+""" % (
+                    document.id,
+                    document.batch_id.name,
+                )
+                raise ValidationError(_(error_message))
+
+    def _check_batch_agreement_alignment_condition(self):
+        self.ensure_one()
+        if not self.batch_id:
+            return True
+        batch = self.batch_id
+        if self.type_id != batch.type_id:
+            return False
+        if self.partner_id != batch.partner_id:
+            return False
+        if self.date_start and batch.date_start and self.date_start < batch.date_start:
+            return False
+        if self.date_end and batch.date_end and self.date_end > batch.date_end:
+            return False
+        return True
+
+    def _check_not_batch_driven(self):
+        self.ensure_one()
+        if not self.batch_id:
+            return
+        if self.env.context.get("from_batch_cascade"):
+            return
+        batch = self.batch_id.sudo()
+        error_message = """
+Context: Run workflow transition on agreement
+Database ID: %s
+Problem: This agreement is governed by batch %s and its workflow cannot run \
+independently
+Solution: Run the workflow transition from the batch record instead
+""" % (
+            self.id,
+            batch.name,
+        )
+        raise UserError(_(error_message))
+
+    def action_confirm(self):
+        for record in self:
+            record._check_not_batch_driven()
+        return super().action_confirm()
+
+    def action_approve_approval(self):
+        for record in self:
+            record._check_not_batch_driven()
+        return super().action_approve_approval()
+
+    def action_reject_approval(self):
+        for record in self:
+            record._check_not_batch_driven()
+        return super().action_reject_approval()
+
+    def action_open(self):
+        for record in self:
+            record._check_not_batch_driven()
+        return super().action_open()
+
+    def action_done(self):
+        for record in self:
+            record._check_not_batch_driven()
+        return super().action_done()
+
+    def action_cancel(self, cancel_reason=False):
+        for record in self:
+            record._check_not_batch_driven()
+        return super().action_cancel(cancel_reason)
+
+    def action_terminate(self, terminate_reason=False):
+        for record in self:
+            record._check_not_batch_driven()
+        return super().action_terminate(terminate_reason)
+
+    def action_restart(self):
+        for record in self:
+            record._check_not_batch_driven()
+        return super().action_restart()
 
     def action_open_payment_terms(self):
         for record in self.sudo():
@@ -416,6 +558,7 @@ class EmployeeExternalAssignmentAgreement(models.Model):
         domain = [
             ("state", "=", "open"),
             ("date_end", "<", today),
+            ("batch_id", "=", False),
         ]
         agreements = self.search(domain)
         agreements.with_context(bypass_policy_check=True).action_done()
