@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo14-addon-ssi_employee_external_assignment',
         'odoo14-addon-ssi_employee_external_assignment_agreement',
         'odoo14-addon-ssi_employee_external_assignment_agreement_operating_unit',
+        'odoo14-addon-ssi_employee_external_assignment_agreement_revenue_recognition',
         'odoo14-addon-ssi_employee_external_assignment_operating_unit',
     ],
     classifiers=[
