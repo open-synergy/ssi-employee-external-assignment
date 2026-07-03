@@ -17,6 +17,7 @@
     "data": [
         "security/res_group/res_group_data.xml",
         "security/ir_rule/ir_rule_data.xml",
+        "views/employee_external_assignment_agreement_batch_views.xml",
         "views/employee_external_assignment_agreement_views.xml",
         "views/employee_external_assignment_agreement_payment_term_views.xml",
     ],

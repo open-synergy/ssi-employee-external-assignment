@@ -3,3 +3,4 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from . import test_employee_external_assignment_agreement_operating_unit
+from . import test_employee_external_assignment_agreement_batch_operating_unit
