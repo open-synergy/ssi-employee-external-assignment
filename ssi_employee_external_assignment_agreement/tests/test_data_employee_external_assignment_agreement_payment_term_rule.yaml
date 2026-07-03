@@ -1,0 +1,360 @@
+scenarios:
+  - name: "Payment Term Rule - Invoice line account resolved from agreement usage"
+    steps:
+      - step: "Search for existing account type"
+        action: "search"
+        model: "account.account.type"
+        domain:
+          - ["type", "=", "other"]
+        save_as: "account_type"
+        limit: 1
+
+      - step: "Create usage account"
+        action: "create"
+        model: "account.account"
+        save_as: "usage_account"
+        values:
+          name: "EEAA Test Usage Account"
+          code: "999201"
+          user_type_id: "EVAL: registry['account_type'].id"
+
+      - step: "Create default income account"
+        action: "create"
+        model: "account.account"
+        save_as: "income_account"
+        values:
+          name: "EEAA Test Default Income Account"
+          code: "999202"
+          user_type_id: "EVAL: registry['account_type'].id"
+
+      - step: "Create product usage type"
+        action: "create"
+        model: "product.usage_type"
+        save_as: "usage_type"
+        values:
+          name: "EEAA Test Usage Type"
+          code: "EEAAINV001"
+          account_id: "EVAL: registry['usage_account'].id"
+
+      - step: "Create product template with default income account"
+        action: "create"
+        model: "product.template"
+        save_as: "product_tmpl"
+        values:
+          name: "EEAA Test Rule Product"
+          type: "service"
+          property_account_income_id: "EVAL: registry['income_account'].id"
+
+      - step: "Get product variant"
+        action: "search"
+        model: "product.product"
+        domain:
+          - ["name", "=", "EEAA Test Rule Product"]
+        save_as: "product"
+        limit: 1
+
+      - step: "Create salary rule category"
+        action: "create"
+        model: "hr.salary_rule_category"
+        save_as: "rule_category"
+        values:
+          name: "EEAA Test Rule Category"
+          code: "EEAARC001"
+
+      - step: "Create salary rule"
+        action: "create"
+        model: "hr.salary_rule"
+        save_as: "salary_rule"
+        values:
+          name: "EEAA Test Salary Rule"
+          code: "EEAASR001"
+          category_id: "EVAL: registry['rule_category'].id"
+
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "EEAA Test Rule Partner"
+          is_company: true
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "EEAA Test Rule Type"
+          code: "EEAART001"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement with usage set"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          title: "EEAA Test Agreement With Usage"
+          partner_id: "EVAL: registry['partner'].id"
+          receivable_account_id: "EVAL: registry['receivable_account'].id"
+          journal_id: "EVAL: registry['journal'].id"
+          usage_id: "EVAL: registry['usage_type'].id"
+          currency_id: "EVAL: registry['currency'].id"
+          pricelist_id: "EVAL: registry['pricelist'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Create payment term for agreement"
+        action: "create"
+        model: "employee_external_assignment_agreement.payment_term"
+        save_as: "payment_term"
+        values:
+          agreement_id: "EVAL: registry['agreement'].id"
+
+      - step: "Create payment term rule"
+        action: "create"
+        model: "employee_external_assignment_agreement.payment_term.rule"
+        save_as: "rule"
+        values:
+          payment_term_id: "EVAL: registry['payment_term'].id"
+          rule_id: "EVAL: registry['salary_rule'].id"
+          product_id: "EVAL: registry['product'].id"
+
+      - step: "Create invoice from payment term"
+        action: "call"
+        target: "payment_term"
+        method: "action_create_invoice"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after invoice creation"
+        action: "call"
+        target: "rule"
+        method: "invalidate_cache"
+
+      - step: "Assert invoice line created"
+        action: "assert"
+        target: "rule"
+        asserts:
+          invoice_line_id:
+            type: "value"
+            operator: "is_truthy"
+
+      - step: "Verify invoice line account resolved from agreement usage"
+        action: "search"
+        model: "account.move.line"
+        domain:
+          - ["id", "=", "EVAL: registry['rule'].invoice_line_id.id"]
+          - ["account_id", "=", "EVAL: registry['usage_account'].id"]
+        save_as: "invoice_line_check"
+        expect_count: 1
+
+  - name:
+      "Payment Term Rule - Invoice line account falls back to product income account"
+    steps:
+      - step: "Search for existing account type"
+        action: "search"
+        model: "account.account.type"
+        domain:
+          - ["type", "=", "other"]
+        save_as: "account_type"
+        limit: 1
+
+      - step: "Create default income account"
+        action: "create"
+        model: "account.account"
+        save_as: "income_account"
+        values:
+          name: "EEAA Test Fallback Income Account"
+          code: "999203"
+          user_type_id: "EVAL: registry['account_type'].id"
+
+      - step: "Create product template with default income account"
+        action: "create"
+        model: "product.template"
+        save_as: "product_tmpl"
+        values:
+          name: "EEAA Test Fallback Product"
+          type: "service"
+          property_account_income_id: "EVAL: registry['income_account'].id"
+
+      - step: "Get product variant"
+        action: "search"
+        model: "product.product"
+        domain:
+          - ["name", "=", "EEAA Test Fallback Product"]
+        save_as: "product"
+        limit: 1
+
+      - step: "Create salary rule category"
+        action: "create"
+        model: "hr.salary_rule_category"
+        save_as: "rule_category"
+        values:
+          name: "EEAA Test Fallback Rule Category"
+          code: "EEAARC002"
+
+      - step: "Create salary rule"
+        action: "create"
+        model: "hr.salary_rule"
+        save_as: "salary_rule"
+        values:
+          name: "EEAA Test Fallback Salary Rule"
+          code: "EEAASR002"
+          category_id: "EVAL: registry['rule_category'].id"
+
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "EEAA Test Fallback Partner"
+          is_company: true
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "EEAA Test Fallback Type"
+          code: "EEAART002"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement without usage set"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          title: "EEAA Test Agreement Without Usage"
+          partner_id: "EVAL: registry['partner'].id"
+          receivable_account_id: "EVAL: registry['receivable_account'].id"
+          journal_id: "EVAL: registry['journal'].id"
+          currency_id: "EVAL: registry['currency'].id"
+          pricelist_id: "EVAL: registry['pricelist'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert agreement usage is empty"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          usage_id:
+            type: "value"
+            operator: "is_falsy"
+
+      - step: "Create payment term for agreement"
+        action: "create"
+        model: "employee_external_assignment_agreement.payment_term"
+        save_as: "payment_term"
+        values:
+          agreement_id: "EVAL: registry['agreement'].id"
+
+      - step: "Create payment term rule"
+        action: "create"
+        model: "employee_external_assignment_agreement.payment_term.rule"
+        save_as: "rule"
+        values:
+          payment_term_id: "EVAL: registry['payment_term'].id"
+          rule_id: "EVAL: registry['salary_rule'].id"
+          product_id: "EVAL: registry['product'].id"
+
+      - step: "Create invoice from payment term"
+        action: "call"
+        target: "payment_term"
+        method: "action_create_invoice"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after invoice creation"
+        action: "call"
+        target: "rule"
+        method: "invalidate_cache"
+
+      - step: "Verify invoice line account falls back to product income account"
+        action: "search"
+        model: "account.move.line"
+        domain:
+          - ["id", "=", "EVAL: registry['rule'].invoice_line_id.id"]
+          - ["account_id", "=", "EVAL: registry['income_account'].id"]
+        save_as: "invoice_line_check"
+        expect_count: 1
