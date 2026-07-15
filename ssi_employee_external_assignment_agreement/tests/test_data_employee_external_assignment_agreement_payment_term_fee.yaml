@@ -1,0 +1,332 @@
+scenarios:
+  - name: "Payment Term - Fee invoice line uses fee's own analytic account"
+    steps:
+      - step: "Search for existing account type"
+        action: "search"
+        model: "account.account.type"
+        domain:
+          - ["type", "=", "other"]
+        save_as: "account_type"
+        limit: 1
+
+      - step: "Create default income account"
+        action: "create"
+        model: "account.account"
+        save_as: "income_account"
+        values:
+          name: "EEAA Test Fee Income Account"
+          code: "999206"
+          user_type_id: "EVAL: registry['account_type'].id"
+
+      - step: "Create product template with default income account"
+        action: "create"
+        model: "product.template"
+        save_as: "product_tmpl"
+        values:
+          name: "EEAA Test Fee Product"
+          type: "service"
+          property_account_income_id: "EVAL: registry['income_account'].id"
+
+      - step: "Get product variant"
+        action: "search"
+        model: "product.product"
+        domain:
+          - ["name", "=", "EEAA Test Fee Product"]
+        save_as: "product"
+        limit: 1
+
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "EEAA Test Fee Partner"
+          is_company: true
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "EEAA Test Fee Type"
+          code: "EEAAFT001"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement analytic account"
+        action: "create"
+        model: "account.analytic.account"
+        save_as: "agreement_analytic"
+        values:
+          name: "EEAA Test Fee Agreement Analytic Account"
+
+      - step: "Create fee analytic account"
+        action: "create"
+        model: "account.analytic.account"
+        save_as: "fee_analytic"
+        values:
+          name: "EEAA Test Fee Own Analytic Account"
+
+      - step: "Create agreement with analytic account set"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          title: "EEAA Test Fee Agreement Own Analytic"
+          partner_id: "EVAL: registry['partner'].id"
+          receivable_account_id: "EVAL: registry['receivable_account'].id"
+          journal_id: "EVAL: registry['journal'].id"
+          currency_id: "EVAL: registry['currency'].id"
+          pricelist_id: "EVAL: registry['pricelist'].id"
+          analytic_account_id: "EVAL: registry['agreement_analytic'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Create other fee with its own analytic account"
+        action: "create"
+        model: "employee_external_assignment_agreement.other_fee"
+        save_as: "fee"
+        values:
+          agreement_id: "EVAL: registry['agreement'].id"
+          product_id: "EVAL: registry['product'].id"
+          name: "EEAA Test Fee Line"
+          account_id: "EVAL: registry['income_account'].id"
+          analytic_account_id: "EVAL: registry['fee_analytic'].id"
+          price_unit: 100000.0
+
+      - step: "Create payment term for agreement"
+        action: "create"
+        model: "employee_external_assignment_agreement.payment_term"
+        save_as: "payment_term"
+        values:
+          agreement_id: "EVAL: registry['agreement'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Create invoice from payment term"
+        action: "call"
+        target: "payment_term"
+        method: "action_create_invoice"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after invoice creation"
+        action: "call"
+        target: "payment_term"
+        method: "invalidate_cache"
+
+      - step: "Verify fee invoice line uses fee's own analytic account"
+        action: "search"
+        model: "account.move.line"
+        domain:
+          - ["move_id", "=", "EVAL: registry['payment_term'].invoice_id.id"]
+          - ["product_id", "=", "EVAL: registry['fee'].product_id.id"]
+          - ["analytic_account_id", "=", "EVAL: registry['fee_analytic'].id"]
+        save_as: "invoice_line_check"
+        expect_count: 1
+
+  - name: "Payment Term - Fee invoice line falls back to agreement analytic account"
+    steps:
+      - step: "Search for existing account type"
+        action: "search"
+        model: "account.account.type"
+        domain:
+          - ["type", "=", "other"]
+        save_as: "account_type"
+        limit: 1
+
+      - step: "Create default income account"
+        action: "create"
+        model: "account.account"
+        save_as: "income_account"
+        values:
+          name: "EEAA Test Fee Fallback Income Account"
+          code: "999207"
+          user_type_id: "EVAL: registry['account_type'].id"
+
+      - step: "Create product template with default income account"
+        action: "create"
+        model: "product.template"
+        save_as: "product_tmpl"
+        values:
+          name: "EEAA Test Fee Fallback Product"
+          type: "service"
+          property_account_income_id: "EVAL: registry['income_account'].id"
+
+      - step: "Get product variant"
+        action: "search"
+        model: "product.product"
+        domain:
+          - ["name", "=", "EEAA Test Fee Fallback Product"]
+        save_as: "product"
+        limit: 1
+
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "EEAA Test Fee Fallback Partner"
+          is_company: true
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "EEAA Test Fee Fallback Type"
+          code: "EEAAFT002"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement analytic account"
+        action: "create"
+        model: "account.analytic.account"
+        save_as: "agreement_analytic"
+        values:
+          name: "EEAA Test Fee Fallback Agreement Analytic Account"
+
+      - step: "Create agreement with analytic account set"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "EVAL: registry['assignment_type'].id"
+          title: "EEAA Test Fee Agreement Fallback Analytic"
+          partner_id: "EVAL: registry['partner'].id"
+          receivable_account_id: "EVAL: registry['receivable_account'].id"
+          journal_id: "EVAL: registry['journal'].id"
+          currency_id: "EVAL: registry['currency'].id"
+          pricelist_id: "EVAL: registry['pricelist'].id"
+          analytic_account_id: "EVAL: registry['agreement_analytic'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Create other fee without its own analytic account"
+        action: "create"
+        model: "employee_external_assignment_agreement.other_fee"
+        save_as: "fee"
+        values:
+          agreement_id: "EVAL: registry['agreement'].id"
+          product_id: "EVAL: registry['product'].id"
+          name: "EEAA Test Fee Fallback Line"
+          account_id: "EVAL: registry['income_account'].id"
+          price_unit: 100000.0
+
+      - step: "Assert fee analytic account is empty"
+        action: "assert"
+        target: "fee"
+        asserts:
+          analytic_account_id:
+            type: "value"
+            operator: "is_falsy"
+
+      - step: "Create payment term for agreement"
+        action: "create"
+        model: "employee_external_assignment_agreement.payment_term"
+        save_as: "payment_term"
+        values:
+          agreement_id: "EVAL: registry['agreement'].id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Create invoice from payment term"
+        action: "call"
+        target: "payment_term"
+        method: "action_create_invoice"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after invoice creation"
+        action: "call"
+        target: "payment_term"
+        method: "invalidate_cache"
+
+      - step: "Verify fee invoice line falls back to agreement analytic account"
+        action: "search"
+        model: "account.move.line"
+        domain:
+          - ["move_id", "=", "EVAL: registry['payment_term'].invoice_id.id"]
+          - ["product_id", "=", "EVAL: registry['fee'].product_id.id"]
+          - ["analytic_account_id", "=", "EVAL: registry['agreement_analytic'].id"]
+        save_as: "invoice_line_check"
+        expect_count: 1
