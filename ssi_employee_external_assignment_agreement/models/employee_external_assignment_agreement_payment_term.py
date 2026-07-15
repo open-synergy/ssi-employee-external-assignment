@@ -277,6 +277,10 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
         for fee in self.agreement_id.variable_fee_ids:
             self._create_fee_invoice_line(invoice, fee)
 
+    def _get_fee_invoice_line_analytic_account(self, fee):
+        self.ensure_one()
+        return fee.analytic_account_id or self.agreement_id.analytic_account_id
+
     def _create_fee_invoice_line(self, invoice, fee):
         self.ensure_one()
         data = {
@@ -284,6 +288,7 @@ class EmployeeExternalAssignmentAgreementPaymentTerm(models.Model):
             "product_id": fee.product_id.id,
             "quantity": getattr(fee, "uom_quantity", 1.0) or 1.0,
             "account_id": fee.product_id.property_account_income_id.id,
+            "analytic_account_id": self._get_fee_invoice_line_analytic_account(fee).id,
             "price_unit": fee.price_unit,
             "tax_ids": [(6, 0, fee.tax_ids.ids)],
             "name": fee.name or fee.product_id.name,
