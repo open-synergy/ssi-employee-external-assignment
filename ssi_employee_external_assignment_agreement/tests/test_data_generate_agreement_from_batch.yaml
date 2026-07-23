@@ -47,6 +47,7 @@ scenarios:
         as_user: "base.user_admin"
         values:
           name: "Test Generate Wizard Usage Type"
+          code: "TGAFB-USG1"
           account_id: "EVAL: registry['receivable_account'].id"
 
       - step: "Create assignment type"
