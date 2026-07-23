@@ -68,6 +68,9 @@ class GenerateAgreementFromBatch(models.TransientModel):
         vals = {
             "batch_id": batch.id,
             "type_id": batch.type_id.id,
+            "usage_id": batch.type_id.usage_id.id,
+            "ref1": batch.ref1,
+            "ref2": batch.ref2,
             "partner_id": batch.partner_id.id,
             "contact_partner_id": batch.contact_partner_id.id,
             "partner_location_id": batch.partner_location_id.id,
