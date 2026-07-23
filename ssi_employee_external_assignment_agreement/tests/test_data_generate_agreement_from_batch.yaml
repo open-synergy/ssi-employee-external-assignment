@@ -40,6 +40,15 @@ scenarios:
           name: "Test Generate Wizard Count Partner"
           is_company: true
 
+      - step: "Create usage type"
+        action: "create"
+        model: "product.usage_type"
+        save_as: "usage_type"
+        as_user: "base.user_admin"
+        values:
+          name: "Test Generate Wizard Usage Type"
+          account_id: "EVAL: registry['receivable_account'].id"
+
       - step: "Create assignment type"
         action: "create"
         model: "employee_external_assignment_type"
@@ -47,6 +56,7 @@ scenarios:
         values:
           name: "Test Generate Wizard Count Type"
           code: "TGAFB001"
+          usage_id: "EVAL: registry['usage_type'].id"
           employee_selection_method: "domain"
           employee_domain: "[]"
           job_selection_method: "domain"
@@ -66,6 +76,8 @@ scenarios:
         values:
           type_id: "EVAL: registry['assignment_type'].id"
           title: "Test Batch For Generate By Count"
+          ref1: "BATCH-REF1-001"
+          ref2: "BATCH-REF2-001"
           partner_id: "EVAL: registry['partner'].id"
           currency_id: "EVAL: registry['currency'].id"
           pricelist_id: "EVAL: registry['pricelist'].id"
@@ -95,6 +107,25 @@ scenarios:
         domain:
           - ["batch_id", "=", "EVAL: registry['batch'].id"]
         save_as: "generated"
+        expect_count: 2
+
+      - step: "Assert generated agreement snapshots ref1/ref2 from batch"
+        action: "search"
+        model: "employee_external_assignment_agreement"
+        domain:
+          - ["batch_id", "=", "EVAL: registry['batch'].id"]
+          - ["ref1", "=", "BATCH-REF1-001"]
+          - ["ref2", "=", "BATCH-REF2-001"]
+        save_as: "generated_with_refs"
+        expect_count: 2
+
+      - step: "Assert generated agreement snapshots usage from assignment type"
+        action: "search"
+        model: "employee_external_assignment_agreement"
+        domain:
+          - ["batch_id", "=", "EVAL: registry['batch'].id"]
+          - ["usage_id", "=", "EVAL: registry['usage_type'].id"]
+        save_as: "generated_with_usage"
         expect_count: 2
 
   - name: "Generate agreements from batch by explicit lines"
