@@ -24,6 +24,7 @@
         "ssi_product_usage_account_type",
         "base_automation",
         "base_duration",
+        "web_tour",
     ],
     "data": [
         "security/ir_module_category/employee_external_assignment_agreement.xml",
@@ -64,6 +65,7 @@
         "views/employee_external_assignment_agreement_payment_term.xml",
         "views/employee_external_assignment.xml",
         "views/hr_payslip.xml",
+        "views/assets.xml",
     ],
     "demo": [],
     "application": False,

@@ -8,6 +8,19 @@ Employee External Assignment Agreement
 
 
 
+Work Instruction
+=================
+
+Employee External Assignment Agreement Input Type
+---------------------------------------------------
+
+* `Create Employee External Assignment Agreement Input Type <docs/employee_external_assignment_agreement_input_type/01-create.html>`_
+* `Edit Employee External Assignment Agreement Input Type <docs/employee_external_assignment_agreement_input_type/02-edit.html>`_
+* `Delete Employee External Assignment Agreement Input Type <docs/employee_external_assignment_agreement_input_type/03-delete.html>`_
+* `Deactivate Employee External Assignment Agreement Input Type <docs/employee_external_assignment_agreement_input_type/04-deactivate.html>`_
+* `Activate Employee External Assignment Agreement Input Type <docs/employee_external_assignment_agreement_input_type/05-activate.html>`_
+
+
 Installation
 ============
 
