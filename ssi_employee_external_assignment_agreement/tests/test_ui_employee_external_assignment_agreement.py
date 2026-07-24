@@ -146,14 +146,20 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
         # Pre-Condition 10-cancel.md: Draft (one of the allowed states).
         cls.agreement_cancel = _create_agreement("Cancel")
 
-        # Pre-Condition 11-terminate.md: On Progress.
+        # Pre-Condition 11-terminate.md: On Progress. active_approver_user_ids
+        # is computed from the approval.approval records action_confirm()
+        # just created -- invalidate_cache so the very next call in the same
+        # Python transaction sees them (same pattern as the "Invalidate cache
+        # after confirm" step in test_data_employee_external_assignment_agreement.yaml).
         cls.agreement_terminate = _create_agreement("Terminate")
         cls.agreement_terminate.with_user(cls.admin).action_confirm()
+        cls.agreement_terminate.invalidate_cache()
         cls.agreement_terminate.with_user(cls.admin).action_approve_approval()
 
         # Pre-Condition 12-restart.md: Rejected.
         cls.agreement_restart = _create_agreement("Restart")
         cls.agreement_restart.with_user(cls.admin).action_confirm()
+        cls.agreement_restart.invalidate_cache()
         cls.agreement_restart.with_user(cls.admin).action_reject_approval()
 
         cls.agreement_payment_term = _create_agreement("Payment Term")
