@@ -35,6 +35,21 @@ Employee External Assignment Agreement Input Type
 * `Deactivate Employee External Assignment Agreement Input Type <docs/employee_external_assignment_agreement_input_type/04-deactivate.html>`_
 * `Activate Employee External Assignment Agreement Input Type <docs/employee_external_assignment_agreement_input_type/05-activate.html>`_
 
+Employee External Assignment Agreement Batch
+------------------------------------------------
+
+* `Create Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/01-create.html>`_
+* `Edit Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/02-edit.html>`_
+* `Delete Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/03-delete.html>`_
+* `Confirm Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/04-confirm.html>`_
+* `Approve Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/05-approve.html>`_
+* `Reject Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/06-reject.html>`_
+* `Cancel Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/10-cancel.html>`_
+* `Terminate Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/11-terminate.html>`_
+* `Restart Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/12-restart.html>`_
+* `Reset Document Number - Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/13-reset-number.html>`_
+* `View Agreements - Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/14-view-agreements.html>`_
+
 
 Installation
 ============
