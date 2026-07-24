@@ -15,7 +15,15 @@ odoo.define(
         // Note: the menu item label is "External Asssignment Types" (as
         // literally defined in menu.xml), while the window action -- and
         // therefore the breadcrumb title once the list is loaded -- is
-        // "Employee External Assignment Types".
+        // "Employee External Assignment Types". "Career" is a grouping
+        // menuitem with no action of its own
+        // (ssi_hr/menu.xml menu_career_configuration has no action=
+        // attribute), so Odoo 14.0 renders it as a plain, non-clickable
+        // "<div class='dropdown-header'>" inside the Configuration
+        // dropdown -- NOT as a data-menu-xmlid link. "External Asssignment
+        // Types" is a direct clickable entry inside that SAME dropdown,
+        // grouped visually under the "Career" heading -- there is
+        // therefore no separate "click Career" step.
         function openTypeList() {
             return [
                 tour.stepUtils.showAppsMenuItem(),
@@ -28,11 +36,6 @@ odoo.define(
                     content: "Open the Configuration menu",
                     trigger:
                         '.o_menu_sections [data-menu-xmlid="ssi_hr.menu_human_resource_configuration"]',
-                },
-                {
-                    content: "Open the Career menu",
-                    trigger:
-                        '.o_menu_sections [data-menu-xmlid="ssi_hr.menu_career_configuration"]',
                 },
                 {
                     content: "Open the External Asssignment Types menu",
