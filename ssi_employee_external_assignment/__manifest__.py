@@ -19,6 +19,7 @@
         "ssi_transaction_date_duration_mixin",
         "ssi_m2o_configurator_mixin",
         "ssi_res_partner_m2o_configurator_mixin",
+        "web_tour",
     ],
     "data": [
         "security/ir_module_category/employee_external_assignment_module_category.xml",
@@ -35,6 +36,7 @@
         "views/employee_external_assignment_type_views.xml",
         "views/employee_external_assignment_views.xml",
         "views/hr_employee.xml",
+        "views/assets.xml",
     ],
     "demo": [],
     "application": False,

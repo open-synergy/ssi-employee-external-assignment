@@ -4,3 +4,4 @@
 
 from . import test_employee_external_assignment_type
 from . import test_employee_external_assignment
+from . import test_ui_employee_external_assignment_type

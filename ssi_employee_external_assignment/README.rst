@@ -7,6 +7,18 @@ Employee External Assignment
 ============================
 
 
+Work Instruction
+=================
+
+Employee External Assignment Type
+-----------------------------------
+
+* `Create Employee External Assignment Type <docs/employee_external_assignment_type/01-create.html>`_
+* `Edit Employee External Assignment Type <docs/employee_external_assignment_type/02-edit.html>`_
+* `Delete Employee External Assignment Type <docs/employee_external_assignment_type/03-delete.html>`_
+* `Deactivate Employee External Assignment Type <docs/employee_external_assignment_type/04-deactivate.html>`_
+* `Activate Employee External Assignment Type <docs/employee_external_assignment_type/05-activate.html>`_
+
 
 Installation
 ============
