@@ -68,15 +68,23 @@ class TestUiEmployeeExternalAssignment(HttpSavepointCase):
         cls.assignment_reject = _create_assignment("TOUR EEA Reject Employee")
         cls.assignment_reject.action_confirm()
 
-        # 10-cancel.md -- On Progress record to cancel.
+        # 10-cancel.md -- On Progress record to cancel. The default env here
+        # runs as the superuser, which is not itself a registered approver on
+        # the approval request created by action_confirm (active_approver_
+        # user_ids is a real membership list, not a group shortcut) --
+        # bypass_policy_check is needed to move it to Open as setup data.
         cls.assignment_cancel = _create_assignment("TOUR EEA Cancel Employee")
         cls.assignment_cancel.action_confirm()
-        cls.assignment_cancel.action_approve_approval()
+        cls.assignment_cancel.with_context(
+            bypass_policy_check=True
+        ).action_approve_approval()
 
         # 11-terminate.md -- On Progress record to terminate.
         cls.assignment_terminate = _create_assignment("TOUR EEA Terminate Employee")
         cls.assignment_terminate.action_confirm()
-        cls.assignment_terminate.action_approve_approval()
+        cls.assignment_terminate.with_context(
+            bypass_policy_check=True
+        ).action_approve_approval()
 
         # 12-restart.md -- Cancelled record to restart.
         cls.assignment_restart = _create_assignment("TOUR EEA Restart Employee")
