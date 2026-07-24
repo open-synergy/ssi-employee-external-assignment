@@ -11,6 +11,21 @@ Employee External Assignment Agreement
 Work Instruction
 =================
 
+Employee External Assignment Agreement
+-----------------------------------------
+
+* `Create Employee External Assignment Agreement <docs/employee_external_assignment_agreement/01-create.html>`_
+* `Edit Employee External Assignment Agreement <docs/employee_external_assignment_agreement/02-edit.html>`_
+* `Delete Employee External Assignment Agreement <docs/employee_external_assignment_agreement/03-delete.html>`_
+* `Confirm Employee External Assignment Agreement <docs/employee_external_assignment_agreement/04-confirm.html>`_
+* `Approve Employee External Assignment Agreement <docs/employee_external_assignment_agreement/05-approve.html>`_
+* `Reject Employee External Assignment Agreement <docs/employee_external_assignment_agreement/06-reject.html>`_
+* `Cancel Employee External Assignment Agreement <docs/employee_external_assignment_agreement/10-cancel.html>`_
+* `Terminate Employee External Assignment Agreement <docs/employee_external_assignment_agreement/11-terminate.html>`_
+* `Restart Employee External Assignment Agreement <docs/employee_external_assignment_agreement/12-restart.html>`_
+* `Reset Document Number - Employee External Assignment Agreement <docs/employee_external_assignment_agreement/13-reset-number.html>`_
+* `View Payment Terms - Employee External Assignment Agreement <docs/employee_external_assignment_agreement/14-view-payment-terms.html>`_
+
 Employee External Assignment Agreement Input Type
 ---------------------------------------------------
 

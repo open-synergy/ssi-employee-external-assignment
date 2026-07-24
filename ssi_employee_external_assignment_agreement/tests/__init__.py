@@ -8,4 +8,5 @@ from . import test_employee_external_assignment_agreement_batch_link
 from . import test_employee_external_assignment_agreement_payment_term_fee
 from . import test_employee_external_assignment_agreement_payment_term_rule
 from . import test_generate_agreement_from_batch
+from . import test_ui_employee_external_assignment_agreement
 from . import test_ui_employee_external_assignment_agreement_input_type
