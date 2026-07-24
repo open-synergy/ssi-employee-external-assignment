@@ -19,6 +19,20 @@ Employee External Assignment Type
 * `Deactivate Employee External Assignment Type <docs/employee_external_assignment_type/04-deactivate.html>`_
 * `Activate Employee External Assignment Type <docs/employee_external_assignment_type/05-activate.html>`_
 
+Employee External Assignment
+-----------------------------------
+
+* `Create Employee External Assignment <docs/employee_external_assignment/01-create.html>`_
+* `Edit Employee External Assignment <docs/employee_external_assignment/02-edit.html>`_
+* `Delete Employee External Assignment <docs/employee_external_assignment/03-delete.html>`_
+* `Confirm Employee External Assignment <docs/employee_external_assignment/04-confirm.html>`_
+* `Approve Employee External Assignment <docs/employee_external_assignment/05-approve.html>`_
+* `Reject Employee External Assignment <docs/employee_external_assignment/06-reject.html>`_
+* `Cancel Employee External Assignment <docs/employee_external_assignment/10-cancel.html>`_
+* `Terminate Employee External Assignment <docs/employee_external_assignment/11-terminate.html>`_
+* `Restart Employee External Assignment <docs/employee_external_assignment/12-restart.html>`_
+* `Reset Document Number - Employee External Assignment <docs/employee_external_assignment/13-reset-number.html>`_
+
 
 Installation
 ============
