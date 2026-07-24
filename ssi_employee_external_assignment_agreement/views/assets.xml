@@ -21,6 +21,10 @@
                 type="text/javascript"
                 src="/ssi_employee_external_assignment_agreement/static/tests/tours/employee_external_assignment_agreement_batch_tour.js"
             />
+            <script
+                type="text/javascript"
+                src="/ssi_employee_external_assignment_agreement/static/tests/tours/employee_external_assignment_agreement_payment_term_tour.js"
+            />
         </xpath>
     </template>
 </odoo>

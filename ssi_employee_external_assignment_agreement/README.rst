@@ -50,6 +50,25 @@ Employee External Assignment Agreement Batch
 * `Reset Document Number - Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/13-reset-number.html>`_
 * `View Agreements - Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/14-view-agreements.html>`_
 
+Employee External Assignment Agreement Payment Term
+--------------------------------------------------------
+
+* `Create Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/01-create.html>`_
+* `Edit Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/02-edit.html>`_
+* `Delete Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/03-delete.html>`_
+* `Confirm Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/04-confirm.html>`_
+* `Approve Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/05-approve.html>`_
+* `Reject Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/06-reject.html>`_
+* `Cancel Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/10-cancel.html>`_
+* `Restart Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/12-restart.html>`_
+* `Reset Document Number - Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/13-reset-number.html>`_
+* `Load External Assignments - Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/14-load-external-assignment.html>`_
+* `View External Assignments - Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/15-view-external-assignments.html>`_
+* `Reload Payslips - Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/16-reload-payslip.html>`_
+* `Load Payslip Lines - Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/17-load-payslip-line.html>`_
+* `Create Invoice - Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/18-create-invoice.html>`_
+* `Delete Invoice - Employee External Assignment Agreement Payment Term <docs/employee_external_assignment_agreement_payment_term/19-delete-invoice.html>`_
+
 
 Installation
 ============
