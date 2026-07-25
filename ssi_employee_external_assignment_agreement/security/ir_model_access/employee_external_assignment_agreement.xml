@@ -221,4 +221,22 @@
     <field name="perm_write" eval="1" />
     <field name="perm_unlink" eval="1" />
 </record>
+
+<!-- Analytic Group - read access for the accounting configurator.
+     The base `analytic` module restricts this model to
+     "Technical/Analytic Accounting" only, which blocks the
+     `allowed_analytic_group_ids` M2O Configurator compute (and the
+     `analytic_group_id` field it filters) for regular users. -->
+<record
+        id="employee_external_assignment_agreement_account_analytic_group_read_access"
+        model="ir.model.access"
+    >
+    <field name="name">account.analytic.group - read (accounting configurator)</field>
+    <field name="model_id" ref="analytic.model_account_analytic_group" />
+    <field name="group_id" eval="False" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_create" eval="0" />
+    <field name="perm_write" eval="0" />
+    <field name="perm_unlink" eval="0" />
+</record>
 </odoo>
