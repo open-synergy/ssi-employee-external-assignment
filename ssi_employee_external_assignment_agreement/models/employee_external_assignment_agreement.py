@@ -284,6 +284,42 @@ class EmployeeExternalAssignmentAgreement(models.Model):
             ],
         },
     )
+    allowed_receivable_account_ids = fields.Many2many(
+        comodel_name="account.account",
+        string="Allowed Receivable Accounts",
+        help="Receivable accounts that are allowed to be selected based on "
+        "the employee external assignment type configuration.",
+        compute="_compute_allowed_receivable_account_ids",
+        store=False,
+        compute_sudo=True,
+    )
+    allowed_journal_ids = fields.Many2many(
+        comodel_name="account.journal",
+        string="Allowed Journals",
+        help="Journals that are allowed to be selected based on the "
+        "employee external assignment type configuration.",
+        compute="_compute_allowed_journal_ids",
+        store=False,
+        compute_sudo=True,
+    )
+    allowed_usage_ids = fields.Many2many(
+        comodel_name="product.usage_type",
+        string="Allowed Usages",
+        help="Usages that are allowed to be selected based on the "
+        "employee external assignment type configuration.",
+        compute="_compute_allowed_usage_ids",
+        store=False,
+        compute_sudo=True,
+    )
+    allowed_analytic_group_ids = fields.Many2many(
+        comodel_name="account.analytic.group",
+        string="Allowed Analytic Groups",
+        help="Analytic groups that are allowed to be selected based on the "
+        "employee external assignment type configuration.",
+        compute="_compute_allowed_analytic_group_ids",
+        store=False,
+        compute_sudo=True,
+    )
     batch_id = fields.Many2one(
         comodel_name="employee_external_assignment_agreement_batch",
         string="# Batch",
@@ -387,6 +423,62 @@ class EmployeeExternalAssignmentAgreement(models.Model):
                     python_code=record.type_id.other_fee_python_code,
                 )
             record.allowed_other_fee_ids = result
+
+    @api.depends("type_id")
+    def _compute_allowed_receivable_account_ids(self):
+        for record in self:
+            result = False
+            if record.type_id:
+                result = record._m2o_configurator_get_filter(
+                    object_name="account.account",
+                    method_selection=record.type_id.receivable_account_selection_method,
+                    manual_recordset=record.type_id.receivable_account_ids,
+                    domain=record.type_id.receivable_account_domain,
+                    python_code=record.type_id.receivable_account_python_code,
+                )
+            record.allowed_receivable_account_ids = result
+
+    @api.depends("type_id")
+    def _compute_allowed_journal_ids(self):
+        for record in self:
+            result = False
+            if record.type_id:
+                result = record._m2o_configurator_get_filter(
+                    object_name="account.journal",
+                    method_selection=record.type_id.journal_selection_method,
+                    manual_recordset=record.type_id.journal_ids,
+                    domain=record.type_id.journal_domain,
+                    python_code=record.type_id.journal_python_code,
+                )
+            record.allowed_journal_ids = result
+
+    @api.depends("type_id")
+    def _compute_allowed_usage_ids(self):
+        for record in self:
+            result = False
+            if record.type_id:
+                result = record._m2o_configurator_get_filter(
+                    object_name="product.usage_type",
+                    method_selection=record.type_id.usage_selection_method,
+                    manual_recordset=record.type_id.usage_ids,
+                    domain=record.type_id.usage_domain,
+                    python_code=record.type_id.usage_python_code,
+                )
+            record.allowed_usage_ids = result
+
+    @api.depends("type_id")
+    def _compute_allowed_analytic_group_ids(self):
+        for record in self:
+            result = False
+            if record.type_id:
+                result = record._m2o_configurator_get_filter(
+                    object_name="account.analytic.group",
+                    method_selection=record.type_id.analytic_group_selection_method,
+                    manual_recordset=record.type_id.analytic_group_ids,
+                    domain=record.type_id.analytic_group_domain,
+                    python_code=record.type_id.analytic_group_python_code,
+                )
+            record.allowed_analytic_group_ids = result
 
     @api.onchange("partner_id", "batch_id")
     def onchange_partner_location_id(self):
