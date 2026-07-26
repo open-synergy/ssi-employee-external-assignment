@@ -61,7 +61,12 @@
       </xpath>
       <xpath expr="//page[@name='employee']" position="after">
         <page name="other_fee" string="Other Fee">
-            <group name="other_fee_category_group" col="2" colspan="4">
+            <group
+                            name="other_fee_category_group"
+                            col="2"
+                            colspan="4"
+                            string="Other Fee Category"
+                        >
                 <field
                                 name="other_fee_category_selection_method"
                                 string="Selection Method"
@@ -85,7 +90,7 @@
                                 string="Python Code"
                             />
             </group>
-            <group name="other_fee_group" col="2" colspan="4">
+            <group name="other_fee_group" col="2" colspan="4" string="Other Fee">
                 <field name="other_fee_selection_method" string="Selection Method" />
                 <field
                                 name="other_fee_ids"
@@ -108,7 +113,12 @@
             </group>
         </page>
         <page name="accounting_config" string="Accounting Configuration">
-            <group name="receivable_account_group" col="2" colspan="4">
+            <group
+                            name="receivable_account_group"
+                            col="2"
+                            colspan="4"
+                            string="Receivable Account"
+                        >
                 <field
                                 name="receivable_account_selection_method"
                                 string="Selection Method"
@@ -132,7 +142,7 @@
                                 string="Python Code"
                             />
             </group>
-            <group name="journal_group" col="2" colspan="4">
+            <group name="journal_group" col="2" colspan="4" string="Journal">
                 <field name="journal_selection_method" string="Selection Method" />
                 <field
                                 name="journal_ids"
@@ -153,7 +163,7 @@
                                 string="Python Code"
                             />
             </group>
-            <group name="usage_group" col="2" colspan="4">
+            <group name="usage_group" col="2" colspan="4" string="Usage">
                 <field name="usage_selection_method" string="Selection Method" />
                 <field
                                 name="usage_ids"
@@ -174,7 +184,12 @@
                                 string="Python Code"
                             />
             </group>
-            <group name="analytic_group_group" col="2" colspan="4">
+            <group
+                            name="analytic_group_group"
+                            col="2"
+                            colspan="4"
+                            string="Analytic Group"
+                        >
                 <field
                                 name="analytic_group_selection_method"
                                 string="Selection Method"
