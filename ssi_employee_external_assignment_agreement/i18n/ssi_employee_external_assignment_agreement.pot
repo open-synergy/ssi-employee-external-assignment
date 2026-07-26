@@ -138,6 +138,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term__agreement_id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail_compensation_term__agreement_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_input__agreement_id
@@ -172,6 +173,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_hr_payslip__agreement_payment_term_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_hr_payslip_line__agreement_payment_term_id
 msgid "Agreement Payment Term"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__agreement_id
+msgid ""
+"Agreement this wizard was launched from. New assignments are linked to this "
+"agreement."
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -228,6 +236,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__allowed_contact_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_batch__allowed_contact_ids
 msgid "Allowed Contact"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__allowed_employee_ids
+msgid "Allowed Employees"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -385,8 +398,14 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_agreement_term_view_form
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_assignment_view_form
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.generate_agreement_from_batch_view_form
 msgid "Are you sure?"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_form
+msgid "Assignment"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -486,6 +505,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_agreement_term_view_form
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_assignment_view_form
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.generate_agreement_from_batch_view_form
 msgid "Cancel"
 msgstr ""
@@ -564,6 +584,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_agreement_term_view_form
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_assignment_view_form
 msgid "Confirm"
 msgstr ""
 
@@ -585,9 +606,20 @@ msgid "Contact"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_agreement_view_form
+msgid "Create Assignment"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.actions.act_window,name:ssi_employee_external_assignment_agreement.create_employee_external_agreement_term_action
 #: model:ir.model,name:ssi_employee_external_assignment_agreement.model_create_employee_external_agreement_term
 msgid "Create Employee External Agreement Term"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.actions.act_window,name:ssi_employee_external_assignment_agreement.create_employee_external_assignment_action
+#: model:ir.model,name:ssi_employee_external_assignment_agreement.model_create_employee_external_assignment
+msgid "Create Employee External Assignment"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -597,6 +629,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term__create_uid
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__create_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__create_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_batch__create_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__create_uid
@@ -614,6 +647,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term__create_date
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__create_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__create_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_batch__create_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__create_date
@@ -725,6 +759,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term__display_name
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_batch__display_name
@@ -881,6 +916,7 @@ msgid "Employee Payslip"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__employee_ids
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__employee_ids
 msgid "Employees"
 msgstr ""
@@ -889,6 +925,19 @@ msgstr ""
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_payment_term__employee_ids
 msgid ""
 "Employees associated with the external assignments in this payment term."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__allowed_employee_ids
+msgid ""
+"Employees eligible for a new assignment: their job position is one of the "
+"agreement's job positions, and they do not already have an active assignment"
+" on this agreement."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__employee_ids
+msgid "Employees to create a new external assignment for."
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
@@ -1019,6 +1068,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term__id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_batch__id
@@ -1212,6 +1262,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term____last_update
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_batch____last_update
@@ -1234,6 +1285,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term__write_uid
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__write_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__write_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_batch__write_uid
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__write_uid
@@ -1251,6 +1303,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_agreement_term__write_date
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_batch__write_date
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_detail__write_date
@@ -2322,6 +2375,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_agreement_term_view_form
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.create_employee_external_assignment_view_form
 #: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.generate_agreement_from_batch_view_form
 msgid "or"
 msgstr ""
