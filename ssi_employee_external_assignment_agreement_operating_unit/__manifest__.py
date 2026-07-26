@@ -13,6 +13,7 @@
         "ssi_employee_external_assignment_agreement",
         "ssi_operating_unit_mixin",
         "ssi_financial_accounting_operating_unit",
+        "ssi_employee_external_assignment_operating_unit",
     ],
     "data": [
         "security/res_group/res_group_data.xml",
@@ -20,5 +21,6 @@
         "views/employee_external_assignment_agreement_batch_views.xml",
         "views/employee_external_assignment_agreement_views.xml",
         "views/employee_external_assignment_agreement_payment_term_views.xml",
+        "views/create_employee_external_assignment_views.xml",
     ],
 }

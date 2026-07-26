@@ -1,0 +1,410 @@
+scenarios:
+  - name: "Wizard filters by agreement OU, shows it, and stamps new assignments"
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner for OU1"
+        action: "create"
+        model: "res.partner"
+        save_as: "ou1_partner"
+        values:
+          name: "Test CEEAOU OU1 Partner"
+          is_company: true
+
+      - step: "Create partner for OU2"
+        action: "create"
+        model: "res.partner"
+        save_as: "ou2_partner"
+        values:
+          name: "Test CEEAOU OU2 Partner"
+          is_company: true
+
+      - step: "Create operating unit OU1"
+        action: "create"
+        model: "operating.unit"
+        save_as: "ou1"
+        values:
+          name: "Test CEEAOU OU1"
+          code: "TCEEAOU1"
+          partner_id: "REC: ou1_partner.id"
+
+      - step: "Create operating unit OU2"
+        action: "create"
+        model: "operating.unit"
+        save_as: "ou2"
+        values:
+          name: "Test CEEAOU OU2"
+          code: "TCEEAOU2"
+          partner_id: "REC: ou2_partner.id"
+
+      - step: "Create job A"
+        action: "create"
+        model: "hr.job"
+        save_as: "job_a"
+        values:
+          name: "Test CEEAOU Job A"
+
+      - step: "Create employee E1 with job A on OU1"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e1"
+        values:
+          name: "Test CEEAOU Employee E1"
+          job_id: "REC: job_a.id"
+          operating_unit_id: "REC: ou1.id"
+
+      - step: "Create employee E2 with job A on OU2"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e2"
+        values:
+          name: "Test CEEAOU Employee E2"
+          job_id: "REC: job_a.id"
+          operating_unit_id: "REC: ou2.id"
+
+      - step: "Create partner for the agreement"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test CEEAOU Agreement Partner"
+          is_company: true
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test CEEAOU Type"
+          code: "TCEEAOU01"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement on OU1 with job A in scope"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test CEEAOU Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          operating_unit_id: "REC: ou1.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job_a.id"
+
+      - step: "Confirm agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after confirm"
+        action: "call"
+        target: "agreement"
+        method: "invalidate_cache"
+
+      - step: "Approve agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "open"
+
+      - step: "Invalidate cache after open"
+        action: "call"
+        target: "agreement"
+        method: "invalidate_cache"
+
+      - step: "Create wizard for the OU1 agreement, selecting E1"
+        action: "create"
+        model: "create_employee_external_assignment"
+        save_as: "wizard"
+        as_user: "base.user_admin"
+        values:
+          agreement_id: "REC: agreement.id"
+          employee_ids: [[6, 0, ["REC: e1.id"]]]
+
+      - step: "Assert wizard shows the agreement's operating unit"
+        action: "assert"
+        target: "wizard"
+        asserts:
+          operating_unit_id:
+            type: "m2o"
+            expected: "REC: ou1"
+
+      - step: "Assert allowed_employee_ids contains only E1 (same OU)"
+        action: "assert"
+        target: "wizard"
+        asserts:
+          allowed_employee_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: e1"
+
+      - step: "Call action_create_assignment"
+        action: "call"
+        target: "wizard"
+        method: "action_create_assignment"
+        as_user: "base.user_admin"
+
+      - step: "Find the assignment created for E1"
+        action: "search"
+        model: "employee_external_assignment"
+        domain:
+          - ["agreement_id", "=", "REC: agreement.id"]
+          - ["employee_id", "=", "REC: e1.id"]
+        save_as: "assignment_e1"
+        expect_count: 1
+
+      - step: "Assert the new assignment inherits OU1 from the agreement"
+        action: "assert"
+        target: "assignment_e1"
+        asserts:
+          operating_unit_id:
+            type: "m2o"
+            expected: "REC: ou1"
+          agreement_id:
+            type: "m2o"
+            expected: "REC: agreement"
+
+  - name: "Agreement without OU leaves employee filtering unrestricted"
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner for OU1 (no-OU scenario)"
+        action: "create"
+        model: "res.partner"
+        save_as: "ou1_partner"
+        values:
+          name: "Test CEEAOU NoOU OU1 Partner"
+          is_company: true
+
+      - step: "Create partner for OU2 (no-OU scenario)"
+        action: "create"
+        model: "res.partner"
+        save_as: "ou2_partner"
+        values:
+          name: "Test CEEAOU NoOU OU2 Partner"
+          is_company: true
+
+      - step: "Create operating unit OU1 (no-OU scenario)"
+        action: "create"
+        model: "operating.unit"
+        save_as: "ou1"
+        values:
+          name: "Test CEEAOU NoOU OU1"
+          code: "TCEEAOUX1"
+          partner_id: "REC: ou1_partner.id"
+
+      - step: "Create operating unit OU2 (no-OU scenario)"
+        action: "create"
+        model: "operating.unit"
+        save_as: "ou2"
+        values:
+          name: "Test CEEAOU NoOU OU2"
+          code: "TCEEAOUX2"
+          partner_id: "REC: ou2_partner.id"
+
+      - step: "Create job A (no-OU scenario)"
+        action: "create"
+        model: "hr.job"
+        save_as: "job_a"
+        values:
+          name: "Test CEEAOU NoOU Job A"
+
+      - step: "Create employee E1 with job A on OU1"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e1"
+        values:
+          name: "Test CEEAOU NoOU Employee E1"
+          job_id: "REC: job_a.id"
+          operating_unit_id: "REC: ou1.id"
+
+      - step: "Create employee E2 with job A on OU2"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e2"
+        values:
+          name: "Test CEEAOU NoOU Employee E2"
+          job_id: "REC: job_a.id"
+          operating_unit_id: "REC: ou2.id"
+
+      - step: "Create partner for the agreement (no-OU scenario)"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test CEEAOU NoOU Agreement Partner"
+          is_company: true
+
+      - step: "Create assignment type (no-OU scenario)"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test CEEAOU NoOU Type"
+          code: "TCEEAOU02"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement without an operating unit"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test CEEAOU NoOU Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job_a.id"
+
+      - step: "Confirm agreement (no-OU scenario)"
+        action: "call"
+        target: "agreement"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+
+      - step: "Invalidate cache after confirm (no-OU scenario)"
+        action: "call"
+        target: "agreement"
+        method: "invalidate_cache"
+
+      - step: "Approve agreement (no-OU scenario)"
+        action: "call"
+        target: "agreement"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "open"
+
+      - step: "Invalidate cache after open (no-OU scenario)"
+        action: "call"
+        target: "agreement"
+        method: "invalidate_cache"
+
+      - step: "Create wizard for the OU-less agreement"
+        action: "create"
+        model: "create_employee_external_assignment"
+        save_as: "wizard"
+        as_user: "base.user_admin"
+        values:
+          agreement_id: "REC: agreement.id"
+          employee_ids: [[6, 0, ["REC: e1.id"]]]
+
+      - step: "Assert wizard operating_unit_id is empty"
+        action: "assert"
+        target: "wizard"
+        asserts:
+          operating_unit_id:
+            type: "value"
+            operator: "is_falsy"
+
+      - step: "Assert allowed_employee_ids contains both E1 and E2"
+        action: "assert"
+        target: "wizard"
+        asserts:
+          allowed_employee_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: e1"
+              - "REC: e2"

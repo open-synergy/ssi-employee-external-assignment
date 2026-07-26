@@ -4,3 +4,4 @@
 
 from . import test_employee_external_assignment_agreement_operating_unit
 from . import test_employee_external_assignment_agreement_batch_operating_unit
+from . import test_create_employee_external_assignment_operating_unit
