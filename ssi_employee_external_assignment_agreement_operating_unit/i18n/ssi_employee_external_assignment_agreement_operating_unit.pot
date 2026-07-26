@@ -30,7 +30,13 @@ msgid "Create Employee External Agreement Term"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement_operating_unit
+#: model:ir.model,name:ssi_employee_external_assignment_agreement_operating_unit.model_create_employee_external_assignment
+msgid "Create Employee External Assignment"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement_operating_unit
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_create_employee_external_agreement_term__display_name
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_create_employee_external_assignment__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_batch__display_name
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_payment_term__display_name
@@ -60,6 +66,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement_operating_unit
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_create_employee_external_agreement_term__id
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_create_employee_external_assignment__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_batch__id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_payment_term__id
@@ -69,6 +76,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement_operating_unit
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_create_employee_external_agreement_term____last_update
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_create_employee_external_assignment____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_batch____last_update
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_payment_term____last_update
@@ -77,6 +85,7 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement_operating_unit
+#: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_create_employee_external_assignment__operating_unit_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement__operating_unit_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_batch__operating_unit_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_payment_term__operating_unit_id
@@ -99,4 +108,11 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement_operating_unit
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement_operating_unit.field_employee_external_assignment_agreement_payment_term__operating_unit_id
 msgid "Operating unit for this payment term. Defaults from the agreement."
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement_operating_unit
+#: model:ir.model.fields,help:ssi_employee_external_assignment_agreement_operating_unit.field_create_employee_external_assignment__operating_unit_id
+msgid ""
+"Operating unit of the agreement this wizard was launched from. Informational"
+" only; new assignments always inherit it from the agreement."
 msgstr ""
