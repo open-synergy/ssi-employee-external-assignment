@@ -327,6 +327,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__analytic_group_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_type_view_form
 msgid "Analytic Group"
 msgstr ""
 
@@ -1216,6 +1217,7 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__journal_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_generate_agreement_from_batch__journal_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_type_view_form
 msgid "Journal"
 msgstr ""
 
@@ -1595,6 +1597,11 @@ msgid "Other Fee Categories"
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_type_view_form
+msgid "Other Fee Category"
+msgstr ""
+
+#. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_type__other_fee_category_domain
 msgid "Other Fee Category Domain"
 msgstr ""
@@ -1806,6 +1813,7 @@ msgstr ""
 #. module: ssi_employee_external_assignment_agreement
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement__receivable_account_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_generate_agreement_from_batch__receivable_account_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_type_view_form
 msgid "Receivable Account"
 msgstr ""
 
@@ -2253,6 +2261,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_other_fee__usage_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_agreement_variable_fee__usage_id
 #: model:ir.model.fields,field_description:ssi_employee_external_assignment_agreement.field_employee_external_assignment_type__usage_id
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement.employee_external_assignment_type_view_form
 msgid "Usage"
 msgstr ""
 
