@@ -18,7 +18,12 @@
         <data>
             <xpath expr="//page[@name='other_fee']" position="after">
                 <page name="revenue_recognition" string="Revenue Recognition">
-                    <group name="rr_1" colspan="4" col="2">
+                    <group
+                            name="rr_1"
+                            colspan="4"
+                            col="2"
+                            string="Performance Obligation"
+                        >
                         <field name="pob_product_id" />
                     </group>
                 </page>
