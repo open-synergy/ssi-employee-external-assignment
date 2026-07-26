@@ -89,3 +89,75 @@ class EmployeeExternalAssignmentType(models.Model):
         help="Default usage that determines which account is used when "
         "generating invoices for agreements of this type.",
     )
+
+    receivable_account_selection_method = fields.Selection(
+        default="domain",
+        selection=[("manual", "Manual"), ("domain", "Domain"), ("code", "Python Code")],
+        string="Receivable Account Selection Method",
+        required=True,
+    )
+    receivable_account_ids = fields.Many2many(
+        comodel_name="account.account",
+        string="Receivable Accounts",
+        relation="eea_type_2_receivable_account_rel",
+        column1="type_id",
+        column2="account_id",
+    )
+    receivable_account_domain = fields.Text(
+        default="[]", string="Receivable Account Domain"
+    )
+    receivable_account_python_code = fields.Text(
+        default="result = []", string="Receivable Account Python Code"
+    )
+
+    journal_selection_method = fields.Selection(
+        default="domain",
+        selection=[("manual", "Manual"), ("domain", "Domain"), ("code", "Python Code")],
+        string="Journal Selection Method",
+        required=True,
+    )
+    journal_ids = fields.Many2many(
+        comodel_name="account.journal",
+        string="Journals",
+        relation="eea_type_2_journal_rel",
+        column1="type_id",
+        column2="journal_id",
+    )
+    journal_domain = fields.Text(default="[]", string="Journal Domain")
+    journal_python_code = fields.Text(
+        default="result = []", string="Journal Python Code"
+    )
+
+    usage_selection_method = fields.Selection(
+        default="domain",
+        selection=[("manual", "Manual"), ("domain", "Domain"), ("code", "Python Code")],
+        string="Usage Selection Method",
+        required=True,
+    )
+    usage_ids = fields.Many2many(
+        comodel_name="product.usage_type",
+        string="Usages",
+        relation="eea_type_2_usage_type_rel",
+        column1="type_id",
+        column2="usage_type_id",
+    )
+    usage_domain = fields.Text(default="[]", string="Usage Domain")
+    usage_python_code = fields.Text(default="result = []", string="Usage Python Code")
+
+    analytic_group_selection_method = fields.Selection(
+        default="domain",
+        selection=[("manual", "Manual"), ("domain", "Domain"), ("code", "Python Code")],
+        string="Analytic Group Selection Method",
+        required=True,
+    )
+    analytic_group_ids = fields.Many2many(
+        comodel_name="account.analytic.group",
+        string="Analytic Groups",
+        relation="eea_type_2_analytic_group_rel",
+        column1="type_id",
+        column2="analytic_group_id",
+    )
+    analytic_group_domain = fields.Text(default="[]", string="Analytic Group Domain")
+    analytic_group_python_code = fields.Text(
+        default="result = []", string="Analytic Group Python Code"
+    )

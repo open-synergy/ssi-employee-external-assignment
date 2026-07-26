@@ -107,6 +107,98 @@
                             />
             </group>
         </page>
+        <page name="accounting_config" string="Accounting Configuration">
+            <group name="receivable_account_group" col="2" colspan="4">
+                <field
+                                name="receivable_account_selection_method"
+                                string="Selection Method"
+                            />
+                <field
+                                name="receivable_account_ids"
+                                attrs="{'invisible':[('receivable_account_selection_method','!=','manual')]}"
+                                string="Receivable Accounts"
+                            />
+                <field
+                                name="receivable_account_domain"
+                                widget="domain"
+                                options="{'model': 'account.account', 'in_dialog': True}"
+                                attrs="{'invisible':[('receivable_account_selection_method','!=','domain')]}"
+                                string="Domain"
+                            />
+                <field
+                                name="receivable_account_python_code"
+                                widget="ace"
+                                attrs="{'invisible':[('receivable_account_selection_method','!=','code')]}"
+                                string="Python Code"
+                            />
+            </group>
+            <group name="journal_group" col="2" colspan="4">
+                <field name="journal_selection_method" string="Selection Method" />
+                <field
+                                name="journal_ids"
+                                attrs="{'invisible':[('journal_selection_method','!=','manual')]}"
+                                string="Journals"
+                            />
+                <field
+                                name="journal_domain"
+                                widget="domain"
+                                options="{'model': 'account.journal', 'in_dialog': True}"
+                                attrs="{'invisible':[('journal_selection_method','!=','domain')]}"
+                                string="Domain"
+                            />
+                <field
+                                name="journal_python_code"
+                                widget="ace"
+                                attrs="{'invisible':[('journal_selection_method','!=','code')]}"
+                                string="Python Code"
+                            />
+            </group>
+            <group name="usage_group" col="2" colspan="4">
+                <field name="usage_selection_method" string="Selection Method" />
+                <field
+                                name="usage_ids"
+                                attrs="{'invisible':[('usage_selection_method','!=','manual')]}"
+                                string="Usages"
+                            />
+                <field
+                                name="usage_domain"
+                                widget="domain"
+                                options="{'model': 'product.usage_type', 'in_dialog': True}"
+                                attrs="{'invisible':[('usage_selection_method','!=','domain')]}"
+                                string="Domain"
+                            />
+                <field
+                                name="usage_python_code"
+                                widget="ace"
+                                attrs="{'invisible':[('usage_selection_method','!=','code')]}"
+                                string="Python Code"
+                            />
+            </group>
+            <group name="analytic_group_group" col="2" colspan="4">
+                <field
+                                name="analytic_group_selection_method"
+                                string="Selection Method"
+                            />
+                <field
+                                name="analytic_group_ids"
+                                attrs="{'invisible':[('analytic_group_selection_method','!=','manual')]}"
+                                string="Analytic Groups"
+                            />
+                <field
+                                name="analytic_group_domain"
+                                widget="domain"
+                                options="{'model': 'account.analytic.group', 'in_dialog': True}"
+                                attrs="{'invisible':[('analytic_group_selection_method','!=','domain')]}"
+                                string="Domain"
+                            />
+                <field
+                                name="analytic_group_python_code"
+                                widget="ace"
+                                attrs="{'invisible':[('analytic_group_selection_method','!=','code')]}"
+                                string="Python Code"
+                            />
+            </group>
+        </page>
       </xpath>
     </data>
   </field>

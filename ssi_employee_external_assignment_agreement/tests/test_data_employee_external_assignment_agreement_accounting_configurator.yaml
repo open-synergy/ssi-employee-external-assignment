@@ -1,0 +1,373 @@
+setup:
+  steps:
+    - step: "Search for an existing account journal"
+      action: "search"
+      model: "account.journal"
+      domain:
+        - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+      save_as: "journal"
+      limit: 1
+
+    - step: "Search for an existing receivable account"
+      action: "search"
+      model: "account.account"
+      domain:
+        - ["user_type_id.type", "=", "receivable"]
+      save_as: "receivable_account"
+      limit: 1
+
+    - step: "Search for a generic account type"
+      action: "search"
+      model: "account.account.type"
+      domain:
+        - ["type", "=", "other"]
+      save_as: "account_type_other"
+      limit: 1
+
+    - step: "Search for an existing currency"
+      action: "search"
+      model: "res.currency"
+      domain:
+        - ["active", "in", [true, false]]
+      save_as: "currency"
+      limit: 1
+
+    - step: "Search for an existing pricelist"
+      action: "search"
+      model: "product.pricelist"
+      domain: []
+      save_as: "pricelist"
+      limit: 1
+
+    - step: "Create partner"
+      action: "create"
+      model: "res.partner"
+      save_as: "partner"
+      values:
+        name: "Test EEAA Accounting Config Partner"
+        is_company: true
+
+scenarios:
+  - name:
+      "Accounting Configurator - Manual receivable account restricts
+      allowed_receivable_account_ids"
+    steps:
+      - step: "Create assignment type with manual receivable account"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEAA Manual Receivable Account Type"
+          code: "TEEAACC001"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+          receivable_account_selection_method: "manual"
+          receivable_account_ids:
+            - - 4
+              - "REC: receivable_account.id"
+
+      - step: "Create agreement using the restricted type"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test Manual Receivable Account Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert allowed_receivable_account_ids exactly the manual account"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          allowed_receivable_account_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: receivable_account"
+
+  - name: "Accounting Configurator - Manual journal restricts allowed_journal_ids"
+    steps:
+      - step: "Create assignment type with manual journal"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEAA Manual Journal Type"
+          code: "TEEAACC002"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+          journal_selection_method: "manual"
+          journal_ids:
+            - - 4
+              - "REC: journal.id"
+
+      - step: "Create agreement using the restricted type"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test Manual Journal Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert allowed_journal_ids exactly the manual journal"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          allowed_journal_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: journal"
+
+  - name: "Accounting Configurator - Manual usage restricts allowed_usage_ids"
+    steps:
+      - step: "Create account for the usage type"
+        action: "create"
+        model: "account.account"
+        save_as: "usage_account"
+        values:
+          name: "Test EEAA Usage Account"
+          code: "EEACUTA01"
+          user_type_id: "REC: account_type_other.id"
+
+      - step: "Create usage type"
+        action: "create"
+        model: "product.usage_type"
+        save_as: "usage_type"
+        values:
+          name: "Test EEAA Usage Type"
+          code: "EEACUT001"
+          account_id: "REC: usage_account.id"
+
+      - step: "Create assignment type with manual usage"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEAA Manual Usage Type"
+          code: "TEEAACC003"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+          usage_selection_method: "manual"
+          usage_ids:
+            - - 4
+              - "REC: usage_type.id"
+
+      - step: "Create agreement using the restricted type"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test Manual Usage Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert allowed_usage_ids exactly the manual usage"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          allowed_usage_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: usage_type"
+
+  - name:
+      "Accounting Configurator - Manual analytic group restricts
+      allowed_analytic_group_ids"
+    steps:
+      - step: "Create analytic group"
+        action: "create"
+        model: "account.analytic.group"
+        save_as: "analytic_group"
+        values:
+          name: "Test EEAA Analytic Group"
+
+      - step: "Create assignment type with manual analytic group"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEAA Manual Analytic Group Type"
+          code: "TEEAACC004"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+          analytic_group_selection_method: "manual"
+          analytic_group_ids:
+            - - 4
+              - "REC: analytic_group.id"
+
+      - step: "Create agreement using the restricted type"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test Manual Analytic Group Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Assert allowed_analytic_group_ids exactly the manual group"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          allowed_analytic_group_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: analytic_group"
+
+  - name:
+      "Accounting Configurator - Domain receivable account matches every record found by
+      the domain"
+    steps:
+      - step: "Create first domain-matched receivable account"
+        action: "create"
+        model: "account.account"
+        save_as: "domain_account_1"
+        values:
+          name: "EEA CFG Domain Account A"
+          code: "EEACD001"
+          user_type_id: "REC: account_type_other.id"
+
+      - step: "Create second domain-matched receivable account"
+        action: "create"
+        model: "account.account"
+        save_as: "domain_account_2"
+        values:
+          name: "EEA CFG Domain Account B"
+          code: "EEACD002"
+          user_type_id: "REC: account_type_other.id"
+
+      - step: "Create assignment type with domain-based receivable account filter"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEAA Domain Receivable Account Type"
+          code: "TEEAACC005"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+          receivable_account_selection_method: "domain"
+          receivable_account_domain: "[('name', 'ilike', 'EEA CFG Domain')]"
+
+      - step: "Create agreement using the domain-restricted type"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test Domain Receivable Account Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step:
+          "Assert allowed_receivable_account_ids contains both domain-matched accounts"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          allowed_receivable_account_ids:
+            type: "m2m"
+            check: "contains"
+            expected_records:
+              - "REC: domain_account_1"
+              - "REC: domain_account_2"
+
+  - name: "Accounting Configurator - Empty type_id yields no allowed accounting records"
+    skip_setup: true
+    steps:
+      - step: "Build a new agreement form without setting type_id"
+        action: "form"
+        model: "employee_external_assignment_agreement"
+        save: false
+        asserts:
+          allowed_receivable_account_ids:
+            type: "m2m"
+            check: "count"
+            expected_count: 0
+          allowed_journal_ids:
+            type: "m2m"
+            check: "count"
+            expected_count: 0
+          allowed_usage_ids:
+            type: "m2m"
+            check: "count"
+            expected_count: 0
+          allowed_analytic_group_ids:
+            type: "m2m"
+            check: "count"
+            expected_count: 0
