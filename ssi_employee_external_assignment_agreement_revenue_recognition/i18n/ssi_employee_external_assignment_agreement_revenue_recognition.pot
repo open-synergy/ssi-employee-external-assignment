@@ -179,6 +179,7 @@ msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement_revenue_recognition
 #: model:ir.model,name:ssi_employee_external_assignment_agreement_revenue_recognition.model_performance_obligation
+#: model_terms:ir.ui.view,arch_db:ssi_employee_external_assignment_agreement_revenue_recognition.employee_external_assignment_type_view_form_rr
 msgid "Performance Obligation"
 msgstr ""
 
