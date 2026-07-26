@@ -24,7 +24,7 @@ addon | version | maintainers | summary
 [ssi_employee_external_assignment](ssi_employee_external_assignment/) | 14.0.1.5.1 |  | Employee External Assignment
 [ssi_employee_external_assignment_agreement](ssi_employee_external_assignment_agreement/) | 14.0.2.11.2 |  | Employee External Assignment Agreement
 [ssi_employee_external_assignment_agreement_operating_unit](ssi_employee_external_assignment_agreement_operating_unit/) | 14.0.1.4.0 |  | Employee External Assignment Agreement + Operating Unit
-[ssi_employee_external_assignment_agreement_revenue_recognition](ssi_employee_external_assignment_agreement_revenue_recognition/) | 14.0.1.1.0 |  | Employee External Assignment Agreement - Revenue Recognition
+[ssi_employee_external_assignment_agreement_revenue_recognition](ssi_employee_external_assignment_agreement_revenue_recognition/) | 14.0.1.1.1 |  | Employee External Assignment Agreement - Revenue Recognition
 [ssi_employee_external_assignment_operating_unit](ssi_employee_external_assignment_operating_unit/) | 14.0.1.2.0 |  | Employee External Assignment + Operating Unit
 
 [//]: # (end addons)
