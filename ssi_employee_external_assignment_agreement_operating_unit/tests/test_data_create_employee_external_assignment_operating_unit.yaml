@@ -348,6 +348,7 @@ scenarios:
           journal_id: "REC: journal.id"
           currency_id: "REC: currency.id"
           pricelist_id: "REC: pricelist.id"
+          operating_unit_id: false
           date_start: "2026-01-01"
           date_end: "2026-12-31"
           detail_ids:
