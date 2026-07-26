@@ -2,6 +2,7 @@
 # Copyright 2025 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from . import test_create_employee_external_assignment
 from . import test_employee_external_assignment_agreement
 from . import test_employee_external_assignment_agreement_accounting_configurator
 from . import test_employee_external_assignment_agreement_batch

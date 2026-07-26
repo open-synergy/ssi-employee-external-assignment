@@ -164,6 +164,35 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
 
         cls.agreement_payment_term = _create_agreement("Payment Term")
 
+        # Pre-Condition 15-create-assignment.md: Open, with a job position
+        # in Details and a matching employee eligible for the wizard.
+        cls.job_create_assignment = (
+            cls.env["hr.job"]
+            .with_user(cls.admin)
+            .create({"name": "TOUR EEAA Job Create Assignment"})
+        )
+        cls.employee_create_assignment = (
+            cls.env["hr.employee"]
+            .with_user(cls.admin)
+            .create(
+                {
+                    "name": "TOUR EEAA Employee Create Assignment",
+                    "job_id": cls.job_create_assignment.id,
+                }
+            )
+        )
+        cls.agreement_create_assignment = _create_agreement("Create Assignment")
+        cls.agreement_create_assignment.with_user(cls.admin).write(
+            {
+                "detail_ids": [
+                    (0, 0, {"job_id": cls.job_create_assignment.id}),
+                ],
+            }
+        )
+        cls.agreement_create_assignment.with_user(cls.admin).action_confirm()
+        cls.agreement_create_assignment.invalidate_cache()
+        cls.agreement_create_assignment.with_user(cls.admin).action_approve_approval()
+
     def test_create(self):
         """IK: docs/employee_external_assignment_agreement/01-create.md"""
         self.start_tour(
@@ -241,5 +270,13 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
         self.start_tour(
             "/web",
             "ssi_employee_external_assignment_agreement_view_payment_terms",
+            login="admin",
+        )
+
+    def test_create_assignment(self):
+        """IK: docs/employee_external_assignment_agreement/15-create-assignment.md"""
+        self.start_tour(
+            "/web",
+            "ssi_employee_external_assignment_agreement_create_assignment",
             login="admin",
         )
