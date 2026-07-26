@@ -767,5 +767,97 @@ odoo.define(
                 ]
             )
         );
+
+        // IK: docs/employee_external_assignment_agreement/15-create-assignment.md
+        tour.register(
+            "ssi_employee_external_assignment_agreement_create_assignment",
+            {
+                test: true,
+                url: "/web",
+            },
+            [].concat(
+                // Flow 1 -- Open the Agreements menu.
+                openAgreementList(),
+                [
+                    // Flow 2 -- Open the record.
+                    {
+                        content: "Open the record",
+                        trigger:
+                            ".o_data_row:contains(TOUR EEAA Partner Create Assignment) .o_data_cell:first",
+                        extra_trigger: ".o_list_view",
+                    },
+                    {
+                        content: "Form is open",
+                        trigger: ".o_form_view",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+
+                    // Flow 3 -- Go to the Assignment tab.
+                    {
+                        content: "Open the Assignment tab",
+                        trigger: ".o_notebook .nav-link:contains(Assignment)",
+                    },
+
+                    // Flow 4 -- Click the Create Assignment button.
+                    {
+                        content: "Click the Create Assignment button",
+                        trigger: "button:contains(Create Assignment)",
+                    },
+                    {
+                        // Wizard: JANGAN prefiks trigger dengan ".modal" di
+                        // 14.0 -- lihat catatan patterns.md skill
+                        // odoo-development-ui-test §H.
+                        content: "Wizard is open",
+                        trigger: ".o_form_view",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+
+                    // Flow 5 -- Select the Employees.
+                    {
+                        content: "Select the Employee",
+                        trigger: ".o_field_many2manytags[name='employee_ids'] input",
+                        run: "text TOUR EEAA Employee Create Assignment",
+                    },
+                    {
+                        content: "Pick the Employee from the dropdown",
+                        trigger:
+                            ".ui-autocomplete .ui-menu-item a:contains(TOUR EEAA Employee Create Assignment)",
+                        in_modal: false,
+                    },
+
+                    // Flow 6 -- Click Confirm.
+                    {
+                        content: "Confirm the wizard",
+                        trigger:
+                            ".modal-footer button[name='action_create_assignment']",
+                    },
+                    {
+                        // The wizard's Confirm button carries a stacked "Are
+                        // you sure?" dialog (confirm= attribute) --
+                        // $modal_displayed resolves to the topmost visible
+                        // modal, so this targets that stacked dialog.
+                        content: "Confirm the stacked dialog",
+                        trigger: ".modal-footer button.btn-primary",
+                        in_modal: true,
+                    },
+
+                    // Post-Condition -- a list view opens showing the newly
+                    // created assignments.
+                    {
+                        content: "Employee External Assignments list is displayed",
+                        trigger:
+                            ".o_control_panel .breadcrumb-item.active:contains(Employee External Assignments)",
+                        extra_trigger: ".o_list_view",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                ]
+            )
+        );
     }
 );
