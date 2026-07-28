@@ -1,0 +1,249 @@
+scenarios:
+  - name:
+      "Employee External Assignment Agreement - force_save keeps batch-driven fields on
+      manual form save"
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner for batch"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test Force Save Batch Partner"
+          is_company: true
+
+      - step: "Create assignment type for batch"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test Force Save Batch Type"
+          code: "TFSAB001"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create batch with known type, partner and period"
+        action: "create"
+        model: "employee_external_assignment_agreement_batch"
+        save_as: "batch"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test Force Save Batch"
+          partner_id: "REC: partner.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step:
+          "Fill agreement form with batch_id and save, without force_save the required
+          snapshot fields would be dropped on save"
+        action: "form"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          title: "Test Force Save Agreement"
+          receivable_account_id: "REC: receivable_account"
+          journal_id: "REC: journal"
+          batch_id: "REC: batch"
+        save: true
+
+      - step: "Assert saved agreement snapshots type_id from batch"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          type_id:
+            type: "m2o"
+            expected: "REC: assignment_type"
+
+      - step: "Assert saved agreement snapshots partner_id from batch"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          partner_id:
+            type: "m2o"
+            expected: "REC: partner"
+
+      - step: "Assert saved agreement snapshots date from batch"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          date:
+            type: "value"
+            expected: "REC: batch.date"
+
+      - step: "Assert saved agreement snapshots date_start from batch"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          date_start:
+            type: "value"
+            expected: "REC: batch.date_start"
+
+      - step: "Assert saved agreement snapshots date_end from batch"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          date_end:
+            type: "value"
+            expected: "REC: batch.date_end"
+
+      - step: "Assert saved agreement keeps the batch link"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          batch_id:
+            type: "m2o"
+            expected: "REC: batch"
+
+  - name:
+      "Employee External Assignment Agreement - manual fields are saved as-is when
+      created without a batch"
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test No Batch Manual Partner"
+          is_company: true
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test No Batch Manual Type"
+          code: "TFSAB002"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Fill agreement form manually, without batch_id, and save"
+        action: "form"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type"
+          partner_id: "REC: partner"
+          title: "Test No Batch Manual Agreement"
+          receivable_account_id: "REC: receivable_account"
+          journal_id: "REC: journal"
+          currency_id: "REC: currency"
+          pricelist_id: "REC: pricelist"
+          date: 2026-02-15
+          date_start: 2026-01-01
+          date_end: 2026-12-31
+        save: true
+
+      - step: "Assert saved agreement has no batch link"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          batch_id:
+            type: "value"
+            operator: "is_falsy"
+
+      - step: "Assert saved agreement keeps the manually entered type_id and partner_id"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          type_id:
+            type: "m2o"
+            expected: "REC: assignment_type"
+          partner_id:
+            type: "m2o"
+            expected: "REC: partner"
+
+      - step: "Assert saved agreement keeps the manually entered dates"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          date:
+            type: "value"
+            expected: 2026-02-15
+          date_start:
+            type: "value"
+            expected: 2026-01-01
+          date_end:
+            type: "value"
+            expected: 2026-12-31

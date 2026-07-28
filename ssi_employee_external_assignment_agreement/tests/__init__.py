@@ -6,6 +6,7 @@ from . import test_create_employee_external_assignment
 from . import test_employee_external_assignment_agreement
 from . import test_employee_external_assignment_agreement_accounting_configurator
 from . import test_employee_external_assignment_agreement_batch
+from . import test_employee_external_assignment_agreement_batch_force_save
 from . import test_employee_external_assignment_agreement_batch_link
 from . import test_employee_external_assignment_agreement_payment_term_fee
 from . import test_employee_external_assignment_agreement_payment_term_rule
