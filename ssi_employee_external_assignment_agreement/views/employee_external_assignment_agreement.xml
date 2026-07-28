@@ -115,6 +115,7 @@
                         <field
                             name="type_id"
                             attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                            force_save="1"
                         />
                         <field
                             name="allowed_partner_ids"
@@ -146,6 +147,7 @@
                             widget="many2one_avatar"
                             domain="[('id','in',allowed_partner_ids)]"
                             attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                            force_save="1"
                         />
                         <field
                             name="allowed_contact_ids"
@@ -167,14 +169,17 @@
                         <field
                             name="date"
                             attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                            force_save="1"
                         />
                         <field
                             name="date_start"
                             attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                            force_save="1"
                         />
                         <field
                             name="date_end"
                             attrs="{'readonly': ['|', ('state','!=','draft'), ('batch_id','!=',False)]}"
+                            force_save="1"
                         />
                         <field name="currency_id" />
                         <field
