@@ -193,6 +193,38 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
         cls.agreement_create_assignment.invalidate_cache()
         cls.agreement_create_assignment.with_user(cls.admin).action_approve_approval()
 
+        # Pre-Condition 16-create-from-batch.md: at least one batch record
+        # exists. The batch's "name" (document number) is overridden from the
+        # default "/" so the m2o dropdown can be searched by a stable, unique
+        # string -- see mixin.transaction.name_get(), which otherwise renders
+        # every Draft batch as "*<id>".
+        cls.batch_partner = (
+            cls.env["res.partner"]
+            .with_user(cls.admin)
+            .create(
+                {
+                    "name": "TOUR EEAA Batch Partner",
+                    "is_company": True,
+                }
+            )
+        )
+        cls.batch_create_from_batch = (
+            cls.env["employee_external_assignment_agreement_batch"]
+            .with_user(cls.admin)
+            .create(
+                {
+                    "name": "TOUR EEAA Batch Create From Batch",
+                    "type_id": cls.assignment_type.id,
+                    "title": "TOUR EEAA Batch Create From Batch",
+                    "partner_id": cls.batch_partner.id,
+                    "currency_id": cls.currency.id,
+                    "pricelist_id": cls.pricelist.id,
+                    "date_start": "2026-01-01",
+                    "date_end": "2026-12-31",
+                }
+            )
+        )
+
     def test_create(self):
         """IK: docs/employee_external_assignment_agreement/01-create.md"""
         self.start_tour(
@@ -278,5 +310,13 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
         self.start_tour(
             "/web",
             "ssi_employee_external_assignment_agreement_create_assignment",
+            login="admin",
+        )
+
+    def test_create_from_batch(self):
+        """IK: docs/employee_external_assignment_agreement/16-create-from-batch.md"""
+        self.start_tour(
+            "/web",
+            "ssi_employee_external_assignment_agreement_create_from_batch",
             login="admin",
         )

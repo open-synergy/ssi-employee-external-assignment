@@ -25,6 +25,7 @@ Employee External Assignment Agreement
 * `Restart Employee External Assignment Agreement <docs/employee_external_assignment_agreement/12-restart.html>`_
 * `Reset Document Number - Employee External Assignment Agreement <docs/employee_external_assignment_agreement/13-reset-number.html>`_
 * `View Payment Terms - Employee External Assignment Agreement <docs/employee_external_assignment_agreement/14-view-payment-terms.html>`_
+* `Create Employee External Assignment Agreement from Batch <docs/employee_external_assignment_agreement/16-create-from-batch.html>`_
 
 Employee External Assignment Agreement Input Type
 ---------------------------------------------------

@@ -859,5 +859,147 @@ odoo.define(
                 ]
             )
         );
+
+        // IK: docs/employee_external_assignment_agreement/16-create-from-batch.md
+        tour.register(
+            "ssi_employee_external_assignment_agreement_create_from_batch",
+            {
+                test: true,
+                url: "/web",
+            },
+            [].concat(
+                // Flow 1 -- Open the Agreements menu.
+                openAgreementList(),
+                [
+                    // Flow 2 -- Click the New button.
+                    {
+                        content: "Click New",
+                        trigger: ".o_list_button_add",
+                        extra_trigger: ".o_list_view",
+                    },
+                    {
+                        content: "Form is open in edit mode",
+                        trigger: ".o_form_view.o_form_editable",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+
+                    // Flow 3 -- Select the # Batch field. Type, Partner,
+                    // Date, Date Start, and Date End are then automatically
+                    // filled from the batch and become read-only.
+                    {
+                        content: "Select the # Batch",
+                        trigger: ".o_field_many2one[name='batch_id'] input",
+                        extra_trigger: ".o_form_view.o_form_editable",
+                        run: "text TOUR EEAA Batch Create From Batch",
+                    },
+                    {
+                        content: "Pick the Batch from the dropdown",
+                        trigger:
+                            ".ui-autocomplete .ui-menu-item a:contains(TOUR EEAA Batch Create From Batch)",
+                        in_modal: false,
+                    },
+                    {
+                        content: "Type is now read-only, filled from the batch",
+                        trigger: ".o_field_widget[name='type_id'].o_readonly_modifier",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                    {
+                        content: "Partner is now read-only, filled from the batch",
+                        trigger:
+                            ".o_field_widget[name='partner_id'].o_readonly_modifier",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                    {
+                        content: "Date is now read-only, filled from the batch",
+                        trigger: ".o_field_widget[name='date'].o_readonly_modifier",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                    {
+                        content: "Date Start is now read-only, filled from the batch",
+                        trigger:
+                            ".o_field_widget[name='date_start'].o_readonly_modifier",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                    {
+                        content: "Date End is now read-only, filled from the batch",
+                        trigger: ".o_field_widget[name='date_end'].o_readonly_modifier",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+
+                    // Flow 4 -- Fill in the remaining required fields: Title,
+                    // Receivable Account, Journal.
+                    {
+                        content: "Fill in the Title",
+                        trigger: ".o_field_widget[name='title']",
+                        extra_trigger: ".o_form_view.o_form_editable",
+                        run: "text TOUR EEAA Create From Batch",
+                    },
+                    {
+                        content: "Open the Accounting Configuration tab",
+                        trigger:
+                            ".o_notebook .nav-link:contains(Accounting Configuration)",
+                    },
+                    {
+                        content: "Select the Receivable Account",
+                        trigger:
+                            ".o_field_many2one[name='receivable_account_id'] input",
+                        run: "text TOUR EEAA Receivable",
+                    },
+                    {
+                        content: "Pick the Receivable Account from the dropdown",
+                        trigger:
+                            ".ui-autocomplete .ui-menu-item a:contains(TOUR EEAA Receivable)",
+                        in_modal: false,
+                    },
+                    {
+                        content: "Select the Journal",
+                        trigger: ".o_field_many2one[name='journal_id'] input",
+                        run: "text TOUR EEAA Journal",
+                    },
+                    {
+                        content: "Pick the Journal from the dropdown",
+                        trigger:
+                            ".ui-autocomplete .ui-menu-item a:contains(TOUR EEAA Journal)",
+                        in_modal: false,
+                    },
+
+                    // Flow 5 -- Click Save.
+                    {
+                        content: "Save the record",
+                        trigger: ".o_form_button_save",
+                    },
+
+                    // Post-Condition -- a new record is created in Draft
+                    // status, linked to the batch.
+                    {
+                        content: "Record is saved",
+                        trigger: ".o_form_view.o_form_readonly",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                    {
+                        content: "Status is Draft",
+                        trigger:
+                            ".o_statusbar_status .o_arrow_button[data-value='draft'].btn-primary",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                ]
+            )
+        );
     }
 );
