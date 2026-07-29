@@ -455,3 +455,471 @@ scenarios:
           state:
             type: "value"
             expected: "open"
+
+  - name:
+      "Batch cascade - Reject propagates to linked agreements, restart returns to draft"
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner for reject cascade"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test EEAB Link Reject Partner"
+          is_company: true
+
+      - step: "Create assignment type for reject cascade"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEAB Link Reject Type"
+          code: "TEEABL004"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create batch for reject cascade"
+        action: "create"
+        model: "employee_external_assignment_agreement_batch"
+        save_as: "batch"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test Batch Cascade Reject"
+          partner_id: "REC: partner.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Create first agreement linked to batch"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement_1"
+        as_user: "base.user_admin"
+        values:
+          batch_id: "REC: batch.id"
+          type_id: "REC: assignment_type.id"
+          title: "Test Reject Agreement Linked 1"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Create second agreement linked to batch"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement_2"
+        as_user: "base.user_admin"
+        values:
+          batch_id: "REC: batch.id"
+          type_id: "REC: assignment_type.id"
+          title: "Test Reject Agreement Linked 2"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-02-01"
+          date_end: "2026-11-30"
+
+      - step: "Confirm the batch"
+        action: "call"
+        target: "batch"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Invalidate cache after batch confirm"
+        action: "call"
+        target: "batch"
+        method: "invalidate_cache"
+
+      - step: "Assert first agreement cascaded to confirm"
+        action: "assert"
+        target: "agreement_1"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Assert second agreement cascaded to confirm"
+        action: "assert"
+        target: "agreement_2"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Link a third agreement to the batch after it was confirmed"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement_3"
+        as_user: "base.user_admin"
+        values:
+          batch_id: "REC: batch.id"
+          type_id: "REC: assignment_type.id"
+          title: "Test Reject Agreement Linked 3 (late)"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-03-01"
+          date_end: "2026-10-31"
+
+      - step: "Assert third agreement stays draft after linking"
+        action: "assert"
+        target: "agreement_3"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+      - step: "Reject the batch"
+        action: "call"
+        target: "batch"
+        method: "action_reject_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "reject"
+
+      - step: "Invalidate cache after batch reject"
+        action: "call"
+        target: "batch"
+        method: "invalidate_cache"
+
+      - step: "Assert first agreement cascaded to reject"
+        action: "assert"
+        target: "agreement_1"
+        asserts:
+          state:
+            type: "value"
+            expected: "reject"
+
+      - step: "Assert second agreement cascaded to reject"
+        action: "assert"
+        target: "agreement_2"
+        asserts:
+          state:
+            type: "value"
+            expected: "reject"
+
+      - step: "Assert third (draft-linked) agreement is not cascaded"
+        action: "assert"
+        target: "agreement_3"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+      - step: "Search rejected approval of first cascaded agreement"
+        action: "search"
+        model: "approval.approval"
+        domain:
+          - ["model", "=", "employee_external_assignment_agreement"]
+          - ["res_id", "=", "REC: agreement_1.id"]
+          - ["status", "=", "rejected"]
+        save_as: "rejected_approval_1"
+        expect_count: 1
+
+      - step: "Search rejected approval of second cascaded agreement"
+        action: "search"
+        model: "approval.approval"
+        domain:
+          - ["model", "=", "employee_external_assignment_agreement"]
+          - ["res_id", "=", "REC: agreement_2.id"]
+          - ["status", "=", "rejected"]
+        save_as: "rejected_approval_2"
+        expect_count: 1
+
+      - step: "Restart the batch"
+        action: "call"
+        target: "batch"
+        method: "action_restart"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+      - step: "Invalidate cache after batch restart"
+        action: "call"
+        target: "batch"
+        method: "invalidate_cache"
+
+      - step: "Assert first agreement restarted back to draft"
+        action: "assert"
+        target: "agreement_1"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+      - step: "Assert second agreement restarted back to draft"
+        action: "assert"
+        target: "agreement_2"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+      - step: "Assert third agreement still draft after batch restart"
+        action: "assert"
+        target: "agreement_3"
+        asserts:
+          state:
+            type: "value"
+            expected: "draft"
+
+  - name: "Reject directly on a batch-linked agreement in confirm is refused"
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner for reject guard"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test EEAB Link Reject Guard Partner"
+          is_company: true
+
+      - step: "Create assignment type for reject guard"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEAB Link Reject Guard Type"
+          code: "TEEABL005"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create batch for reject guard"
+        action: "create"
+        model: "employee_external_assignment_agreement_batch"
+        save_as: "batch"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test Batch Reject Guard"
+          partner_id: "REC: partner.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Create agreement linked to batch for reject guard"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          batch_id: "REC: batch.id"
+          type_id: "REC: assignment_type.id"
+          title: "Test Reject Guard Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Confirm the batch"
+        action: "call"
+        target: "batch"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Invalidate cache after batch confirm"
+        action: "call"
+        target: "batch"
+        method: "invalidate_cache"
+
+      - step: "Assert agreement cascaded to confirm"
+        action: "assert"
+        target: "agreement"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Rejecting the agreement directly must be refused"
+        action: "call"
+        target: "agreement"
+        method: "action_reject_approval"
+        as_user: "base.user_admin"
+        expect_error:
+          type: "UserError"
+          message_contains: "cannot run independently"
+
+  - name: "action_reject_from_batch on an agreement without a batch is refused"
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner for standalone reject-from-batch guard"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test EEAB Link No-Batch Reject Partner"
+          is_company: true
+
+      - step: "Create assignment type for standalone reject-from-batch guard"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test EEAB Link No-Batch Reject Type"
+          code: "TEEABL006"
+          employee_selection_method: "domain"
+          employee_domain: "[]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create standalone agreement without batch_id"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test No-Batch Reject Agreement"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "action_reject_from_batch without a batch_id must be refused"
+        action: "call"
+        target: "agreement"
+        method: "action_reject_from_batch"
+        as_user: "base.user_admin"
+        expect_error:
+          type: "UserError"
+          message_contains: "no linked batch"

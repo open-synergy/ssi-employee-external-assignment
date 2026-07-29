@@ -3,7 +3,10 @@
 ## Pre-Condition
 
 - Record is in **Waiting for Approval** status.
-- Record is not linked to a batch.
+- Record is not linked to a batch (field **Batch** is empty). An agreement linked to a
+  batch cannot be rejected on its own record — its workflow, including reject, only runs
+  through the batch. Reject it by rejecting the batch instead (see the Agreement Batch
+  **Reject** instruction), which cascades the rejection down to this agreement.
 - User is registered as an active approver for the record.
 
 ## Flow

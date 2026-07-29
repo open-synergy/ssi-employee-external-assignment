@@ -231,6 +231,19 @@ class EmployeeExternalAssignmentAgreementBatch(models.Model):
     def _10_cascade_restart_agreement(self):
         self._cascade_agreement("action_restart", ["cancel", "reject"])
 
+    @ssi_decorator.post_reject_action()
+    def _10_cascade_reject_agreement(self):
+        """Cascade the batch rejection to agreements still in confirm.
+
+        Runs after the batch itself is rejected via
+        ``action_reject_approval``. Only agreements in ``confirm``
+        are moved to ``reject``; agreements still in ``draft`` are
+        left untouched -- unlike ``_10_cascade_open_agreement``,
+        reject has no safety net for stragglers linked after the
+        batch was already confirmed.
+        """
+        self._cascade_agreement("action_reject_from_batch", ["confirm"])
+
     @ssi_decorator.insert_on_form_view()
     def _insert_form_element(self, view_arch):
         if self._automatically_insert_view_element:

@@ -16,4 +16,7 @@
 ## Post-Condition
 
 - Status changes to **Rejected**.
-- Linked agreements are not affected — rejecting the batch does not cascade to them.
+- Every linked agreement that is in **Waiting for Approval** status is cascaded to
+  **Rejected** as well.
+- Linked agreements still in **Draft** status (added to the batch after it was
+  confirmed) are left untouched — they stay in **Draft**.
