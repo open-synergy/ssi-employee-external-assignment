@@ -114,7 +114,7 @@ if env.user.id in document.active_approver_user_ids.ids:
             <field name="restrict_state" eval="1" />
             <field
                 name="state_ids"
-                search="[('field_id.model_id.model','=','employee_external_assignment_agreement.payment_term'),('value','=','done')]"
+                search="[('field_id.model_id.model','=','employee_external_assignment_agreement.payment_term'),('value','=','open')]"
             />
             <field name="restrict_user" eval="1" />
             <field name="computation_method">use_group</field>
@@ -144,7 +144,7 @@ if not document.approval_template_id:
             <field name="restrict_state" eval="1" />
             <field
                 name="state_ids"
-                search="[('field_id.model_id.model','=','employee_external_assignment_agreement.payment_term'),('value','=','done')]"
+                search="[('field_id.model_id.model','=','employee_external_assignment_agreement.payment_term'),('value','=','open')]"
             />
             <field name="restrict_user" eval="1" />
             <field name="computation_method">use_group</field>
