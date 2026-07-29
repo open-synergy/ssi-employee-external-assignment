@@ -627,6 +627,61 @@ Solution: Run the workflow transition from the batch record instead
             record._check_not_batch_driven()
         return super().action_restart()
 
+    def action_reject_from_batch(self):
+        """Reject this agreement as a side effect of its batch reject.
+
+        Exposed as a plain method (no button) -- called only by the
+        batch's ``_10_cascade_reject_agreement`` hook when the batch
+        itself is rejected via ``action_reject_approval``.
+        """
+        for record in self.sudo():
+            record._reject_from_batch()
+
+    def _reject_from_batch(self):
+        """Force this agreement into ``reject`` state from its batch.
+
+        Does not delegate to
+        ``mixin.multiple_approval._action_approval()`` because that
+        method only records a rejection when ``self.env.user`` is
+        listed in the ``approver_user_ids`` of the agreement's own
+        active approval -- the batch's approver is not guaranteed to
+        also approve every linked agreement, so delegating would
+        silently leave the agreement in ``confirm`` while the batch
+        moves to ``reject``. Instead, every active approval is
+        written ``rejected`` directly (same audit trail as a manual
+        reject: ``date`` and ``user_id`` set), then ``state`` is set
+        to ``reject``. The pre/post reject runners still fire so glue
+        module hooks keep working on this cascade path.
+
+        :raises UserError: if this agreement has no ``batch_id`` --
+            this method is exclusive to the batch cascade path.
+        """
+        self.ensure_one()
+        if not self.batch_id:
+            error_message = """
+Context: Reject agreement from batch cascade
+Database ID: %s
+Problem: This agreement has no linked batch
+Solution: Call action_reject_approval on this agreement directly, \
+or link it to a batch first
+""" % (
+                self.id,
+            )
+            raise UserError(_(error_message))
+        self._run_pre_reject_check()
+        self._run_pre_reject_action()
+        self.active_approval_ids.write(
+            {
+                "status": "rejected",
+                "date": fields.Datetime.now(),
+                "user_id": self.env.user.id,
+            }
+        )
+        self.write({"state": "reject"})
+        self._run_post_reject_check()
+        self._run_post_reject_action()
+        self._notify_reject_action()
+
     def action_open_payment_terms(self):
         for record in self.sudo():
             result = record._open_payment_term()
