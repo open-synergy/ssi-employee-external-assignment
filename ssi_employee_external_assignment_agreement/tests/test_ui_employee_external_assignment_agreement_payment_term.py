@@ -158,6 +158,18 @@ class TestUiEmployeeExternalAssignmentAgreementPaymentTerm(HttpSavepointCase):
         cls.payment_term_restart.invalidate_cache()
         cls.payment_term_restart.with_user(cls.admin).action_reject_approval()
 
+        # Pre-Condition 13-reset-number.md: Draft, with a manually-set
+        # document number (the "name" field is editable in Draft status) so
+        # the reset is observable: name_get() renders "/" as "*<id>" (see
+        # mixin_transaction.py), which only differs from the manually-set
+        # number below.
+        cls.payment_term_reset_number = _create_payment_term(
+            "Reset Number", "2026-07-01", "2026-07-31"
+        )
+        cls.payment_term_reset_number.with_user(cls.admin).write(
+            {"name": "TOUR-EEAAPT-MANUAL-001"}
+        )
+
         # --- Payroll fixtures shared by the "load"/"reload" scenarios ---
         cls.debit_account = (
             cls.env["account.account"]
@@ -475,6 +487,14 @@ class TestUiEmployeeExternalAssignmentAgreementPaymentTerm(HttpSavepointCase):
         self.start_tour(
             "/web",
             "ssi_employee_external_assignment_agreement_payment_term_restart",
+            login="admin",
+        )
+
+    def test_reset_number(self):
+        """IK: docs/.../payment_term/13-reset-number.md"""
+        self.start_tour(
+            "/web",
+            "ssi_employee_external_assignment_agreement_payment_term_reset_number",
             login="admin",
         )
 

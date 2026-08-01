@@ -162,6 +162,18 @@ class TestUiEmployeeExternalAssignmentAgreementBatch(HttpSavepointCase):
         cls.batch_restart.invalidate_cache()
         cls.batch_restart.with_user(cls.admin).action_reject_approval()
 
+        # Pre-Condition 13-reset-number.md: Draft, with a manually-set
+        # document number (the "name" field is editable in Draft status) so
+        # the reset is observable: name_get() renders "/" as "*<id>" (see
+        # mixin_transaction.py), which only differs from the manually-set
+        # number below. Unlike the agreement model, the batch model's
+        # manual_number_ok policy has no batch-link restriction (only
+        # agreements can themselves be linked to a batch).
+        cls.batch_reset_number = _create_batch("Reset Number")
+        cls.batch_reset_number.with_user(cls.admin).write(
+            {"name": "TOUR-EEAB-MANUAL-001"}
+        )
+
         cls.batch_view_agreements = _create_batch("View Agreements")
 
         # Pre-Condition 15-generate-agreements.md: Draft (one of the allowed
@@ -237,6 +249,14 @@ class TestUiEmployeeExternalAssignmentAgreementBatch(HttpSavepointCase):
         self.start_tour(
             "/web",
             "ssi_employee_external_assignment_agreement_batch_restart",
+            login="admin",
+        )
+
+    def test_reset_number(self):
+        """IK: docs/employee_external_assignment_agreement_batch/13-reset-number.md"""
+        self.start_tour(
+            "/web",
+            "ssi_employee_external_assignment_agreement_batch_reset_number",
             login="admin",
         )
 

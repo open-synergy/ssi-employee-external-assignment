@@ -3,6 +3,7 @@
 ## Pre-Condition
 
 - Record is in **Draft** status.
+- Record is not linked to a batch.
 - User has _Can Input Manual Document Number_ access right.
 
 ## Flow

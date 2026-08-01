@@ -683,6 +683,67 @@ odoo.define(
             )
         );
 
+        // IK: docs/employee_external_assignment_agreement_batch/13-reset-number.md
+        tour.register(
+            "ssi_employee_external_assignment_agreement_batch_reset_number",
+            {
+                test: true,
+                url: "/web",
+            },
+            [].concat(
+                // Flow 1 -- Open the Agreement Batches menu.
+                openAgreementBatchList(),
+                [
+                    // Flow 2 -- Open the record whose document number will
+                    // be reset.
+                    {
+                        content: "Open the record",
+                        trigger:
+                            ".o_data_row:contains(TOUR EEAB Partner Reset Number) .o_data_cell:first",
+                        extra_trigger: ".o_list_view",
+                    },
+                    {
+                        content: "Form is open",
+                        trigger: ".o_form_view",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+
+                    // Flow 3 -- Click the Reset Document Number button.
+                    {
+                        content: "Click the Reset Document Number button",
+                        trigger:
+                            ".o_statusbar_buttons button[name='action_reset_document_number']",
+                        extra_trigger: ".o_form_view",
+                    },
+
+                    // Flow 4 -- Click OK on the confirmation dialog.
+                    {
+                        content: "Confirm the dialog",
+                        trigger: ".modal-footer button.btn-primary",
+                        in_modal: true,
+                    },
+
+                    // Post-Condition -- document number returns to "/".
+                    // After the reset, the form re-renders read-only, so
+                    // the visible field is "display_name" (not the
+                    // edit-only "name" field); name_get() renders "/" as
+                    // "*<id>", which is the observable marker that the
+                    // reset took effect (see mixin_transaction.py in
+                    // ssi_transaction_mixin).
+                    {
+                        content: "Document number is reset (display name shows *)",
+                        trigger:
+                            ".oe_title .o_field_widget[name='display_name']:contains(*)",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                ]
+            )
+        );
+
         // IK: docs/employee_external_assignment_agreement_batch/14-view-agreements.md
         tour.register(
             "ssi_employee_external_assignment_agreement_batch_view_agreements",
