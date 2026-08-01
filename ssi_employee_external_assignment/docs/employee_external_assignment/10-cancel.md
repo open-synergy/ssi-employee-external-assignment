@@ -1,5 +1,12 @@
 # Cancel Employee External Assignment
 
+> **Module:** ssi_employee_external_assignment\
+> **Model:** `employee_external_assignment`\
+> **Menu:** Human Resource > Career Management > External Assignment > Assignments\
+> **Actor:** user in group `Employee External Assignment / Validator`\
+> **State:** `draft`/`open`/`done`/`terminate` → `cancel`\
+> **Requires:** `01-create`
+
 ## Pre-Condition
 
 - Record is in **Draft**, **On Progress**, **Done**, or **Terminated** status.
