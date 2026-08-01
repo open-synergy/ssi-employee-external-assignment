@@ -1,5 +1,11 @@
 # Edit Employee External Assignment
 
+> **Module:** ssi_employee_external_assignment\
+> **Model:** `employee_external_assignment`\
+> **Menu:** Human Resource > Career Management > External Assignment > Assignments\
+> **Actor:** user in group `Employee External Assignment / User`\
+> **Requires:** `01-create`
+
 ## Pre-Condition
 
 - Record is in **Draft** status.

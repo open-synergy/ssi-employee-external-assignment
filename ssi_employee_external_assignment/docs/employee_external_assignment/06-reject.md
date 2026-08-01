@@ -1,5 +1,12 @@
 # Reject Employee External Assignment
 
+> **Module:** ssi_employee_external_assignment\
+> **Model:** `employee_external_assignment`\
+> **Menu:** Human Resource > Career Management > External Assignment > Assignments\
+> **Actor:** user registered as an approver on the active `approval.template`\
+> **State:** `confirm` → `reject`\
+> **Requires:** `04-confirm`
+
 ## Pre-Condition
 
 - Record is in **Waiting for Approval** status.
