@@ -730,5 +730,112 @@ odoo.define(
                 ]
             )
         );
+
+        // IK: docs/employee_external_assignment_agreement_batch/15-generate-agreements.md
+        tour.register(
+            "ssi_employee_external_assignment_agreement_batch_generate_agreements",
+            {
+                test: true,
+                url: "/web",
+            },
+            [].concat(
+                // Flow 1 -- Open the Agreement Batches menu.
+                openAgreementBatchList(),
+                [
+                    // Flow 2 -- Open the batch record.
+                    {
+                        content: "Open the record",
+                        trigger:
+                            ".o_data_row:contains(TOUR EEAB Partner Generate Agreements) .o_data_cell:first",
+                        extra_trigger: ".o_list_view",
+                    },
+                    {
+                        content: "Form is open",
+                        trigger: ".o_form_view",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+
+                    // Flow 3 -- Go to the Agreements tab.
+                    {
+                        content: "Open the Agreements tab",
+                        trigger: ".o_notebook .nav-link:contains(Agreements)",
+                    },
+
+                    // Flow 4 -- Click the Generate Agreements button.
+                    {
+                        content: "Click the Generate Agreements button",
+                        trigger: "button:contains(Generate Agreements)",
+                    },
+                    {
+                        // Wizard: JANGAN prefiks trigger dengan ".modal" di
+                        // 14.0 -- lihat catatan patterns.md skill
+                        // odoo-development-ui-test §H.
+                        content: "Wizard is open",
+                        trigger: ".o_form_view",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+
+                    // Flow 5 -- Fill in Number of Agreements (left at its
+                    // default of 1, no Agreements line added), Receivable
+                    // Account, and Journal.
+                    {
+                        content: "Select the Receivable Account",
+                        trigger:
+                            ".o_field_many2one[name='receivable_account_id'] input",
+                        run: "text TOUR EEAB Receivable",
+                    },
+                    {
+                        content: "Pick the Receivable Account from the dropdown",
+                        trigger:
+                            ".ui-autocomplete .ui-menu-item a:contains(TOUR EEAB Receivable)",
+                        in_modal: false,
+                    },
+                    {
+                        content: "Select the Journal",
+                        trigger: ".o_field_many2one[name='journal_id'] input",
+                        run: "text TOUR EEAB Journal",
+                    },
+                    {
+                        content: "Pick the Journal from the dropdown",
+                        trigger:
+                            ".ui-autocomplete .ui-menu-item a:contains(TOUR EEAB Journal)",
+                        in_modal: false,
+                    },
+
+                    // Flow 6 -- Click Generate.
+                    {
+                        content: "Click Generate",
+                        trigger: ".modal-footer button[name='action_generate']",
+                    },
+
+                    // Flow 7 -- Click OK on the confirmation dialog.
+                    {
+                        // The wizard's Generate button carries a stacked
+                        // "Are you sure?" dialog (confirm= attribute) --
+                        // $modal_displayed resolves to the topmost visible
+                        // modal, so this targets that stacked dialog.
+                        content: "Confirm the stacked dialog",
+                        trigger: ".modal-footer button.btn-primary",
+                        in_modal: true,
+                    },
+
+                    // Post-Condition -- a list view opens showing the newly
+                    // generated agreements.
+                    {
+                        content: "Generated Agreements list is displayed",
+                        trigger:
+                            ".o_control_panel .breadcrumb-item.active:contains(Generated Agreements)",
+                        extra_trigger: ".o_list_view",
+                        run: function () {
+                            // Assertion only.
+                        },
+                    },
+                ]
+            )
+        );
     }
 );

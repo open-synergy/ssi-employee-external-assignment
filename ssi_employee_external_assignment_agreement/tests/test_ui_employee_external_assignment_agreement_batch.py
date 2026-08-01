@@ -20,6 +20,33 @@ class TestUiEmployeeExternalAssignmentAgreementBatch(HttpSavepointCase):
         # pricelist_id.
         cls.currency = cls.env.ref("base.EUR")
         cls.pricelist = cls.env.ref("product.list0")
+        # Pre-Condition 15-generate-agreements.md: a receivable account and a
+        # journal to fill in the Generate Agreements wizard.
+        cls.journal = (
+            cls.env["account.journal"]
+            .with_user(cls.admin)
+            .create(
+                {
+                    "name": "TOUR EEAB Journal",
+                    "code": "TEEABJ",
+                    "type": "general",
+                }
+            )
+        )
+        cls.account = (
+            cls.env["account.account"]
+            .with_user(cls.admin)
+            .create(
+                {
+                    "name": "TOUR EEAB Receivable",
+                    "code": "TEEABA1",
+                    "user_type_id": cls.env.ref(
+                        "account.data_account_type_receivable"
+                    ).id,
+                    "reconcile": True,
+                }
+            )
+        )
         cls.assignment_type = (
             cls.env["employee_external_assignment_type"]
             .with_user(cls.admin)
@@ -137,6 +164,10 @@ class TestUiEmployeeExternalAssignmentAgreementBatch(HttpSavepointCase):
 
         cls.batch_view_agreements = _create_batch("View Agreements")
 
+        # Pre-Condition 15-generate-agreements.md: Draft (one of the allowed
+        # statuses -- anything except Done, Cancelled, or Terminated).
+        cls.batch_generate_agreements = _create_batch("Generate Agreements")
+
     def test_create(self):
         """IK: docs/employee_external_assignment_agreement_batch/01-create.md"""
         self.start_tour(
@@ -214,5 +245,13 @@ class TestUiEmployeeExternalAssignmentAgreementBatch(HttpSavepointCase):
         self.start_tour(
             "/web",
             "ssi_employee_external_assignment_agreement_batch_view_agreements",
+            login="admin",
+        )
+
+    def test_generate_agreements(self):
+        """IK: docs/employee_external_assignment_agreement_batch/15-generate-agreements.md"""
+        self.start_tour(
+            "/web",
+            "ssi_employee_external_assignment_agreement_batch_generate_agreements",
             login="admin",
         )

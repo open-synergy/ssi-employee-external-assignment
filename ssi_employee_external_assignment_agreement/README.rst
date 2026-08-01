@@ -50,6 +50,7 @@ Employee External Assignment Agreement Batch
 * `Restart Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/12-restart.html>`_
 * `Reset Document Number - Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/13-reset-number.html>`_
 * `View Agreements - Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/14-view-agreements.html>`_
+* `Generate Agreements - Employee External Assignment Agreement Batch <docs/employee_external_assignment_agreement_batch/15-generate-agreements.html>`_
 
 Employee External Assignment Agreement Payment Term
 --------------------------------------------------------
