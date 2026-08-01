@@ -162,6 +162,19 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
         cls.agreement_restart.invalidate_cache()
         cls.agreement_restart.with_user(cls.admin).action_reject_approval()
 
+        # Pre-Condition 13-reset-number.md: Draft, not linked to a batch
+        # (manual_number_ok's additional_python_code requires
+        # "not document.batch_id" -- see
+        # policy_template/employee_external_assignment_agreement.xml), with
+        # a manually-set document number (the "name" field is editable in
+        # Draft status) so the reset is observable: name_get() renders "/"
+        # as "*<id>" (see mixin_transaction.py), which only differs from
+        # the manually-set number below.
+        cls.agreement_reset_number = _create_agreement("Reset Number")
+        cls.agreement_reset_number.with_user(cls.admin).write(
+            {"name": "TOUR-EEAA-MANUAL-001"}
+        )
+
         cls.agreement_payment_term = _create_agreement("Payment Term")
 
         # Pre-Condition 15-create-assignment.md: Open, with a job position
@@ -294,6 +307,14 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
         self.start_tour(
             "/web",
             "ssi_employee_external_assignment_agreement_restart",
+            login="admin",
+        )
+
+    def test_reset_number(self):
+        """IK: docs/employee_external_assignment_agreement/13-reset-number.md"""
+        self.start_tour(
+            "/web",
+            "ssi_employee_external_assignment_agreement_reset_number",
             login="admin",
         )
 
