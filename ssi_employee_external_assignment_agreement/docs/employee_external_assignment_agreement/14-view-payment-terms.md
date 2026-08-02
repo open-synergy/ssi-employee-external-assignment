@@ -1,5 +1,11 @@
 # View Payment Terms — Employee External Assignment Agreement
 
+> **Module:** ssi_employee_external_assignment_agreement\
+> **Model:** `employee_external_assignment_agreement`\
+> **Menu:** Human Resource > Career Management > External Assignment > Agreements\
+> **Actor:** user in group `Employee External Assignment Agreement / Viewer`\
+> **Requires:** `01-create`
+
 ## Pre-Condition
 
 - None. The **Payment Terms** button is available regardless of status.

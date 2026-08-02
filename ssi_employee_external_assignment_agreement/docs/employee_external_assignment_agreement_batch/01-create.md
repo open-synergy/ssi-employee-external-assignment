@@ -1,5 +1,12 @@
 # Create Employee External Assignment Agreement Batch
 
+> **Module:** ssi_employee_external_assignment_agreement\
+> **Model:** `employee_external_assignment_agreement_batch`\
+> **Menu:** Human Resource > Career Management > External Assignment > Agreement
+> Batches\
+> **Actor:** user in group `Employee External Assignment Agreement Batch / User`\
+> **State:** `—` → `draft`
+
 ## Pre-Condition
 
 - None.

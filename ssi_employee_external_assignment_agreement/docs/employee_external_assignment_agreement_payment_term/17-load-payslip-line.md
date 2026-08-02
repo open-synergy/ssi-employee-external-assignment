@@ -1,5 +1,11 @@
 # Load Payslip Lines — Employee External Assignment Agreement Payment Term
 
+> **Module:** ssi_employee_external_assignment_agreement\
+> **Model:** `employee_external_assignment_agreement.payment_term`\
+> **Menu:** Human Resource > Career Management > External Assignment > Payment Terms\
+> **Actor:** user in group `Employee External Assignment Agreement - Payment Term / User`\
+> **Requires:** `16-reload-payslip`
+
 ## Pre-Condition
 
 - Record is in **Draft** status (the button is only available while in Draft).
