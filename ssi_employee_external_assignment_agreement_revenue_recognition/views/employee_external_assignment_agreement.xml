@@ -21,7 +21,7 @@
                     expr="//field[@name='detail_ids']/tree/field[@name='quantity_diff']"
                     position="after"
                 >
-                <field name="pob_id" />
+                <field name="pob_id" widget="many2one" />
                 <button
                         name="action_create_pob"
                         type="object"
@@ -34,7 +34,7 @@
                     expr="//field[@name='other_fee_ids']/tree/field[@name='price_subtotal']"
                     position="after"
                 >
-                <field name="pob_id" />
+                <field name="pob_id" widget="many2one" />
                 <button
                         name="action_create_pob"
                         type="object"
@@ -47,7 +47,7 @@
                     expr="//field[@name='variable_fee_ids']/tree/field[@name='analytic_account_id']"
                     position="after"
                 >
-                <field name="pob_id" />
+                <field name="pob_id" widget="many2one" />
                 <button
                         name="action_create_pob"
                         type="object"
