@@ -13,10 +13,12 @@
         "ssi_employee_external_assignment",
         "ssi_operating_unit_mixin",
         "ssi_hr_employee_operating_unit",
+        "web_tour",
     ],
     "data": [
         "security/res_group/res_group_data.xml",
         "security/ir_rule/ir_rule_data.xml",
         "views/employee_external_assignment_views.xml",
+        "views/assets.xml",
     ],
 }
