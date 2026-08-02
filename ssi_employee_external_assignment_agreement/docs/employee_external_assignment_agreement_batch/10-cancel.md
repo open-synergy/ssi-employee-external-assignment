@@ -1,5 +1,13 @@
 # Cancel Employee External Assignment Agreement Batch
 
+> **Module:** ssi_employee_external_assignment_agreement\
+> **Model:** `employee_external_assignment_agreement_batch`\
+> **Menu:** Human Resource > Career Management > External Assignment > Agreement
+> Batches\
+> **Actor:** user in group `Employee External Assignment Agreement Batch / Validator`\
+> **State:** `draft`/`open`/`done`/`terminate` → `cancel`\
+> **Requires:** `01-create`
+
 ## Pre-Condition
 
 - Record is in **Draft**, **On Progress**, **Done**, or **Terminated** status (cancel is

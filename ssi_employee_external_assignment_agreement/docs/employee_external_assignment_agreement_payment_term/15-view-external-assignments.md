@@ -1,5 +1,11 @@
 # View External Assignments — Employee External Assignment Agreement Payment Term
 
+> **Module:** ssi_employee_external_assignment_agreement\
+> **Model:** `employee_external_assignment_agreement.payment_term`\
+> **Menu:** Human Resource > Career Management > External Assignment > Payment Terms\
+> **Actor:** user in group `Employee External Assignment / Viewer`\
+> **Requires:** `14-load-external-assignment`
+
 ## Pre-Condition
 
 - At least one External Assignment is already loaded on the record (the button is only

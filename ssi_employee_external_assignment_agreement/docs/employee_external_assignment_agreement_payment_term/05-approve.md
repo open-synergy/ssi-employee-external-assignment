@@ -1,5 +1,12 @@
 # Approve Employee External Assignment Agreement Payment Term
 
+> **Module:** ssi_employee_external_assignment_agreement\
+> **Model:** `employee_external_assignment_agreement.payment_term`\
+> **Menu:** Human Resource > Career Management > External Assignment > Payment Terms\
+> **Actor:** user registered as an approver on the active `approval.template`\
+> **State:** `confirm` → `done`\
+> **Requires:** `04-confirm`
+
 ## Pre-Condition
 
 - Record is in **Waiting for Approval** status.

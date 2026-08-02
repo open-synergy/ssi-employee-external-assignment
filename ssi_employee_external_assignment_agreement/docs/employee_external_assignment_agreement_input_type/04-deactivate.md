@@ -1,5 +1,13 @@
 # Deactivate Employee External Assignment Agreement Input Type
 
+> **Module:** ssi_employee_external_assignment_agreement\
+> **Model:** `employee_external_assignment_agreement_input_type`\
+> **Menu:** Human Resource > Configuration > Career > External Assignment > Agreement
+> Input Types\
+> **Actor:** user in group `Human Resource - Configurator / External Assignment Agreement Input Type`\
+> **Active:** `true` → `false`\
+> **Requires:** `01-create`
+
 ## Pre-Condition
 
 - None.

@@ -1,5 +1,11 @@
 # Create Invoice — Employee External Assignment Agreement Payment Term
 
+> **Module:** ssi_employee_external_assignment_agreement\
+> **Model:** `employee_external_assignment_agreement.payment_term`\
+> **Menu:** Human Resource > Career Management > External Assignment > Payment Terms\
+> **Actor:** user in group `Employee External Assignment Agreement - Payment Term / User`\
+> **Requires:** `01-create`
+
 ## Pre-Condition
 
 - No Invoice is linked to the record yet (the button is only available while the
