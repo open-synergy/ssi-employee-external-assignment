@@ -32,6 +32,13 @@ scenarios:
         save_as: "pricelist"
         limit: 1
 
+      - step: "Search for an existing job position"
+        action: "search"
+        model: "hr.job"
+        domain: []
+        save_as: "job"
+        limit: 1
+
       - step: "Create partner"
         action: "create"
         model: "res.partner"
@@ -73,6 +80,10 @@ scenarios:
           pricelist_id: "EVAL: registry['pricelist'].id"
           date_start: "2026-01-01"
           date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "EVAL: registry['job'].id"
 
       - step: "Assert agreement created in draft"
         action: "assert"

@@ -55,6 +55,12 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
                 }
             )
         )
+        # Detail line (job position) required by every agreement below --
+        # action_confirm() refuses agreements with no Detail line, see
+        # EmployeeExternalAssignmentAgreement._check_detail_ids().
+        cls.job = (
+            cls.env["hr.job"].with_user(cls.admin).create({"name": "TOUR EEAA Job"})
+        )
         # Partner used only by the 01-create tour itself (typed/picked live in
         # the browser, never searched for in a list). Named so it is NOT a
         # prefix of the per-scenario "TOUR EEAA Partner <Label>" partners
@@ -128,6 +134,7 @@ class TestUiEmployeeExternalAssignmentAgreement(HttpSavepointCase):
                         "pricelist_id": cls.pricelist.id,
                         "date_start": "2026-01-01",
                         "date_end": "2026-12-31",
+                        "detail_ids": [(0, 0, {"job_id": cls.job.id})],
                     }
                 )
             )
