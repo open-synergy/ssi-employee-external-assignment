@@ -44,7 +44,7 @@
             <field
                             name="salary_rule_domain"
                             widget="domain"
-                            options="{'model': 'salary_rule', 'in_dialog': True}"
+                            options="{'model': 'hr.salary_rule', 'in_dialog': True}"
                             attrs="{'invisible':[('salary_rule_selection_method','!=','domain')]}"
                             string="Domain"
                         />

@@ -32,6 +32,13 @@ scenarios:
         save_as: "pricelist"
         limit: 1
 
+      - step: "Search for an existing job position"
+        action: "search"
+        model: "hr.job"
+        domain: []
+        save_as: "job"
+        limit: 1
+
       - step: "Create partner"
         action: "create"
         model: "res.partner"
@@ -88,6 +95,10 @@ scenarios:
           pricelist_id: "EVAL: registry['pricelist'].id"
           date_start: "2026-01-01"
           date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "EVAL: registry['job'].id"
 
       - step: "Create second agreement linked to batch"
         action: "create"
@@ -105,6 +116,10 @@ scenarios:
           pricelist_id: "EVAL: registry['pricelist'].id"
           date_start: "2026-02-01"
           date_end: "2026-11-30"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "EVAL: registry['job'].id"
 
       - step: "Assert both agreements start in draft"
         action: "assert"
@@ -242,6 +257,13 @@ scenarios:
         save_as: "pricelist"
         limit: 1
 
+      - step: "Search for an existing job position"
+        action: "search"
+        model: "hr.job"
+        domain: []
+        save_as: "job"
+        limit: 1
+
       - step: "Create partner for cancel cascade"
         action: "create"
         model: "res.partner"
@@ -298,6 +320,10 @@ scenarios:
           pricelist_id: "EVAL: registry['pricelist'].id"
           date_start: "2026-01-01"
           date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "EVAL: registry['job'].id"
 
       - step: "Confirm the batch"
         action: "call"
@@ -389,6 +415,13 @@ scenarios:
         save_as: "pricelist"
         limit: 1
 
+      - step: "Search for an existing job position"
+        action: "search"
+        model: "hr.job"
+        domain: []
+        save_as: "job"
+        limit: 1
+
       - step: "Create partner for standalone agreement"
         action: "create"
         model: "res.partner"
@@ -430,6 +463,10 @@ scenarios:
           pricelist_id: "EVAL: registry['pricelist'].id"
           date_start: "2026-01-01"
           date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "EVAL: registry['job'].id"
 
       - step: "Confirm standalone agreement directly"
         action: "call"
@@ -490,6 +527,13 @@ scenarios:
         save_as: "pricelist"
         limit: 1
 
+      - step: "Search for an existing job position"
+        action: "search"
+        model: "hr.job"
+        domain: []
+        save_as: "job"
+        limit: 1
+
       - step: "Create partner for reject cascade"
         action: "create"
         model: "res.partner"
@@ -546,6 +590,10 @@ scenarios:
           pricelist_id: "REC: pricelist.id"
           date_start: "2026-01-01"
           date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job.id"
 
       - step: "Create second agreement linked to batch"
         action: "create"
@@ -563,6 +611,10 @@ scenarios:
           pricelist_id: "REC: pricelist.id"
           date_start: "2026-02-01"
           date_end: "2026-11-30"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job.id"
 
       - step: "Confirm the batch"
         action: "call"
@@ -751,6 +803,13 @@ scenarios:
         save_as: "pricelist"
         limit: 1
 
+      - step: "Search for an existing job position"
+        action: "search"
+        model: "hr.job"
+        domain: []
+        save_as: "job"
+        limit: 1
+
       - step: "Create partner for reject guard"
         action: "create"
         model: "res.partner"
@@ -807,6 +866,10 @@ scenarios:
           pricelist_id: "REC: pricelist.id"
           date_start: "2026-01-01"
           date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job.id"
 
       - step: "Confirm the batch"
         action: "call"
