@@ -587,9 +587,34 @@ Solution: Run the workflow transition from the batch record instead
         )
         raise UserError(_(error_message))
 
+    def _check_detail_ids(self):
+        """Require at least one Detail line before leaving Draft.
+
+        ``detail_ids`` is only editable while the agreement is in Draft
+        state. Once confirmed, ``all_job_position_ids`` (computed from
+        ``detail_ids``) drives which employees are selectable in the
+        "Create Assignment" wizard, so an agreement confirmed with no
+        Detail lines silently ends up with no employee eligible for
+        assignment.
+        """
+        self.ensure_one()
+        if self.detail_ids:
+            return
+        error_message = """
+Context: Confirm agreement
+Database ID: %s
+Problem: Agreement %s has no Detail line (job position)
+Solution: Add at least one line on the Details tab before confirming
+""" % (
+            self.id,
+            self.name,
+        )
+        raise UserError(_(error_message))
+
     def action_confirm(self):
         for record in self:
             record._check_not_batch_driven()
+            record._check_detail_ids()
         return super().action_confirm()
 
     def action_approve_approval(self):
