@@ -932,8 +932,9 @@ msgstr ""
 #: model:ir.model.fields,help:ssi_employee_external_assignment_agreement.field_create_employee_external_assignment__allowed_employee_ids
 msgid ""
 "Employees eligible for a new assignment: their job position is one of the "
-"agreement's job positions, and they do not already have an active assignment"
-" on this agreement."
+"agreement's job positions, they pass the employee configuration of the "
+"agreement type, and they do not already have an active assignment on this "
+"agreement."
 msgstr ""
 
 #. module: ssi_employee_external_assignment_agreement
