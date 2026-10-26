@@ -11,6 +11,8 @@
 - Record is in **On Progress** (Open) status.
 - The agreement has at least one job position listed in its **Details** tab.
 - User has access to the **Create Employee External Assignment** wizard.
+- The agreement's **Type** has its employee selection configured (manual list, domain,
+  or Python code); only employees allowed by it can be offered.
 
 ## Flow
 
@@ -20,8 +22,9 @@
 3. Go to the **Assignment** tab.
 4. Click the **Create Assignment** button.
 5. In the wizard that appears, select one or more **Employees**. Only employees whose
-   job position is one of the agreement's job positions, and who do not already have an
-   active assignment on this agreement, are offered.
+   job position is one of the agreement's job positions, who are allowed by the employee
+   selection of the agreement's **Type** (manual list, domain, or Python code), and who
+   do not already have an active assignment on this agreement, are offered.
 6. Click **Confirm**.
 
 ## Post-Condition
