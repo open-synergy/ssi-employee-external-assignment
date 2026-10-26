@@ -1028,7 +1028,7 @@ scenarios:
         as_user: "base.user_admin"
         values:
           agreement_id: "REC: agreement.id"
-          employee_ids: [[6, 0, "REC: e2.id"]]
+          employee_ids: [[6, 0, ["REC: e2.id"]]]
 
       - step: "Assert allowed_employee_ids contains only E2"
         action: "assert"
@@ -1204,7 +1204,7 @@ scenarios:
         as_user: "base.user_admin"
         values:
           agreement_id: "REC: agreement.id"
-          employee_ids: [[6, 0, "REC: e2.id"]]
+          employee_ids: [[6, 0, ["REC: e2.id"]]]
 
       - step: "Assert allowed_employee_ids contains only E2"
         action: "assert"
