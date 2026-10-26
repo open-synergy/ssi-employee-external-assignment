@@ -11,8 +11,9 @@ class CreateEmployeeExternalAssignment(models.TransientModel):
 
     Launched from an Employee External Assignment Agreement in Open
     state. The employee choices are restricted to the job positions
-    listed on the agreement, excluding employees who already have an
-    active assignment on that same agreement.
+    listed on the agreement and to the employee configurator of the
+    agreement type, excluding employees who already have an active
+    assignment on that same agreement.
     """
 
     _name = "create_employee_external_assignment"
@@ -37,8 +38,9 @@ class CreateEmployeeExternalAssignment(models.TransientModel):
         store=False,
         compute_sudo=True,
         help="Employees eligible for a new assignment: their job position "
-        "is one of the agreement's job positions, and they do not "
-        "already have an active assignment on this agreement.",
+        "is one of the agreement's job positions, they pass the employee "
+        "configuration of the agreement type, and they do not already "
+        "have an active assignment on this agreement.",
     )
     employee_ids = fields.Many2many(
         comodel_name="hr.employee",
@@ -50,9 +52,16 @@ class CreateEmployeeExternalAssignment(models.TransientModel):
         help="Employees to create a new external assignment for.",
     )
 
-    @api.depends("agreement_id")
+    @api.depends("agreement_id", "agreement_id.type_id")
     def _compute_allowed_employee_ids(self):
-        """Restrict employee choices to the agreement's job positions.
+        """Restrict employee choices to eligible employees.
+
+        An employee is allowed when the job position is one of the
+        agreement's job positions and the employee passes the employee
+        configurator of the agreement type (selection method, manual
+        list, domain, or Python code). Python code is evaluated with
+        ``document`` set to the agreement. An agreement without a type
+        adds no type restriction.
 
         Employees who already have an active assignment (state not in
         ``cancel``, ``terminate``, or ``reject``) on the same agreement
@@ -79,7 +88,30 @@ class CreateEmployeeExternalAssignment(models.TransientModel):
                 allowed = candidate_employees - existing_assignments.mapped(
                     "employee_id"
                 )
+                type_employees = record._get_type_employees()
+                if type_employees is not None:
+                    allowed &= type_employees
             record.allowed_employee_ids = allowed
+
+    def _get_type_employees(self):
+        """Get the employees allowed by the agreement type configurator.
+
+        :return: ``hr.employee`` recordset allowed by the type, or
+            ``None`` when the agreement has no type (no restriction)
+        """
+        self.ensure_one()
+        agreement = self.agreement_id
+        assignment_type = agreement.type_id
+        if not assignment_type:
+            return None
+        result = agreement._m2o_configurator_get_filter(
+            object_name="hr.employee",
+            method_selection=assignment_type.employee_selection_method,
+            manual_recordset=assignment_type.employee_ids,
+            domain=assignment_type.employee_domain,
+            python_code=assignment_type.employee_python_code,
+        )
+        return result or self.env["hr.employee"]
 
     def action_create_assignment(self):
         """Create the selected employees' assignments and open the list.

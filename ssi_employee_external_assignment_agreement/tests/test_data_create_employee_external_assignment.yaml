@@ -622,3 +622,596 @@ scenarios:
         expect_error:
           type: "UserError"
           message_contains: "is not in Open state"
+
+  - name: "Type domain narrows the allowed employees to one"
+    options: {auto_refresh: true}
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test CEEA Partner TypeDomain"
+          is_company: true
+
+      - step: "Create job A"
+        action: "create"
+        model: "hr.job"
+        save_as: "job_a"
+        values:
+          name: "Test CEEA Job A - TypeDomain"
+
+      - step: "Create employee E1 with job A"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e1"
+        values:
+          name: "Test CEEA Employee E1 - TypeDomain"
+          job_id: "REC: job_a.id"
+
+      - step: "Create employee E2 with job A"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e2"
+        values:
+          name: "Test CEEA Employee E2 - TypeDomain"
+          job_id: "REC: job_a.id"
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test CEEA TypeDomain Type"
+          code: "TCEEA10"
+          employee_selection_method: "domain"
+          employee_domain: "[('name', '=', 'Test CEEA Employee E1 - TypeDomain')]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test CEEA Agreement TypeDomain"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job_a.id"
+
+      - step: "Confirm agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Approve agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "open"
+
+      - step: "Create wizard"
+        action: "create"
+        model: "create_employee_external_assignment"
+        save_as: "wizard"
+        as_user: "base.user_admin"
+        values:
+          agreement_id: "REC: agreement.id"
+          employee_ids: [[6, 0, ["REC: e1.id"]]]
+
+      - step: "Assert allowed_employee_ids contains only E1"
+        action: "assert"
+        target: "wizard"
+        asserts:
+          allowed_employee_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: e1"
+
+  - name: "Employee excluded by the type domain is not allowed despite a matching job"
+    options: {auto_refresh: true}
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test CEEA Partner TypeExcl"
+          is_company: true
+
+      - step: "Create job A"
+        action: "create"
+        model: "hr.job"
+        save_as: "job_a"
+        values:
+          name: "Test CEEA Job A - TypeExcl"
+
+      - step: "Create employee E1 with job A"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e1"
+        values:
+          name: "Test CEEA Employee E1 - TypeExcl"
+          job_id: "REC: job_a.id"
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test CEEA TypeExcl Type"
+          code: "TCEEA11"
+          employee_selection_method: "domain"
+          employee_domain: "[('name', '=', 'Test CEEA Nobody Matches This')]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test CEEA Agreement TypeExcl"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job_a.id"
+
+      - step: "Confirm agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Approve agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "open"
+
+      - step: "Create wizard"
+        action: "create"
+        model: "create_employee_external_assignment"
+        save_as: "wizard"
+        as_user: "base.user_admin"
+        values:
+          agreement_id: "REC: agreement.id"
+          employee_ids: [[6, 0, ["REC: e1.id"]]]
+
+      - step: "Assert allowed_employee_ids is empty"
+        action: "assert"
+        target: "wizard"
+        asserts:
+          allowed_employee_ids:
+            type: "m2m"
+            check: "count"
+            expected_count: 0
+
+  - name: "Manual type only allows the employees listed on the type"
+    options: {auto_refresh: true}
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test CEEA Partner TypeManual"
+          is_company: true
+
+      - step: "Create job A"
+        action: "create"
+        model: "hr.job"
+        save_as: "job_a"
+        values:
+          name: "Test CEEA Job A - TypeManual"
+
+      - step: "Create employee E1 with job A"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e1"
+        values:
+          name: "Test CEEA Employee E1 - TypeManual"
+          job_id: "REC: job_a.id"
+
+      - step: "Create employee E2 with job A"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e2"
+        values:
+          name: "Test CEEA Employee E2 - TypeManual"
+          job_id: "REC: job_a.id"
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test CEEA TypeManual Type"
+          code: "TCEEA12"
+          employee_selection_method: "manual"
+          employee_ids: [[6, 0, ["REC: e2.id"]]]
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test CEEA Agreement TypeManual"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job_a.id"
+
+      - step: "Confirm agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Approve agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "open"
+
+      - step: "Create wizard"
+        action: "create"
+        model: "create_employee_external_assignment"
+        save_as: "wizard"
+        as_user: "base.user_admin"
+        values:
+          agreement_id: "REC: agreement.id"
+          employee_ids: [[6, 0, ["REC: e2.id"]]]
+
+      - step: "Assert allowed_employee_ids contains only E2"
+        action: "assert"
+        target: "wizard"
+        asserts:
+          allowed_employee_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: e2"
+
+  - name: "Employee passing the type but with an active assignment is not allowed"
+    options: {auto_refresh: true}
+    steps:
+      - step: "Search for an existing account journal"
+        action: "search"
+        model: "account.journal"
+        domain:
+          - ["type", "in", ["general", "sale", "purchase", "bank", "cash"]]
+        save_as: "journal"
+        limit: 1
+
+      - step: "Search for an existing receivable account"
+        action: "search"
+        model: "account.account"
+        domain:
+          - ["user_type_id.type", "=", "receivable"]
+        save_as: "receivable_account"
+        limit: 1
+
+      - step: "Search for an existing currency"
+        action: "search"
+        model: "res.currency"
+        domain:
+          - ["active", "in", [true, false]]
+        save_as: "currency"
+        limit: 1
+
+      - step: "Search for an existing pricelist"
+        action: "search"
+        model: "product.pricelist"
+        domain: []
+        save_as: "pricelist"
+        limit: 1
+
+      - step: "Create partner"
+        action: "create"
+        model: "res.partner"
+        save_as: "partner"
+        values:
+          name: "Test CEEA Partner TypeActive"
+          is_company: true
+
+      - step: "Create job A"
+        action: "create"
+        model: "hr.job"
+        save_as: "job_a"
+        values:
+          name: "Test CEEA Job A - TypeActive"
+
+      - step: "Create employee E1 with job A"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e1"
+        values:
+          name: "Test CEEA Employee E1 - TypeActive"
+          job_id: "REC: job_a.id"
+
+      - step: "Create employee E2 with job A"
+        action: "create"
+        model: "hr.employee"
+        save_as: "e2"
+        values:
+          name: "Test CEEA Employee E2 - TypeActive"
+          job_id: "REC: job_a.id"
+
+      - step: "Create assignment type"
+        action: "create"
+        model: "employee_external_assignment_type"
+        save_as: "assignment_type"
+        values:
+          name: "Test CEEA TypeActive Type"
+          code: "TCEEA13"
+          employee_selection_method: "domain"
+          employee_domain: "[('name', 'like', 'Test CEEA Employee % - TypeActive')]"
+          job_selection_method: "domain"
+          job_domain: "[]"
+          salary_rule_selection_method: "domain"
+          salary_rule_domain: "[]"
+          other_fee_category_selection_method: "domain"
+          other_fee_category_domain: "[]"
+          other_fee_selection_method: "domain"
+          other_fee_domain: "[]"
+
+      - step: "Create agreement"
+        action: "create"
+        model: "employee_external_assignment_agreement"
+        save_as: "agreement"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          title: "Test CEEA Agreement TypeActive"
+          partner_id: "REC: partner.id"
+          receivable_account_id: "REC: receivable_account.id"
+          journal_id: "REC: journal.id"
+          currency_id: "REC: currency.id"
+          pricelist_id: "REC: pricelist.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+          detail_ids:
+            - - 0
+              - 0
+              - job_id: "REC: job_a.id"
+
+      - step: "Confirm agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Approve agreement"
+        action: "call"
+        target: "agreement"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "open"
+
+      - step: "Give E1 an existing open assignment on this agreement"
+        action: "create"
+        model: "employee_external_assignment"
+        save_as: "existing_assignment"
+        as_user: "base.user_admin"
+        values:
+          type_id: "REC: assignment_type.id"
+          employee_id: "REC: e1.id"
+          job_id: "REC: job_a.id"
+          partner_id: "REC: partner.id"
+          agreement_id: "REC: agreement.id"
+          date_start: "2026-01-01"
+          date_end: "2026-12-31"
+
+      - step: "Open the existing assignment"
+        action: "call"
+        target: "existing_assignment"
+        method: "action_confirm"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "confirm"
+
+      - step: "Approve the existing assignment"
+        action: "call"
+        target: "existing_assignment"
+        method: "action_approve_approval"
+        as_user: "base.user_admin"
+        asserts:
+          state:
+            type: "value"
+            expected: "open"
+
+      - step: "Create wizard"
+        action: "create"
+        model: "create_employee_external_assignment"
+        save_as: "wizard"
+        as_user: "base.user_admin"
+        values:
+          agreement_id: "REC: agreement.id"
+          employee_ids: [[6, 0, ["REC: e2.id"]]]
+
+      - step: "Assert allowed_employee_ids contains only E2"
+        action: "assert"
+        target: "wizard"
+        asserts:
+          allowed_employee_ids:
+            type: "m2m"
+            check: "exact"
+            expected_records:
+              - "REC: e2"
